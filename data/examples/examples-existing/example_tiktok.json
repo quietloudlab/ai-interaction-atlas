@@ -1,0 +1,167 @@
+{
+  "nodes": [
+    {
+      "id": "feed-1",
+      "referenceId": "system_load_db",
+      "type": "task",
+      "x": 50,
+      "y": 260,
+      "customLabel": "Load Candidate Videos",
+      "notes": "Pull a pool of eligible videos (fresh + follow graph + trending).",
+      "attachments": [
+        { "id": "feed-1-a", "referenceId": "data_list", "type": "data", "direction": "output", "notes": "Candidate set" },
+        { "id": "feed-1-b", "referenceId": "const_rate_limit", "type": "constraint", "notes": "Cap repeated exposure (fatigue control)" }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "feed-2",
+      "referenceId": "system_load_db",
+      "type": "task",
+      "x": 50,
+      "y": 420,
+      "customLabel": "Load User Profile Signals",
+      "notes": "Watch time, follows, hides, likes, not-interested, session context.",
+      "attachments": [
+        { "id": "feed-2-a", "referenceId": "data_preference_profile", "type": "data", "direction": "output", "notes": "User interests + history" }
+      ],
+      "measuredW": 220,
+      "measuredH": 118
+    },
+    {
+      "id": "feed-3",
+      "referenceId": "task_rank",
+      "type": "task",
+      "x": 320,
+      "y": 320,
+      "customLabel": "Rank Feed Items",
+      "notes": "Order candidates for predicted engagement + satisfaction.",
+      "attachments": [
+        { "id": "feed-3-a", "referenceId": "data_score", "type": "data", "direction": "output", "notes": "Rank scores per item" },
+        { "id": "feed-3-b", "referenceId": "const_bias", "type": "constraint", "notes": "Mitigate over-amplification / ensure diversity guardrails" }
+      ],
+      "measuredW": 220,
+      "measuredH": 143
+    },
+    {
+      "id": "feed-4",
+      "referenceId": "system_rules",
+      "type": "task",
+      "x": 590,
+      "y": 320,
+      "customLabel": "Safety + Policy Gate",
+      "notes": "Filter/route sensitive content; apply age & region constraints.",
+      "attachments": [
+        { "id": "feed-4-a", "referenceId": "const_human_loop", "type": "constraint", "notes": "Escalate borderline content for review" }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "feed-5",
+      "referenceId": "tp_mobile",
+      "type": "touchpoint",
+      "x": 860,
+      "y": 335,
+      "customLabel": "Short-Form Feed UI",
+      "notes": "Infinite scroll playback. The ranking becomes the experience.",
+      "measuredW": 140,
+      "measuredH": 35,
+      "personaId": "persona-viewer"
+    },
+    {
+      "id": "feed-6",
+      "referenceId": "human_select_option",
+      "type": "task",
+      "x": 1040,
+      "y": 260,
+      "customLabel": "Watch / Skip / Like / Share",
+      "notes": "Implicit + explicit signals.",
+      "attachments": [
+        { "id": "feed-6-a", "referenceId": "data_log", "type": "data", "direction": "output", "notes": "Events: watch_time, like, skip, hide" }
+      ],
+      "measuredW": 220,
+      "measuredH": 138,
+      "personaId": "persona-viewer"
+    },
+    {
+      "id": "feed-7",
+      "referenceId": "task_explore",
+      "type": "task",
+      "x": 1040,
+      "y": 420,
+      "customLabel": "Explore (Small Experiments)",
+      "notes": "Try new creators/topics to avoid stagnation.",
+      "attachments": [
+        { "id": "feed-7-a", "referenceId": "const_format", "type": "constraint", "notes": "Limit exploration % per session (e.g., 5–10%)" }
+      ],
+      "measuredW": 220,
+      "measuredH": 121
+    },
+    {
+      "id": "feed-8",
+      "referenceId": "task_adapt",
+      "type": "task",
+      "x": 1310,
+      "y": 320,
+      "customLabel": "Adapt Ranking Model",
+      "notes": "Update per-user (and global) models from logs.",
+      "measuredW": 220,
+      "measuredH": 96
+    },
+    {
+      "id": "feed-9",
+      "referenceId": "system_log",
+      "type": "task",
+      "x": 1580,
+      "y": 320,
+      "customLabel": "Audit + Metrics Logging",
+      "notes": "Track distribution, satisfaction proxies, safety incidents.",
+      "measuredW": 220,
+      "measuredH": 96
+    },
+    {
+      "id": "feed-zone-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 280,
+      "y": 220,
+      "width": 520,
+      "height": 260,
+      "customLabel": "Ranking Core",
+      "notes": "Candidates + user profile → ranked list → policy gate",
+      "measuredW": 520,
+      "measuredH": 260
+    },
+    {
+      "id": "feed-note-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 50,
+      "y": 110,
+      "width": 520,
+      "height": 110,
+      "customLabel": "DEMO POINT",
+      "notes": "This example shows why “Rank” is never alone: it needs policy gates + exploration + learning loops to stay healthy.",
+      "measuredW": 520,
+      "measuredH": 110
+    }
+  ],
+  "edges": [
+    { "id": "feed-e1", "source": "feed-1", "target": "feed-3" },
+    { "id": "feed-e2", "source": "feed-2", "target": "feed-3" },
+    { "id": "feed-e3", "source": "feed-3", "target": "feed-4" },
+    { "id": "feed-e4", "source": "feed-4", "target": "feed-5" },
+    { "id": "feed-e5", "source": "feed-5", "target": "feed-6" },
+    { "id": "feed-e6", "source": "feed-6", "target": "feed-8" },
+    { "id": "feed-e7", "source": "feed-6", "target": "feed-9" },
+    { "id": "feed-e8", "source": "feed-7", "target": "feed-5", "label": "Inject exploration items" },
+    { "id": "feed-e9", "source": "feed-8", "target": "feed-3", "label": "Model update loop" }
+  ],
+  "personas": [
+    { "id": "persona-viewer", "name": "Viewer", "role": "Consumes & signals preferences", "color": "#F59E0B", "initials": "V", "category": "human" }
+  ]
+}

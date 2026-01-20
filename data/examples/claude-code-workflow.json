@@ -1,0 +1,778 @@
+{
+  "nodes": [
+    {
+      "id": "tp-1",
+      "referenceId": "tp_cli",
+      "type": "touchpoint",
+      "x": 40,
+      "y": 120,
+      "customLabel": "CLI Interface",
+      "notes": "User types request in terminal",
+      "measuredW": 140,
+      "measuredH": 35
+    },
+    {
+      "id": "node-1",
+      "referenceId": "human_type_input",
+      "type": "task",
+      "x": 240,
+      "y": 90,
+      "customLabel": "Describe Desired Change",
+      "notes": "User requests: 'Add feature X', 'Fix bug Y', 'Refactor Z'",
+      "attachments": [
+        {
+          "id": "att-1-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Natural language request"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-developer"
+    },
+    {
+      "id": "node-2",
+      "referenceId": "task_classify",
+      "type": "task",
+      "x": 520,
+      "y": 90,
+      "customLabel": "Parse Intent & Context",
+      "capability": "Natural Language Understanding",
+      "notes": "Identify: task type, affected files, scope, complexity",
+      "attachments": [
+        {
+          "id": "att-2-1",
+          "referenceId": "data_classification",
+          "type": "data",
+          "direction": "output",
+          "notes": "Task classification & scope"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "node-3",
+      "referenceId": "task_retrieve",
+      "type": "task",
+      "x": 800,
+      "y": 50,
+      "customLabel": "Search Codebase",
+      "capability": "Code Search",
+      "notes": "Use Glob/Grep to find relevant files, functions, patterns",
+      "attachments": [
+        {
+          "id": "att-3-1",
+          "referenceId": "data_code",
+          "type": "data",
+          "direction": "input",
+          "notes": "Source files"
+        },
+        {
+          "id": "att-3-2",
+          "referenceId": "data_any",
+          "type": "data",
+          "direction": "output",
+          "notes": "Relevant file paths & code snippets"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "node-4",
+      "referenceId": "task_analyze",
+      "type": "task",
+      "x": 1080,
+      "y": 50,
+      "customLabel": "Read & Understand Code",
+      "capability": "Code Understanding",
+      "notes": "Analyze: structure, patterns, dependencies, existing implementations",
+      "attachments": [
+        {
+          "id": "att-4-1",
+          "referenceId": "data_code",
+          "type": "data",
+          "direction": "input",
+          "notes": "File contents"
+        },
+        {
+          "id": "att-4-2",
+          "referenceId": "const_type_system",
+          "type": "constraint",
+          "notes": "Must understand TypeScript types & interfaces"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "node-5",
+      "referenceId": "task_reason",
+      "type": "task",
+      "x": 1360,
+      "y": 50,
+      "customLabel": "Identify Required Changes",
+      "capability": "Code Reasoning",
+      "notes": "Determine: which files to modify, what patterns to follow, edge cases",
+      "attachments": [
+        {
+          "id": "att-5-1",
+          "referenceId": "data_structured_data",
+          "type": "data",
+          "direction": "output",
+          "notes": "Change plan with affected files"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 121
+    },
+    {
+      "id": "node-6",
+      "referenceId": "human_review",
+      "type": "task",
+      "x": 1640,
+      "y": 90,
+      "customLabel": "Review Proposed Plan (Optional)",
+      "notes": "For complex tasks, user reviews plan before implementation",
+      "attachments": [
+        {
+          "id": "att-6-1",
+          "referenceId": "const_human_loop",
+          "type": "constraint",
+          "notes": "User approval required for major architectural changes"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 96,
+      "personaId": "persona-developer"
+    },
+    {
+      "id": "node-7",
+      "referenceId": "task_generate",
+      "type": "task",
+      "x": 1920,
+      "y": 50,
+      "customLabel": "Generate Code Changes",
+      "capability": "Code Generation",
+      "notes": "Write/edit code using Read, Edit, Write tools",
+      "attachments": [
+        {
+          "id": "att-7-1",
+          "referenceId": "const_code_style",
+          "type": "constraint",
+          "notes": "Follow existing code patterns & conventions"
+        },
+        {
+          "id": "att-7-2",
+          "referenceId": "const_type_system",
+          "type": "constraint",
+          "notes": "Maintain TypeScript type safety"
+        },
+        {
+          "id": "att-7-3",
+          "referenceId": "data_code",
+          "type": "data",
+          "direction": "output",
+          "notes": "Modified source files"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 184
+    },
+    {
+      "id": "node-8",
+      "referenceId": "system_compile",
+      "type": "task",
+      "x": 2200,
+      "y": 50,
+      "customLabel": "Run TypeScript Compiler",
+      "notes": "Execute: npx tsc --noEmit to verify no type errors",
+      "attachments": [
+        {
+          "id": "att-8-1",
+          "referenceId": "data_log",
+          "type": "data",
+          "direction": "output",
+          "notes": "Compilation results"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "node-9",
+      "referenceId": "task_verify",
+      "type": "task",
+      "x": 2480,
+      "y": 50,
+      "customLabel": "Verify Compilation Success",
+      "capability": "Error Detection",
+      "notes": "Check for: type errors, syntax errors, import issues",
+      "attachments": [
+        {
+          "id": "att-9-1",
+          "referenceId": "data_classification",
+          "type": "data",
+          "direction": "output",
+          "notes": "Pass/Fail status"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 121
+    },
+    {
+      "id": "node-10",
+      "referenceId": "task_debug",
+      "type": "task",
+      "x": 2480,
+      "y": 220,
+      "customLabel": "Debug Errors",
+      "capability": "Error Analysis",
+      "notes": "If errors: analyze error messages, identify root cause, generate fix",
+      "attachments": [
+        {
+          "id": "att-10-1",
+          "referenceId": "data_log",
+          "type": "data",
+          "direction": "input",
+          "notes": "Error messages"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "node-11",
+      "referenceId": "task_summarize",
+      "type": "task",
+      "x": 2760,
+      "y": 50,
+      "customLabel": "Summarize Changes",
+      "capability": "Summarization",
+      "notes": "Generate concise description of what was changed and why",
+      "attachments": [
+        {
+          "id": "att-11-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Change summary"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 121
+    },
+    {
+      "id": "tp-2",
+      "referenceId": "tp_cli",
+      "type": "touchpoint",
+      "x": 3040,
+      "y": 65,
+      "customLabel": "CLI Output",
+      "notes": "Display results to user in terminal",
+      "measuredW": 140,
+      "measuredH": 35
+    },
+    {
+      "id": "node-12",
+      "referenceId": "human_review",
+      "type": "task",
+      "x": 240,
+      "y": 350,
+      "customLabel": "Review Changes",
+      "notes": "User examines code changes, tests functionality",
+      "attachments": [
+        {
+          "id": "att-12-1",
+          "referenceId": "data_signal",
+          "type": "data",
+          "direction": "output",
+          "notes": "Approval or requested modifications"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-developer"
+    },
+    {
+      "id": "node-13",
+      "referenceId": "human_type_input",
+      "type": "task",
+      "x": 520,
+      "y": 350,
+      "customLabel": "Request Adjustments (Optional)",
+      "notes": "User asks for tweaks: 'Change X', 'Also update Y', 'Fix this issue'",
+      "attachments": [
+        {
+          "id": "att-13-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Follow-up request"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-developer"
+    },
+    {
+      "id": "node-14",
+      "referenceId": "human_execute_command",
+      "type": "task",
+      "x": 800,
+      "y": 350,
+      "customLabel": "Request Commit",
+      "notes": "User: 'Let's push all our changes to prod'",
+      "measuredW": 220,
+      "measuredH": 87,
+      "personaId": "persona-developer"
+    },
+    {
+      "id": "node-15",
+      "referenceId": "system_query_git",
+      "type": "task",
+      "x": 1080,
+      "y": 350,
+      "customLabel": "Check Git Status",
+      "notes": "Run: git status to see all changed files",
+      "attachments": [
+        {
+          "id": "att-15-1",
+          "referenceId": "data_log",
+          "type": "data",
+          "direction": "output",
+          "notes": "List of modified/untracked files"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "node-16",
+      "referenceId": "system_query_git",
+      "type": "task",
+      "x": 1360,
+      "y": 350,
+      "customLabel": "Review Git Diff",
+      "notes": "Run: git diff to see specific changes",
+      "attachments": [
+        {
+          "id": "att-16-1",
+          "referenceId": "data_code",
+          "type": "data",
+          "direction": "output",
+          "notes": "Line-by-line changes"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "node-17",
+      "referenceId": "task_synthesize",
+      "type": "task",
+      "x": 1640,
+      "y": 350,
+      "customLabel": "Generate Commit Message",
+      "capability": "Summarization",
+      "notes": "Create comprehensive commit message with: summary, changes, impacts",
+      "attachments": [
+        {
+          "id": "att-17-1",
+          "referenceId": "const_format",
+          "type": "constraint",
+          "notes": "Follow conventional commit format"
+        },
+        {
+          "id": "att-17-2",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Commit message"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 184
+    },
+    {
+      "id": "node-18",
+      "referenceId": "system_update_git",
+      "type": "task",
+      "x": 1920,
+      "y": 350,
+      "customLabel": "Stage All Changes",
+      "notes": "Run: git add -A to stage all files",
+      "measuredW": 220,
+      "measuredH": 87
+    },
+    {
+      "id": "node-19",
+      "referenceId": "system_update_git",
+      "type": "task",
+      "x": 2200,
+      "y": 350,
+      "customLabel": "Create Commit",
+      "notes": "Run: git commit -m \"message\" with generated message",
+      "attachments": [
+        {
+          "id": "att-19-1",
+          "referenceId": "const_attribution",
+          "type": "constraint",
+          "notes": "Include 'Co-Authored-By: Claude Sonnet 4.5' footer"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "node-20",
+      "referenceId": "system_update_git",
+      "type": "task",
+      "x": 2480,
+      "y": 350,
+      "customLabel": "Push to Remote",
+      "notes": "Run: git push origin main",
+      "measuredW": 220,
+      "measuredH": 87
+    },
+    {
+      "id": "tp-3",
+      "referenceId": "tp_api",
+      "type": "touchpoint",
+      "x": 2760,
+      "y": 365,
+      "customLabel": "GitHub Repository",
+      "notes": "Changes appear in remote repository",
+      "measuredW": 140,
+      "measuredH": 35
+    },
+    {
+      "id": "node-21",
+      "referenceId": "task_retrieve",
+      "type": "task",
+      "x": 800,
+      "y": 220,
+      "customLabel": "Check Conversation History",
+      "capability": "Memory Retrieval",
+      "notes": "Access full conversation context for continuity",
+      "attachments": [
+        {
+          "id": "att-21-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Previous messages & context"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 121
+    },
+    {
+      "id": "note-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 40,
+      "y": -80,
+      "width": 420,
+      "height": 110,
+      "customLabel": "How Claude Code Works",
+      "notes": "An autonomous AI coding assistant that understands, plans, implements, and verifies changes to your codebase.",
+      "measuredW": 420,
+      "measuredH": 110
+    },
+    {
+      "id": "note-2",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 2200,
+      "y": -80,
+      "width": 380,
+      "height": 110,
+      "customLabel": "Always Verify",
+      "notes": "Every code change is compiled with TypeScript to catch errors before the user even sees the code.",
+      "measuredW": 380,
+      "measuredH": 110
+    },
+    {
+      "id": "note-3",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 1080,
+      "y": 490,
+      "width": 340,
+      "height": 100,
+      "customLabel": "Git Workflow",
+      "notes": "Claude Code handles all git operations: status, diff, add, commit, push with proper attribution.",
+      "measuredW": 340,
+      "measuredH": 100
+    },
+    {
+      "id": "zone-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 220,
+      "y": 40,
+      "width": 460,
+      "height": 200,
+      "customLabel": "Phase 1: Input",
+      "notes": "Receive and parse user request",
+      "measuredW": 460,
+      "measuredH": 200
+    },
+    {
+      "id": "zone-2",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 780,
+      "y": 20,
+      "width": 880,
+      "height": 240,
+      "customLabel": "Phase 2: Analysis & Planning",
+      "notes": "Search codebase, understand context, plan changes",
+      "measuredW": 880,
+      "measuredH": 240,
+      "color": "bg-blue-100/50"
+    },
+    {
+      "id": "zone-3",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 1900,
+      "y": 20,
+      "width": 600,
+      "height": 240,
+      "customLabel": "Phase 3: Implementation",
+      "notes": "Generate code and verify compilation",
+      "measuredW": 600,
+      "measuredH": 240,
+      "color": "bg-purple-100/50"
+    },
+    {
+      "id": "zone-4",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 2540,
+      "y": 20,
+      "width": 680,
+      "height": 240,
+      "customLabel": "Phase 4: Verification",
+      "notes": "Check for errors, debug if needed, report results",
+      "measuredW": 680,
+      "measuredH": 240,
+      "color": "bg-green-100/50"
+    },
+    {
+      "id": "zone-5",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 220,
+      "y": 300,
+      "width": 880,
+      "height": 200,
+      "customLabel": "Phase 5: User Review & Iteration",
+      "notes": "User reviews, requests changes, provides feedback",
+      "measuredW": 880,
+      "measuredH": 200,
+      "color": "bg-yellow-100/50"
+    },
+    {
+      "id": "zone-6",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 1060,
+      "y": 300,
+      "width": 1900,
+      "height": 200,
+      "customLabel": "Phase 6: Commit & Deploy",
+      "notes": "Git operations: stage, commit, push to production",
+      "measuredW": 1900,
+      "measuredH": 200,
+      "color": "bg-red-100/40"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1",
+      "source": "tp-1",
+      "target": "node-1"
+    },
+    {
+      "id": "edge-2",
+      "source": "node-1",
+      "target": "node-2"
+    },
+    {
+      "id": "edge-3",
+      "source": "node-2",
+      "target": "node-3"
+    },
+    {
+      "id": "edge-4",
+      "source": "node-3",
+      "target": "node-4"
+    },
+    {
+      "id": "edge-5",
+      "source": "node-4",
+      "target": "node-5"
+    },
+    {
+      "id": "edge-6",
+      "source": "node-5",
+      "target": "node-6",
+      "label": "Complex tasks"
+    },
+    {
+      "id": "edge-7",
+      "source": "node-6",
+      "target": "node-7"
+    },
+    {
+      "id": "edge-8",
+      "source": "node-5",
+      "target": "node-7",
+      "label": "Simple tasks",
+      "customY": 90,
+      "sourceX": 1590
+    },
+    {
+      "id": "edge-9",
+      "source": "node-7",
+      "target": "node-8"
+    },
+    {
+      "id": "edge-10",
+      "source": "node-8",
+      "target": "node-9"
+    },
+    {
+      "id": "edge-11",
+      "source": "node-9",
+      "target": "node-10",
+      "label": "Errors found"
+    },
+    {
+      "id": "edge-12",
+      "source": "node-10",
+      "target": "node-7",
+      "customX": 2100,
+      "customY": 180,
+      "label": "Generate fix"
+    },
+    {
+      "id": "edge-13",
+      "source": "node-9",
+      "target": "node-11",
+      "label": "Success"
+    },
+    {
+      "id": "edge-14",
+      "source": "node-11",
+      "target": "tp-2"
+    },
+    {
+      "id": "edge-15",
+      "source": "tp-2",
+      "target": "node-12",
+      "customY": 270,
+      "targetX": 180
+    },
+    {
+      "id": "edge-16",
+      "source": "node-12",
+      "target": "node-13",
+      "label": "Needs changes"
+    },
+    {
+      "id": "edge-17",
+      "source": "node-13",
+      "target": "node-2",
+      "customX": 400,
+      "customY": 240,
+      "label": "Iterate"
+    },
+    {
+      "id": "edge-18",
+      "source": "node-12",
+      "target": "node-14",
+      "label": "Approved",
+      "customY": 380
+    },
+    {
+      "id": "edge-19",
+      "source": "node-14",
+      "target": "node-15"
+    },
+    {
+      "id": "edge-20",
+      "source": "node-15",
+      "target": "node-16"
+    },
+    {
+      "id": "edge-21",
+      "source": "node-16",
+      "target": "node-17"
+    },
+    {
+      "id": "edge-22",
+      "source": "node-17",
+      "target": "node-18"
+    },
+    {
+      "id": "edge-23",
+      "source": "node-18",
+      "target": "node-19"
+    },
+    {
+      "id": "edge-24",
+      "source": "node-19",
+      "target": "node-20"
+    },
+    {
+      "id": "edge-25",
+      "source": "node-20",
+      "target": "tp-3"
+    },
+    {
+      "id": "edge-26",
+      "source": "node-2",
+      "target": "node-21",
+      "label": "Check context"
+    },
+    {
+      "id": "edge-27",
+      "source": "node-21",
+      "target": "node-3"
+    }
+  ],
+  "personas": [
+    {
+      "id": "persona-developer",
+      "name": "Developer",
+      "role": "Software Engineer / Product Builder",
+      "color": "#3B82F6",
+      "initials": "D",
+      "category": "human"
+    },
+    {
+      "id": "persona-claude",
+      "name": "Claude Code",
+      "role": "AI Coding Assistant (Sonnet 4.5)",
+      "color": "#8B5CF6",
+      "initials": "CC",
+      "category": "ai"
+    }
+  ]
+}

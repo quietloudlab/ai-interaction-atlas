@@ -1,0 +1,318 @@
+{
+  "nodes": [
+    {
+      "id": "sc-1",
+      "referenceId": "human_type_input",
+      "type": "task",
+      "x": 50,
+      "y": 320,
+      "customLabel": "Type Email Sentence",
+      "notes": "User composes an email in Gmail. Cursor position matters.",
+      "attachments": [
+        {
+          "id": "sc-1-a",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Draft text + cursor position"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-user"
+    },
+    {
+      "id": "sc-2",
+      "referenceId": "system_load_db",
+      "type": "task",
+      "x": 320,
+      "y": 240,
+      "customLabel": "Load Local Context",
+      "notes": "Thread history + recipient context + language settings (privacy-scoped).",
+      "attachments": [
+        {
+          "id": "sc-2-a",
+          "referenceId": "data_conversation",
+          "type": "data",
+          "direction": "output",
+          "notes": "Thread + recent user phrasing"
+        },
+        {
+          "id": "sc-2-b",
+          "referenceId": "const_privacy",
+          "type": "constraint",
+          "notes": "Do not expose sensitive content in suggestions"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 159
+    },
+    {
+      "id": "sc-3",
+      "referenceId": "task_represent",
+      "type": "task",
+      "x": 320,
+      "y": 400,
+      "customLabel": "Represent Draft Context",
+      "capability": "Feature Extraction",
+      "notes": "Embed partial sentence + surrounding context for prediction.",
+      "attachments": [
+        {
+          "id": "sc-3-a",
+          "referenceId": "data_embedding",
+          "type": "data",
+          "direction": "output",
+          "notes": "Context vector"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "sc-4",
+      "referenceId": "task_retrieve",
+      "type": "task",
+      "x": 590,
+      "y": 240,
+      "customLabel": "Retrieve Common Completions",
+      "notes": "Look up likely phrase continuations conditioned on context.",
+      "attachments": [
+        {
+          "id": "sc-4-a",
+          "referenceId": "data_list",
+          "type": "data",
+          "direction": "output",
+          "notes": "Top candidate continuations"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "sc-5",
+      "referenceId": "task_generate",
+      "type": "task",
+      "x": 590,
+      "y": 400,
+      "customLabel": "Generate Inline Suggestion",
+      "capability": "Text Generation",
+      "notes": "Produce a short continuation (few words).",
+      "attachments": [
+        {
+          "id": "sc-5-a",
+          "referenceId": "const_latency",
+          "type": "constraint",
+          "notes": "Target: <100ms perceived"
+        },
+        {
+          "id": "sc-5-b",
+          "referenceId": "const_tone",
+          "type": "constraint",
+          "notes": "Match user's typical formality level"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 121
+    },
+    {
+      "id": "sc-6",
+      "referenceId": "system_rules",
+      "type": "task",
+      "x": 860,
+      "y": 320,
+      "customLabel": "Confidence + Safety Gate",
+      "notes": "Only show if confidence high and suggestion is non-sensitive.",
+      "attachments": [
+        {
+          "id": "sc-6-a",
+          "referenceId": "const_confidence",
+          "type": "constraint",
+          "notes": "Show only if > 0.85"
+        },
+        {
+          "id": "sc-6-b",
+          "referenceId": "const_format",
+          "type": "constraint",
+          "notes": "Max 6-10 words; no new facts"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 118
+    },
+    {
+      "id": "sc-7",
+      "referenceId": "tp_embedded",
+      "type": "touchpoint",
+      "x": 1242.5164470864663,
+      "y": 268.07058591236705,
+      "customLabel": "Inline Ghost Text",
+      "notes": "Suggestion appears inline; user can accept with Tab.",
+      "measuredW": 140,
+      "measuredH": 35,
+      "personaId": "persona-user"
+    },
+    {
+      "id": "sc-8",
+      "referenceId": "human_select_option",
+      "type": "task",
+      "x": 1213.3505554840974,
+      "y": 340.9202603853619,
+      "customLabel": "Accept / Ignore",
+      "notes": "Tab to accept; keep typing to ignore.",
+      "attachments": [
+        {
+          "id": "sc-8-a",
+          "referenceId": "data_signal",
+          "type": "data",
+          "direction": "output",
+          "notes": "accept | ignore"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-user"
+    },
+    {
+      "id": "sc-9",
+      "referenceId": "system_log",
+      "type": "task",
+      "x": 1505.312974102346,
+      "y": 281.96608984337377,
+      "customLabel": "Log Outcome",
+      "notes": "Record suggestion + accept/ignore for learning.",
+      "attachments": [
+        {
+          "id": "sc-9-a",
+          "referenceId": "const_data_retention",
+          "type": "constraint",
+          "notes": "Minimize retention; aggregate where possible"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 96
+    },
+    {
+      "id": "sc-10",
+      "referenceId": "task_adapt",
+      "type": "task",
+      "x": 1508.4504624763815,
+      "y": 441.8368495455988,
+      "customLabel": "Adapt Personalization",
+      "notes": "Update user preference profile from accept/ignore patterns.",
+      "attachments": [
+        {
+          "id": "sc-10-a",
+          "referenceId": "data_preference_profile",
+          "type": "data",
+          "direction": "output",
+          "notes": "Language + style preferences"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "sc-zone-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 280,
+      "y": 210.45829458011843,
+      "width": 824.9000930077158,
+      "height": 349.2126511375381,
+      "customLabel": "Prediction Pipeline",
+      "notes": "Context → candidates → suggestion → gate",
+      "measuredW": 825,
+      "measuredH": 349
+    },
+    {
+      "id": "sc-note-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": -95.8618654166341,
+      "y": 191.1474728686745,
+      "width": 320.11922864059034,
+      "height": 100,
+      "customLabel": "Gmail \"Smart Compose\" - inline text prediction",
+      "notes": "data boundaries + latency + confidence + learning loop.",
+      "measuredW": 318,
+      "measuredH": 100
+    }
+  ],
+  "edges": [
+    {
+      "id": "sc-e1",
+      "source": "sc-1",
+      "target": "sc-2"
+    },
+    {
+      "id": "sc-e2",
+      "source": "sc-1",
+      "target": "sc-3"
+    },
+    {
+      "id": "sc-e3",
+      "source": "sc-2",
+      "target": "sc-4"
+    },
+    {
+      "id": "sc-e4",
+      "source": "sc-3",
+      "target": "sc-5"
+    },
+    {
+      "id": "sc-e5",
+      "source": "sc-4",
+      "target": "sc-5",
+      "sourceX": 821.4482108912954,
+      "customY": 375.53362885702484
+    },
+    {
+      "id": "sc-e6",
+      "source": "sc-5",
+      "target": "sc-6",
+      "customX": 829.620661810555
+    },
+    {
+      "id": "sc-e7",
+      "source": "sc-6",
+      "target": "sc-7",
+      "label": "If show"
+    },
+    {
+      "id": "sc-e8",
+      "source": "sc-7",
+      "target": "sc-8",
+      "customY": 319.5000122255735
+    },
+    {
+      "id": "sc-e9",
+      "source": "sc-8",
+      "target": "sc-9"
+    },
+    {
+      "id": "sc-e10",
+      "source": "sc-9",
+      "target": "sc-10",
+      "customY": 407.39588345332373
+    },
+    {
+      "id": "sc-e11",
+      "source": "sc-10",
+      "target": "sc-3",
+      "label": "Personalization loop",
+      "customY": 588.0043320017407
+    }
+  ],
+  "personas": [
+    {
+      "id": "persona-user",
+      "name": "Email User",
+      "role": "Composes messages",
+      "color": "#3B82F6",
+      "initials": "EU",
+      "category": "human"
+    }
+  ]
+}

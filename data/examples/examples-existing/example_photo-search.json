@@ -1,0 +1,276 @@
+{
+  "nodes": [
+    {
+      "id": "ph-1",
+      "referenceId": "system_load_db",
+      "type": "task",
+      "x": 478.75648193307575,
+      "y": 287.50426930508513,
+      "customLabel": "Load Photo Library Index",
+      "notes": "Precomputed embeddings + metadata per photo/video.",
+      "attachments": [
+        {
+          "id": "ph-1-a",
+          "referenceId": "data_embedding",
+          "type": "data",
+          "direction": "output",
+          "notes": "Media embeddings"
+        },
+        {
+          "id": "ph-1-b",
+          "referenceId": "const_privacy",
+          "type": "constraint",
+          "notes": "Often on-device / privacy-scoped processing"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 159
+    },
+    {
+      "id": "ph-2",
+      "referenceId": "task_classify",
+      "type": "task",
+      "x": 478.75648193307575,
+      "y": 467.50426930508513,
+      "customLabel": "Auto-Tag Media (Background)",
+      "capability": "Image Classification",
+      "notes": "Classify objects/scenes: dog, beach, receipt, etc. (runs continuously).",
+      "attachments": [
+        {
+          "id": "ph-2-a",
+          "referenceId": "data_classification",
+          "type": "data",
+          "direction": "output",
+          "notes": "Tags per media item"
+        },
+        {
+          "id": "ph-2-b",
+          "referenceId": "system_log",
+          "type": "constraint",
+          "notes": "Track model version used for tags"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 184
+    },
+    {
+      "id": "ph-3",
+      "referenceId": "human_type_input",
+      "type": "task",
+      "x": 317.8406153863176,
+      "y": 117.89167587498565,
+      "customLabel": "Type Search Query",
+      "notes": "User types: “dog” / “beach” / “receipt”.",
+      "attachments": [
+        {
+          "id": "ph-3-a",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Query string"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-photo-user"
+    },
+    {
+      "id": "ph-4",
+      "referenceId": "task_represent",
+      "type": "task",
+      "x": 593.8895061685228,
+      "y": 117.89167587498565,
+      "customLabel": "Represent Query",
+      "capability": "Feature Extraction",
+      "notes": "Embed the query for semantic matching to media embeddings/tags.",
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "ph-5",
+      "referenceId": "task_retrieve",
+      "type": "task",
+      "x": 864.4015695360532,
+      "y": 205.88783609558726,
+      "customLabel": "Retrieve Matches",
+      "notes": "Combine tag hits + embedding similarity to find relevant media.",
+      "attachments": [
+        {
+          "id": "ph-5-a",
+          "referenceId": "data_list",
+          "type": "data",
+          "direction": "output",
+          "notes": "Matched media IDs"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "ph-6",
+      "referenceId": "task_rank",
+      "type": "task",
+      "x": 878.2708728096482,
+      "y": 398.78194181269015,
+      "customLabel": "Rank Results",
+      "notes": "Sort by relevance + recency + favorites, etc.",
+      "measuredW": 220,
+      "measuredH": 87
+    },
+    {
+      "id": "ph-7",
+      "referenceId": "tp_mobile",
+      "type": "touchpoint",
+      "x": 1130,
+      "y": 335,
+      "customLabel": "Search Results Grid",
+      "notes": "Photos shown; may include highlighted terms/tags.",
+      "measuredW": 140,
+      "measuredH": 35,
+      "personaId": "persona-photo-user"
+    },
+    {
+      "id": "ph-8",
+      "referenceId": "human_select_option",
+      "type": "task",
+      "x": 1140.6899119639274,
+      "y": 399.1737821751418,
+      "customLabel": "Open Result / Refine Search",
+      "notes": "User selects a photo or refines query.",
+      "attachments": [
+        {
+          "id": "ph-8-a",
+          "referenceId": "data_log",
+          "type": "data",
+          "direction": "output",
+          "notes": "Clicks + refinements"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-photo-user"
+    },
+    {
+      "id": "ph-9",
+      "referenceId": "task_adapt",
+      "type": "task",
+      "x": 1397.291271903519,
+      "y": 412.57242223555045,
+      "customLabel": "Adapt Ranking",
+      "notes": "Learn personal relevance (e.g., which dog, which receipt style).",
+      "measuredW": 220,
+      "measuredH": 87
+    },
+    {
+      "id": "ph-zone-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 439.0458875647163,
+      "y": 267.3113322173248,
+      "width": 298.51373344046596,
+      "height": 443.9192268166524,
+      "customLabel": "Background Indexing",
+      "notes": "Tagging/index happens before search (and keeps updating).",
+      "measuredW": 299,
+      "measuredH": 446
+    },
+    {
+      "id": "ph-note-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 12.321584358069376,
+      "y": -48.37734810246765,
+      "width": 520,
+      "height": 110,
+      "customLabel": "iPhone Image Search",
+      "notes": "clean story: offline/continuous indexing + simple query → retrieve → rank. The UX feels “instant” because the work happened earlier.",
+      "measuredW": 520,
+      "measuredH": 110
+    },
+    {
+      "id": "da095034-1aff-47a5-8c45-81f1cbce880f",
+      "referenceId": "tp_mobile",
+      "type": "touchpoint",
+      "x": 148.6550158706211,
+      "y": 120.87508103032438,
+      "measuredW": 140,
+      "measuredH": 35,
+      "customLabel": "Photos > Search"
+    }
+  ],
+  "edges": [
+    {
+      "id": "ph-e1",
+      "source": "ph-1",
+      "target": "ph-5",
+      "customX": 787.7107168254581
+    },
+    {
+      "id": "ph-e2",
+      "source": "ph-2",
+      "target": "ph-1",
+      "label": "Update index",
+      "customY": 676.2530156961027
+    },
+    {
+      "id": "ph-e3",
+      "source": "ph-3",
+      "target": "ph-4"
+    },
+    {
+      "id": "ph-e4",
+      "source": "ph-4",
+      "target": "ph-5"
+    },
+    {
+      "id": "ph-e5",
+      "source": "ph-5",
+      "target": "ph-6",
+      "sourceX": 1110.6023543040797,
+      "customY": 337.1370973415892,
+      "targetX": 853.0528146223382
+    },
+    {
+      "id": "ph-e6",
+      "source": "ph-6",
+      "target": "ph-7",
+      "customX": 1111.9139515596253
+    },
+    {
+      "id": "ph-e7",
+      "source": "ph-7",
+      "target": "ph-8",
+      "customY": 384.6345669487174,
+      "targetX": 1126.4343774624065
+    },
+    {
+      "id": "ph-e8",
+      "source": "ph-8",
+      "target": "ph-9"
+    },
+    {
+      "id": "ph-e9",
+      "source": "ph-9",
+      "target": "ph-6",
+      "label": "Personal ranking loop",
+      "customY": 549.9094172163195
+    },
+    {
+      "id": "39b65dd4-116c-429f-9a4a-11cf942b8656",
+      "source": "da095034-1aff-47a5-8c45-81f1cbce880f",
+      "target": "ph-3"
+    }
+  ],
+  "personas": [
+    {
+      "id": "persona-photo-user",
+      "name": "Photo App User",
+      "role": "Searches personal media",
+      "color": "#10B981",
+      "initials": "PU",
+      "category": "human"
+    }
+  ]
+}

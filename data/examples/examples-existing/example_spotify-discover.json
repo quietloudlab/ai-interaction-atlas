@@ -1,0 +1,278 @@
+{
+  "nodes": [
+    {
+      "id": "sp-1",
+      "referenceId": "system_timer",
+      "type": "task",
+      "x": 50,
+      "y": 320,
+      "customLabel": "Weekly Playlist Job",
+      "notes": "Scheduled generation (Discover Weekly) or frequent refresh (Daily Mix).",
+      "attachments": [
+        {
+          "id": "sp-1-a",
+          "referenceId": "data_signal",
+          "type": "data",
+          "direction": "output",
+          "notes": "Timer trigger"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "sp-2",
+      "referenceId": "system_load_db",
+      "type": "task",
+      "x": 320,
+      "y": 240,
+      "customLabel": "Load Listening History",
+      "notes": "Recent plays, skips, saves, follows.",
+      "attachments": [
+        {
+          "id": "sp-2-a",
+          "referenceId": "data_session_history",
+          "type": "data",
+          "direction": "output",
+          "notes": "Event history"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "sp-3",
+      "referenceId": "task_represent",
+      "type": "task",
+      "x": 320,
+      "y": 400,
+      "customLabel": "Build Taste Vector",
+      "capability": "Feature Extraction",
+      "notes": "Represent the user’s “taste” as an embedding/profile.",
+      "attachments": [
+        {
+          "id": "sp-3-a",
+          "referenceId": "data_preference_profile",
+          "type": "data",
+          "direction": "output",
+          "notes": "Taste profile"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 138
+    },
+    {
+      "id": "sp-4",
+      "referenceId": "task_retrieve",
+      "type": "task",
+      "x": 590,
+      "y": 240,
+      "customLabel": "Retrieve Candidate Tracks",
+      "notes": "Pull tracks related to taste vector + similar users + catalog constraints.",
+      "attachments": [
+        {
+          "id": "sp-4-a",
+          "referenceId": "data_list",
+          "type": "data",
+          "direction": "output",
+          "notes": "Candidate tracks"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "sp-5",
+      "referenceId": "task_rank",
+      "type": "task",
+      "x": 590,
+      "y": 400,
+      "customLabel": "Rank for Mix Quality",
+      "notes": "Balance familiarity vs novelty; avoid repeats; enforce diversity constraints.",
+      "attachments": [
+        {
+          "id": "sp-5-a",
+          "referenceId": "const_format",
+          "type": "constraint",
+          "notes": "Constraints: no duplicates, cap same-artist streaks"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 96
+    },
+    {
+      "id": "sp-6",
+      "referenceId": "system_save_db",
+      "type": "task",
+      "x": 860,
+      "y": 320,
+      "customLabel": "Publish Playlist",
+      "notes": "Persist playlist; make it available in user library.",
+      "attachments": [
+        {
+          "id": "sp-6-a",
+          "referenceId": "data_db_record",
+          "type": "data",
+          "direction": "output",
+          "notes": "Playlist ID"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113
+    },
+    {
+      "id": "sp-7",
+      "referenceId": "system_notification",
+      "type": "task",
+      "x": 1130,
+      "y": 260,
+      "customLabel": "Notify User",
+      "notes": "Push/in-app banner: 'Discover Weekly is ready'.",
+      "measuredW": 220,
+      "measuredH": 87
+    },
+    {
+      "id": "sp-8",
+      "referenceId": "tp_mobile",
+      "type": "touchpoint",
+      "x": 1130,
+      "y": 400,
+      "customLabel": "Spotify App",
+      "notes": "Playlist surfaced as a feature card.",
+      "measuredW": 140,
+      "measuredH": 35,
+      "personaId": "persona-listener"
+    },
+    {
+      "id": "sp-9",
+      "referenceId": "human_select_option",
+      "type": "task",
+      "x": 1384.6044642985312,
+      "y": 360.78377381653036,
+      "customLabel": "Listen / Save / Skip",
+      "notes": "Signals become training data.",
+      "attachments": [
+        {
+          "id": "sp-9-a",
+          "referenceId": "data_log",
+          "type": "data",
+          "direction": "output",
+          "notes": "Plays, skips, saves, follows"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 113,
+      "personaId": "persona-listener"
+    },
+    {
+      "id": "sp-10",
+      "referenceId": "task_adapt",
+      "type": "task",
+      "x": 1654.6044642985312,
+      "y": 360.78377381653036,
+      "customLabel": "Adapt Taste Model",
+      "notes": "Update profile using implicit + explicit feedback.",
+      "measuredW": 220,
+      "measuredH": 87
+    },
+    {
+      "id": "sp-zone-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 280,
+      "y": 210.9841827768014,
+      "width": 543.066783831283,
+      "height": 354.1652021089631,
+      "customLabel": "Recommendation Engine",
+      "notes": "Represent → Retrieve → Rank",
+      "measuredW": 543,
+      "measuredH": 354
+    },
+    {
+      "id": "sp-note-1",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 269.6836555360281,
+      "y": 55.07908611599298,
+      "width": 520,
+      "height": 110,
+      "customLabel": "Spotify \"Discover Weekly\"",
+      "notes": "The product isn’t “a playlist”—it’s an orchestrated loop: scheduled generation + constraints + feedback shaping taste.",
+      "measuredW": 520,
+      "measuredH": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "sp-e1",
+      "source": "sp-1",
+      "target": "sp-2"
+    },
+    {
+      "id": "sp-e2",
+      "source": "sp-2",
+      "target": "sp-3",
+      "sourceX": 556.311072056239,
+      "customY": 383.1388400702988
+    },
+    {
+      "id": "sp-e3",
+      "source": "sp-3",
+      "target": "sp-4",
+      "customX": 563.9015817223199
+    },
+    {
+      "id": "sp-e4",
+      "source": "sp-4",
+      "target": "sp-5",
+      "customY": 380.81195079086115,
+      "targetX": 570.3936731107206
+    },
+    {
+      "id": "sp-e5",
+      "source": "sp-5",
+      "target": "sp-6"
+    },
+    {
+      "id": "sp-e6",
+      "source": "sp-6",
+      "target": "sp-7",
+      "customX": 1097.0421904748234
+    },
+    {
+      "id": "sp-e7",
+      "source": "sp-7",
+      "target": "sp-8",
+      "customY": 372.16449997846775
+    },
+    {
+      "id": "sp-e8",
+      "source": "sp-8",
+      "target": "sp-9"
+    },
+    {
+      "id": "sp-e9",
+      "source": "sp-9",
+      "target": "sp-10"
+    },
+    {
+      "id": "sp-e10",
+      "source": "sp-10",
+      "target": "sp-3",
+      "label": "Taste loop",
+      "customY": 563.2794376098418
+    }
+  ],
+  "personas": [
+    {
+      "id": "persona-listener",
+      "name": "Listener",
+      "role": "Music discovery & preference signals",
+      "color": "#3B82F6",
+      "initials": "L",
+      "category": "human"
+    }
+  ]
+}

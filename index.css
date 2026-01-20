@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #F9F9F7;
+  --surface: #FFFFFF;
+  --text-main: #111111;
+  --text-muted: #6E6E6E;
+  --border: #E6E6E6;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+}
+
+#root {
+  height: 100%;
+}
+
+.font-instrument {
+  font-family: 'Instrument Serif', serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+/* Global cursor rules */
+button, a {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}

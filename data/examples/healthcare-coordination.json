@@ -1,0 +1,1277 @@
+{
+  "nodes": [
+    {
+      "id": "note-intro",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": -91.0228254309779,
+      "y": -240.24080814662122,
+      "width": 520,
+      "height": 130,
+      "customLabel": "Healthcare Coordination System",
+      "notes": "This comprehensive example demonstrates ALL canvas features: multiple node types, zones with semantic types, edge customization, attachments, personas, and complex workflows. Use this as a playground to test every feature!",
+      "measuredW": 520,
+      "measuredH": 130
+    },
+    {
+      "id": "tp-mobile",
+      "referenceId": "tp_mobile",
+      "type": "touchpoint",
+      "x": -71.9363403205547,
+      "y": 2.93771670540103,
+      "customLabel": "Patient Mobile App",
+      "notes": "iOS/Android app for symptom logging, appointments, and messaging",
+      "measuredW": 140,
+      "measuredH": 40,
+      "designerDescription": "Primary patient touchpoint for daily health management"
+    },
+    {
+      "id": "tp-web",
+      "referenceId": "tp_web",
+      "type": "touchpoint",
+      "x": -72.31352993825065,
+      "y": 84.33523620418634,
+      "customLabel": "Web Patient Portal",
+      "notes": "Desktop interface for medical records and communication",
+      "measuredW": 140,
+      "measuredH": 40,
+      "designerDescription": "Full-featured portal for comprehensive health management"
+    },
+    {
+      "id": "tp-phone",
+      "referenceId": "tp_phone",
+      "type": "touchpoint",
+      "x": -71.68061854584559,
+      "y": 161.42384379912306,
+      "customLabel": "Phone Hotline (24/7)",
+      "notes": "Voice-based triage and emergency support",
+      "measuredW": 140,
+      "measuredH": 40,
+      "designerDescription": "Always-available voice support for urgent needs"
+    },
+    {
+      "id": "tp-wearable",
+      "referenceId": "tp_embedded",
+      "type": "touchpoint",
+      "x": -64.5071145226419,
+      "y": 321.30018293886167,
+      "customLabel": "Wearable Device Integration",
+      "notes": "Apple Watch, Fitbit, continuous monitoring devices",
+      "measuredW": 140,
+      "measuredH": 40,
+      "designerDescription": "Passive health data collection from patient devices"
+    },
+    {
+      "id": "actor-patient",
+      "referenceId": "actor_end_user",
+      "type": "actor",
+      "x": -544.5222318373047,
+      "y": 122.71483268057949,
+      "customLabel": "Patient",
+      "notes": "Primary user seeking healthcare services",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-patient"
+    },
+    {
+      "id": "actor-doctor",
+      "referenceId": "actor_expert",
+      "type": "actor",
+      "x": 1868.109439585581,
+      "y": -72.41933393964726,
+      "customLabel": "Physician",
+      "notes": "Licensed doctor providing clinical care",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-clinician"
+    },
+    {
+      "id": "actor-nurse",
+      "referenceId": "actor_operator",
+      "type": "actor",
+      "x": 798.3037773864735,
+      "y": 34.47074378077713,
+      "customLabel": "Nurse Practitioner",
+      "notes": "Triage, care coordination, patient education",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-clinician"
+    },
+    {
+      "id": "actor-admin",
+      "referenceId": "actor_administrator",
+      "type": "actor",
+      "x": 2879.734675880628,
+      "y": -554.954448373568,
+      "customLabel": "Admin Staff",
+      "notes": "Scheduling, billing, insurance verification",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-admin"
+    },
+    {
+      "id": "human-intake",
+      "referenceId": "human_type_input",
+      "type": "task",
+      "x": 199.8642774494168,
+      "y": 56.67448478593995,
+      "customLabel": "Log Symptoms & Concerns",
+      "notes": "Patient describes symptoms, pain level, duration, and medical history context",
+      "attachments": [
+        {
+          "id": "att-intake-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Free-form symptom description"
+        },
+        {
+          "id": "att-intake-2",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Structured intake form (pain scale, duration, etc.)"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 124,
+      "personaId": "persona-patient"
+    },
+    {
+      "id": "system-collect-vitals",
+      "referenceId": "system_fetch_api",
+      "type": "task",
+      "x": 202.33008596973835,
+      "y": 245.3672149691652,
+      "customLabel": "Collect Vital Signs from Wearables",
+      "notes": "Automatically pull heart rate, blood pressure, sleep data, activity levels from connected devices",
+      "attachments": [
+        {
+          "id": "att-vitals-1",
+          "referenceId": "data_time_series",
+          "type": "data",
+          "direction": "output",
+          "notes": "Continuous vital sign data (HR, BP, SpO2)"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 110
+    },
+    {
+      "id": "ai-triage",
+      "referenceId": "task_classify",
+      "type": "task",
+      "x": 631.2538314877227,
+      "y": 123.39227223524486,
+      "customLabel": "AI-Powered Symptom Triage",
+      "capability": "Zero-Shot Classification",
+      "notes": "Classify urgency: Emergency (call 911), Urgent (same-day), Routine (schedule appointment)",
+      "attachments": [
+        {
+          "id": "att-triage-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Patient symptom description"
+        },
+        {
+          "id": "att-triage-2",
+          "referenceId": "data_time_series",
+          "type": "data",
+          "direction": "input",
+          "notes": "Recent vital signs"
+        },
+        {
+          "id": "att-triage-3",
+          "referenceId": "data_classification",
+          "type": "data",
+          "direction": "output",
+          "notes": "Urgency level + confidence score"
+        },
+        {
+          "id": "att-triage-4",
+          "referenceId": "const_confidence",
+          "type": "constraint",
+          "notes": "If confidence < 0.80, escalate to human nurse immediately"
+        },
+        {
+          "id": "att-triage-5",
+          "referenceId": "const_system_instruction",
+          "type": "constraint",
+          "notes": "Always err on side of caution for chest pain, breathing issues, severe injuries"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 277,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "human-nurse-review",
+      "referenceId": "human_review",
+      "type": "task",
+      "x": 1019.2543289887453,
+      "y": 38.05981540004992,
+      "customLabel": "Nurse Reviews Emergency Cases",
+      "notes": "Human nurse validates AI triage for high-urgency cases, may call patient directly",
+      "attachments": [
+        {
+          "id": "att-nurse-1",
+          "referenceId": "const_human_loop",
+          "type": "constraint",
+          "notes": "All emergency classifications require human confirmation within 5 minutes"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 106,
+      "personaId": "persona-clinician"
+    },
+    {
+      "id": "ai-scheduling",
+      "referenceId": "task_generate",
+      "type": "task",
+      "x": 1070.7797556771939,
+      "y": 210.87933238589878,
+      "customLabel": "Smart Appointment Scheduling",
+      "capability": "Text Generation",
+      "notes": "Suggests 3 appointment slots based on: patient availability, provider schedule, appointment type, travel time",
+      "attachments": [
+        {
+          "id": "att-sched-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Calendar availability, provider specialties"
+        },
+        {
+          "id": "att-sched-2",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Recommended appointment slots with reasoning"
+        },
+        {
+          "id": "att-sched-3",
+          "referenceId": "const_response_time",
+          "type": "constraint",
+          "notes": "Urgent appointments: within 24 hours; Routine: within 2 weeks"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 254,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "system-calendar",
+      "referenceId": "system_save_db",
+      "type": "task",
+      "x": 1476.1581635813127,
+      "y": 42.89000836830171,
+      "customLabel": "Book Appointment in EHR System",
+      "notes": "",
+      "attachments": [
+        {
+          "id": "att-cal-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Confirmation details (time, location, provider)"
+        },
+        {
+          "id": "att-cal-2",
+          "referenceId": "const_data_retention",
+          "type": "constraint",
+          "notes": "Appointment records retained for 7 years per HIPAA"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 173,
+      "designerDescription": "Create appointment in Electronic Health Record, send confirmations, block calendar"
+    },
+    {
+      "id": "system-notify",
+      "referenceId": "system_send_notification",
+      "type": "task",
+      "x": 1494.0810463423747,
+      "y": 367.51506548999083,
+      "customLabel": "Send Multi-Channel Confirmation",
+      "notes": "Deliver confirmation via: SMS, email, push notification, calendar invite",
+      "attachments": [
+        {
+          "id": "att-notify-1",
+          "referenceId": "const_format",
+          "type": "constraint",
+          "notes": "Include: date/time, provider name, location with map, prep instructions"
+        },
+        {
+          "id": "att-notify-2",
+          "referenceId": "const_accessibility",
+          "type": "constraint",
+          "notes": "Messages must be accessible (screen reader compatible, plain language)"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 93
+    },
+    {
+      "id": "tp-clinic",
+      "referenceId": "tp_hardware",
+      "type": "touchpoint",
+      "x": 1922.457985507516,
+      "y": -7.703995676299596,
+      "customLabel": "In-Clinic Appointment",
+      "notes": "Physical visit with healthcare provider",
+      "measuredW": 140,
+      "measuredH": 40,
+      "designerDescription": "Face-to-face clinical consultation"
+    },
+    {
+      "id": "human-consultation",
+      "referenceId": "human_review",
+      "type": "task",
+      "x": 2115.194385531439,
+      "y": -42.42607373215766,
+      "customLabel": "Physician Consultation & Diagnosis",
+      "notes": "Doctor examines patient, reviews history, orders tests, provides diagnosis",
+      "attachments": [
+        {
+          "id": "att-consult-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Patient history, triage notes, vital signs"
+        },
+        {
+          "id": "att-consult-2",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Clinical notes, diagnosis codes (ICD-10), treatment plan"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 173,
+      "personaId": "persona-clinician"
+    },
+    {
+      "id": "ai-documentation",
+      "referenceId": "task_transcribe",
+      "type": "task",
+      "x": 2462.8860908933393,
+      "y": 296.2642560924792,
+      "customLabel": "AI Medical Scribe",
+      "capability": "Automatic Speech Recognition",
+      "notes": "Transcribe doctor-patient conversation, extract structured clinical data, generate visit summary",
+      "attachments": [
+        {
+          "id": "att-scribe-1",
+          "referenceId": "data_audio",
+          "type": "data",
+          "direction": "input",
+          "notes": "Consultation audio recording"
+        },
+        {
+          "id": "att-scribe-2",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Structured clinical note (SOAP format)"
+        },
+        {
+          "id": "att-scribe-3",
+          "referenceId": "const_privacy",
+          "type": "constraint",
+          "notes": "HIPAA-compliant: audio deleted after transcription, encrypted in transit"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 208,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "ai-diagnosis-support",
+      "referenceId": "task_analyze",
+      "type": "task",
+      "x": 2068.049608513471,
+      "y": 230.70634243893326,
+      "customLabel": "Clinical Decision Support",
+      "capability": "Question Answering",
+      "notes": "Suggest differential diagnoses, flag drug interactions, recommend evidence-based treatments",
+      "attachments": [
+        {
+          "id": "att-cds-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Symptoms, patient history, test results"
+        },
+        {
+          "id": "att-cds-2",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Suggested diagnoses with evidence citations"
+        },
+        {
+          "id": "att-cds-3",
+          "referenceId": "const_system_instruction",
+          "type": "constraint",
+          "notes": "Present as suggestions only; final diagnosis always physician's responsibility"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 208,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "human-prescription",
+      "referenceId": "human_approve",
+      "type": "task",
+      "x": 3064.648246830594,
+      "y": -11.486496424946736,
+      "customLabel": "Physician Prescribes Medication",
+      "notes": "Doctor writes prescription based on diagnosis, considers allergies and interactions",
+      "attachments": [
+        {
+          "id": "att-rx-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Electronic prescription (drug, dose, frequency, duration)"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 110,
+      "personaId": "persona-clinician"
+    },
+    {
+      "id": "system-send-rx",
+      "referenceId": "system_send_notification",
+      "type": "task",
+      "x": 3337.5686008128946,
+      "y": -0.8670273983980366,
+      "customLabel": "Send E-Prescription to Pharmacy",
+      "notes": "Transmit prescription via secure network (NCPDP SCRIPT standard)",
+      "attachments": [
+        {
+          "id": "att-send-rx-1",
+          "referenceId": "const_privacy",
+          "type": "constraint",
+          "notes": "Encrypted transmission, audit log required"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 93
+    },
+    {
+      "id": "tp-pharmacy",
+      "referenceId": "tp_hardware",
+      "type": "touchpoint",
+      "x": 3683.4474266713773,
+      "y": 24.099927676698933,
+      "customLabel": "Pharmacy Counter",
+      "notes": "Patient picks up medication at local pharmacy",
+      "measuredW": 140,
+      "measuredH": 40,
+      "designerDescription": "Physical medication pickup location"
+    },
+    {
+      "id": "ai-care-plan",
+      "referenceId": "task_synthesize",
+      "type": "task",
+      "x": 2881.8549591872743,
+      "y": 164.41137231637802,
+      "customLabel": "Generate Personalized Care Plan",
+      "capability": "Summarization",
+      "notes": "Create patient-friendly care instructions: medication schedule, lifestyle changes, follow-up actions",
+      "attachments": [
+        {
+          "id": "att-care-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Diagnosis, prescriptions, doctor's recommendations"
+        },
+        {
+          "id": "att-care-2",
+          "referenceId": "data_document",
+          "type": "data",
+          "direction": "output",
+          "notes": "Plain-language care plan (PDF/markdown)"
+        },
+        {
+          "id": "att-care-3",
+          "referenceId": "const_tone",
+          "type": "constraint",
+          "notes": "Use plain language (8th grade reading level), avoid medical jargon"
+        },
+        {
+          "id": "att-care-4",
+          "referenceId": "const_accessibility",
+          "type": "constraint",
+          "notes": "Available in multiple languages, visual format for low-literacy patients"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 254,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "system-update-ehr",
+      "referenceId": "system_save_db",
+      "type": "task",
+      "x": 3210.154012038419,
+      "y": 380.08421136678703,
+      "customLabel": "Update Electronic Health Record",
+      "notes": "Write back: clinical notes, diagnosis codes, prescriptions, care plan to central EHR",
+      "attachments": [
+        {
+          "id": "att-ehr-1",
+          "referenceId": "const_data_retention",
+          "type": "constraint",
+          "notes": "Medical records retained permanently per federal law"
+        },
+        {
+          "id": "att-ehr-2",
+          "referenceId": "const_privacy",
+          "type": "constraint",
+          "notes": "HIPAA-compliant storage with encryption at rest and in transit"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 130
+    },
+    {
+      "id": "ai-follow-up",
+      "referenceId": "task_generate",
+      "type": "task",
+      "x": 3210.2433761257917,
+      "y": 175.07546639588156,
+      "customLabel": "Automated Follow-Up Reminders",
+      "capability": "Text Generation",
+      "notes": "Schedule and send: medication reminders, appointment booking prompts, symptom check-ins",
+      "attachments": [
+        {
+          "id": "att-follow-1",
+          "referenceId": "data_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Personalized reminder messages"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 156,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "system-analytics",
+      "referenceId": "system_generate_report",
+      "type": "task",
+      "x": 3719.0874541261037,
+      "y": 303.4810812777689,
+      "customLabel": "Generate Clinical Analytics",
+      "notes": "Aggregate anonymized data: patient outcomes, treatment efficacy, resource utilization",
+      "attachments": [
+        {
+          "id": "att-analytics-1",
+          "referenceId": "data_metrics",
+          "type": "data",
+          "direction": "output",
+          "notes": "Dashboards: wait times, readmission rates, patient satisfaction"
+        },
+        {
+          "id": "att-analytics-2",
+          "referenceId": "const_privacy",
+          "type": "constraint",
+          "notes": "De-identified data only for analytics (HIPAA safe harbor method)"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 159
+    },
+    {
+      "id": "human-admin-billing",
+      "referenceId": "human_manage",
+      "type": "task",
+      "x": 2882.8005923365936,
+      "y": -476.95104174262616,
+      "customLabel": "Process Insurance & Billing",
+      "notes": "Admin staff verifies coverage, submits claims, processes payments, handles denials",
+      "attachments": [
+        {
+          "id": "att-billing-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "input",
+          "notes": "Diagnosis codes, procedure codes, patient insurance info"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 110,
+      "personaId": "persona-admin"
+    },
+    {
+      "id": "ai-insurance-verify",
+      "referenceId": "task_verify",
+      "type": "task",
+      "x": 2888.7794605678246,
+      "y": -318.19354910826667,
+      "customLabel": "Automated Eligibility Check",
+      "capability": "Question Answering",
+      "notes": "Query insurance databases in real-time: verify coverage, check deductibles, estimate patient cost",
+      "attachments": [
+        {
+          "id": "att-insurance-1",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "direction": "output",
+          "notes": "Coverage details, estimated out-of-pocket cost"
+        }
+      ],
+      "measuredW": 220,
+      "measuredH": 156,
+      "personaId": "persona-ai-coordinator"
+    },
+    {
+      "id": "data-patient-record",
+      "referenceId": "data_document",
+      "type": "data",
+      "x": -71.66843998581368,
+      "y": 862.6978095286347,
+      "customLabel": "Patient Medical Record",
+      "notes": "Comprehensive EHR: demographics, allergies, medications, conditions, visit history",
+      "measuredW": 160,
+      "measuredH": 48
+    },
+    {
+      "id": "data-knowledge-base",
+      "referenceId": "data_document",
+      "type": "data",
+      "x": -64.3213254293965,
+      "y": 942.0015706541012,
+      "customLabel": "Medical Knowledge Base",
+      "notes": "Clinical guidelines, drug databases, research papers, treatment protocols",
+      "measuredW": 160,
+      "measuredH": 48
+    },
+    {
+      "id": "const-hipaa",
+      "referenceId": "const_privacy",
+      "type": "constraint",
+      "x": -66.56090019731329,
+      "y": 526.5609926603229,
+      "customLabel": "HIPAA Compliance",
+      "notes": "Federal privacy law: patient data security, access controls, breach notification",
+      "measuredW": 180,
+      "measuredH": 40
+    },
+    {
+      "id": "const-response-time",
+      "referenceId": "const_response_time",
+      "type": "constraint",
+      "x": -60.56188169826046,
+      "y": 606.3896284579682,
+      "customLabel": "Response Time SLA",
+      "notes": "Emergency: <5 min; Urgent: <2 hours; Routine: <24 hours",
+      "measuredW": 180,
+      "measuredH": 40
+    },
+    {
+      "id": "const-quality",
+      "referenceId": "const_quality",
+      "type": "constraint",
+      "x": -62.33607524664719,
+      "y": 738.210865017108,
+      "customLabel": "Clinical Quality Standards",
+      "notes": "Evidence-based medicine, HEDIS quality measures, patient safety protocols",
+      "measuredW": 180,
+      "measuredH": 40
+    },
+    {
+      "id": "const-budget",
+      "referenceId": "const_cost",
+      "type": "constraint",
+      "x": -64.41268814987274,
+      "y": 668.4191983504413,
+      "customLabel": "Budget Constraints",
+      "notes": "Cost per patient visit, insurance reimbursement rates, resource allocation",
+      "measuredW": 180,
+      "measuredH": 40
+    },
+    {
+      "id": "zone-intake",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "semanticType": "touchpoint",
+      "x": -97.55199049316693,
+      "y": -20.0248200546041,
+      "width": 552.4473325962529,
+      "height": 426.7865550516332,
+      "customLabel": "Patient Intake & Data Collection",
+      "notes": "Multi-channel patient input: symptoms, vitals, preferences",
+      "color": "bg-cyan-100/50",
+      "measuredW": 552,
+      "measuredH": 426
+    },
+    {
+      "id": "zone-triage",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "semanticType": "task",
+      "x": 602.3964232947549,
+      "y": -0.34561292904252694,
+      "width": 1138.6356451811776,
+      "height": 492.6829585774568,
+      "customLabel": "AI-Assisted Triage & Scheduling",
+      "notes": "Intelligent urgency assessment and appointment coordination",
+      "color": "bg-purple-100/50",
+      "measuredW": 1140,
+      "measuredH": 493
+    },
+    {
+      "id": "zone-clinical",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "semanticType": "task",
+      "x": 1845.3995529820259,
+      "y": -100.88118296051708,
+      "width": 860.9803921568628,
+      "height": 627.2644592646142,
+      "customLabel": "Clinical Care & Decision Support",
+      "notes": "Physician consultation with AI-powered documentation and diagnosis assistance",
+      "color": "bg-blue-100/50",
+      "measuredW": 861,
+      "measuredH": 627
+    },
+    {
+      "id": "zone-fulfillment",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "semanticType": "task",
+      "x": 2834.470057952025,
+      "y": -93.50287090893836,
+      "width": 1207.9486630332804,
+      "height": 624.2878707287717,
+      "customLabel": "Treatment Fulfillment & Follow-Up",
+      "notes": "Prescription delivery, care plan creation, automated patient engagement",
+      "color": "bg-green-100/50",
+      "measuredW": 1208,
+      "measuredH": 624
+    },
+    {
+      "id": "zone-data",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "semanticType": "data",
+      "x": -93.64949080407371,
+      "y": 837.989224975089,
+      "width": 262.4849267872525,
+      "height": 181.34366925064597,
+      "customLabel": "Core Data Assets",
+      "notes": "Patient records and medical knowledge base",
+      "color": "bg-amber-100/50",
+      "measuredW": 263,
+      "measuredH": 181
+    },
+    {
+      "id": "zone-compliance",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "semanticType": "constraint",
+      "x": -93.0005087960514,
+      "y": 461.75772642590005,
+      "width": 251.46047387290008,
+      "height": 338.0428875670117,
+      "customLabel": "Governance & Constraints",
+      "notes": "Privacy, quality, time, and cost requirements",
+      "color": "bg-rose-100/50",
+      "measuredW": 253,
+      "measuredH": 337
+    },
+    {
+      "id": "zone-admin",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "zone",
+      "x": 2840.578370114372,
+      "y": -581.2371009676783,
+      "width": 309.6748619697113,
+      "height": 450.2448718424039,
+      "customLabel": "Administrative Operations",
+      "notes": "Insurance verification and billing processes",
+      "color": "bg-gray-100/50",
+      "measuredW": 310,
+      "measuredH": 450
+    },
+    {
+      "id": "note-ai-role",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 454.45583363112667,
+      "y": -237.33953242018038,
+      "width": 440,
+      "height": 130,
+      "customLabel": "AI Role",
+      "notes": "AI handles: triage classification, appointment scheduling, medical transcription, diagnosis suggestions, care plan generation, follow-up automation, and eligibility verification. All clinical decisions remain with licensed professionals.",
+      "measuredW": 440,
+      "measuredH": 130
+    },
+    {
+      "id": "note-edge-demo",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 923.1371800277092,
+      "y": -235.19182558985295,
+      "width": 440,
+      "height": 130,
+      "customLabel": "Edge Customization Demo",
+      "notes": "Look for edges with custom paths, labels, and attachments throughout the diagram. Some edges have customX/Y for curved paths, and several carry data/constraint attachments showing information flow.",
+      "measuredW": 440,
+      "measuredH": 130
+    },
+    {
+      "id": "note-zones",
+      "referenceId": "zone_group",
+      "type": "annotation",
+      "subType": "note",
+      "x": 1390.8042220546836,
+      "y": -231.2685163779177,
+      "width": 460,
+      "height": 130,
+      "customLabel": "Semantic Zone Types",
+      "notes": "Notice the colored zones with semantic types: Cyan=Touchpoint zones, Purple/Blue=Task zones, Amber=Data zone, Rose=Constraint zone. Click zone sections in the inspector to highlight contained nodes!",
+      "measuredW": 460,
+      "measuredH": 130
+    },
+    {
+      "id": "e2695cf3-ba80-4a3b-bbd2-8ca5ffb8a18d",
+      "referenceId": "sticky_note",
+      "type": "annotation",
+      "x": -2166.8994671937153,
+      "y": -973.9862226234422,
+      "subType": "note",
+      "width": 1163.2990207417693,
+      "height": 3765.4882154882175,
+      "measuredW": 1163,
+      "measuredH": 3766,
+      "notes": "An AI-powered healthcare coordination platform demonstrating patient intake → triage → scheduling → clinical care → prescription fulfillment → follow-up.\n\n  ---\n  ✅ FEATURES DEMONSTRATED\n\n  1. ALL NODE TYPES\n\n  | Type                            | Count   |    Examples\n  |-----------------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------\n  | AI Tasks                      | 10         | Symptom triage, appointment scheduling, medical scribe, diagnosis support, care plan generation, follow-up automation, eligibility verification\n  | Human Tasks              | 5          | Symptom logging, nurse review, physician consultation, prescription writing, insurance processing\n  | System Tasks             | 6          | Vital collection, calendar booking, notifications, EHR updates, analytics generation, pharmacy transmission\n  | Data Nodes                 | 2          | Patient medical record, Medical knowledge base\n  | Constraint Nodes       | 4          | HIPAA compliance, Response time SLAs, Clinical quality standards, Budget constraints\n  | Touchpoint Nodes      | 6         | Mobile app, web portal, phone hotline, wearables, clinic, pharmacy\n  | Actor Nodes                | 4         | Patient, Physician, Nurse, Admin staff\n\n  Total Nodes: 37 task/data/constraint/touchpoint/actor nodes\n\n  ---\n  2. ZONES WITH SEMANTIC TYPES\n\n  | Zone                                      | Semantic Type.    | Purpose                                                      | Color  |\n  |-----------------------------|-------------------|------------------------------------------|--------|\n  | Patient Intake.                       | touchpoint            | Multi-channel data collection                   | Cyan   |\n  | AI-Assisted Triage                | task                       | Intelligent urgency assessment                | Purple |\n  | Clinical Care                          | task                       | Physician consultation + AI support.       | Blue   |\n  | Treatment Fulfillment            | task                       | Prescription & care plan delivery             | Green  |\n  | Core Data Assets                  | data.                      | Patient records + knowledge base          | Amber  |\n  | Governance & Constraints   | constraint              | Privacy, quality, time, cost rules              | Rose   |\n  | Administrative Ops               | none.                     | Billing and insurance                                 | Gray   |\n\n  Total Zones: 7 zones (5 with semantic types)\n\n  Zone Features Demonstrated:\n  - ✅ Zones contain multiple nodes\n  - ✅ Semantic types make zones connectable\n  - ✅ Color coding by function\n  - ✅ Nested node containment\n  - ✅ Zone inspector will show grouped contents\n\n  ---\n  3. ANNOTATIONS\n\n  Sticky Notes: 4 documentation notes\n  - System introduction\n  - AI role explanation\n  - Edge customization guide\n  - Zone semantic types guide\n\n  Use: Double-click to edit, provides context for the system\n\n  ---\n  4. EDGE FEATURES\n\n  Total Edges: 35 connections\n\n  Edge Demonstrations:\n  - ✅ Simple edges: Direct node-to-node connections (most edges)\n  - ✅ Labeled edges: 5 edges with descriptive labels\n    - \"Voice to text\"\n    - \"If urgent/emergency\"\n    - \"If routine\"\n    - \"Conversation audio\"\n    - \"Suggestions\"\n  - ✅ Custom path edges: 15+ edges with customX, customY, sourceX, targetX for curved/adjusted paths\n  - ✅ Edge attachments: 2 edges with data attachments\n    - Urgency classification data\n    - Differential diagnoses data\n\n  ---\n  5. NODE ATTACHMENTS\n\n  Rich Attachment Demonstrations:\n\n  Data Attachments (input/output specifications):\n  - Patient symptom descriptions\n  - Vital sign data\n  - Audio recordings\n  - Transcripts\n  - Embeddings\n  - Care plans\n  - Prescriptions\n  - Clinical notes\n\n  Constraint Attachments (rules and limitations):\n  - Confidence thresholds\n  - Privacy requirements (HIPAA)\n  - Human-in-the-loop requirements\n  - Response time SLAs\n  - Data retention policies\n  - Quality standards\n  - Accessibility requirements\n  - Plain language guidelines\n\n  Example Node with Multiple Attachments: AI Triage task has 5 attachments (2 input data, 1 output data, 2 constraints)\n\n  ---\n  6. AI CAPABILITIES\n\n  Demonstrated AI Capabilities:\n  - ✅ Zero-Shot Classification (symptom triage)\n  - ✅ Text Generation (scheduling, care plans, follow-ups)\n  - ✅ Automatic Speech Recognition (medical scribe)\n  - ✅ Question Answering (diagnosis support, eligibility checks)\n  - ✅ Summarization (care plan generation)\n\n  ---\n  7. PERSONAS\n\n  4 Personas Across Categories:\n\n  | Persona             | Role                   | Color  | Category | Initials |\n  |---------------------|------------------------|--------|----------|----------|\n  | Patient             | Healthcare Consumer    | Blue   | human    | PT       |\n  | Clinician           | Physician/NP           | Green  | human    | MD       |\n  | Admin               | Administrative Staff   | Gray   | human    | AD       |\n  | AI Care Coordinator | Intelligent automation | Purple | ai       | AI       |\n\n  Features:\n  - ✅ Multiple persona assignments to tasks\n  - ✅ Human, AI, and System categories\n  - ✅ Color-coded for visual distinction\n  - ✅ Role descriptions\n\n  ---\n  8. ADVANCED FEATURES\n\n  Designer Descriptions (Experiential View):\n  - Touchpoint nodes have designerDescription fields\n  - Example: \"Primary patient touchpoint for daily health management\"\n  - Used in experiential view mode for UX-focused perspective\n\n  Node Measurements:\n  - All nodes have measuredW and measuredH fields\n  - Ensures consistent rendering\n\n  Custom Labels:\n  - Nearly every node has descriptive customLabel\n  - Provides context beyond reference IDs\n\n  Notes:\n  - Every node includes detailed notes explaining purpose\n  - Rich documentation for learning\n\n  ---\n  🎯 HOW TO USE THIS EXAMPLE\n\n  Loading the Example:\n\n  1. Open the Builder canvas\n  2. Click \"Import\" or file upload\n  3. Select /data/examples/healthcare-coordination.json\n  4. The entire system will load with all nodes, edges, zones, and personas\n\n  Testing Features:\n\n  1. Zone Inspector:\n    - Select any zone → Inspector shows contained nodes grouped by type\n    - Click section headers to highlight node types\n    - Click individual attachments to highlight nodes containing them\n  2. Multi-Select:\n    - Shift+click multiple nodes\n    - Bulk actions bar appears\n    - Test bulk persona assignment, zone creation, bulk delete\n  3. Edge Customization:\n    - Drag edge control points to adjust paths\n    - Notice edges with existing custom paths\n    - Double-click handles to reset\n  4. Node Connections:\n    - Drag from node handles to create new connections\n    - Try connecting zones with semantic types\n    - Test attachment drag-and-drop\n  5. Search:\n    - Open search (Cmd+K)\n    - Search for \"triage\", \"prescription\", etc.\n    - Drag results to canvas\n  6. Personas:\n    - Open persona manager\n    - Assign different personas to tasks\n    - Notice color-coded badges\n  7. View Modes:\n    - Toggle between Default and Experiential view\n    - Notice touchpoint emphasis in Experiential mode\n    - Designer descriptions appear\n  8. History:\n    - Make changes\n    - Test Undo (Cmd+Z) / Redo (Cmd+Shift+Z)\n  9. Copy/Paste:\n    - Select nodes\n    - Copy (Cmd+C) / Paste (Cmd+V)\n    - Notice 20px offset\n  10. Alt+Drag Duplication:\n    - Select zone with nodes\n    - Alt+drag to duplicate with contents\n\n  ---\n  📊 STATISTICS\n\n  - Total Nodes: 49 (37 functional + 7 zones + 5 annotations)\n  - Total Edges: 35 (with labels, custom paths, attachments)\n  - Total Personas: 4 (human, ai categories)\n  - Total Zones: 7 (5 with semantic types)\n  - Total Sticky Notes: 4\n  - Node Types Represented: 7/7 (100% coverage)\n  - Features Demonstrated: ~25 major features\n\n  ---\n  🔍 KEY LEARNING AREAS\n\n  For Developers:\n  - System architecture patterns\n  - AI/Human/System task distribution\n  - Data flow through clinical workflows\n  - Constraint enforcement points\n\n  For Designers:\n  - Patient journey mapping\n  - Touchpoint identification\n  - User interaction patterns\n  - Service design visualization\n\n  For Product Managers:\n  - Feature dependencies\n  - Automation opportunities\n  - Compliance requirements\n  - Process optimization\n\n  ---\n  This example is your comprehensive playground to test every canvas feature before building your own systems! 🚀",
+      "customLabel": "System Overview"
+    },
+    {
+      "id": "b735cd1f-65ff-4846-a259-eb8d7d038c74",
+      "referenceId": "actor_end_user",
+      "type": "actor",
+      "x": 3863.518457188764,
+      "y": -39.451869642380686,
+      "customLabel": "Patient",
+      "notes": "Primary user seeking healthcare services",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-patient"
+    },
+    {
+      "id": "b97e067f-a627-4c43-af55-1bd97299a2c2",
+      "referenceId": "actor_expert",
+      "type": "actor",
+      "x": 2865.79198421402,
+      "y": -64.75202200525557,
+      "customLabel": "Physician",
+      "notes": "Licensed doctor providing clinical care",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-clinician"
+    },
+    {
+      "id": "6f1d8a33-7ac1-40fd-80d6-02487e7fb239",
+      "referenceId": "actor_administrator",
+      "type": "actor",
+      "x": 1270.4830880844738,
+      "y": 37.99678398152614,
+      "customLabel": "Admin Staff",
+      "notes": "Scheduling, billing, insurance verification",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-admin"
+    },
+    {
+      "id": "1712822b-a4a4-4fc2-8cc1-dab340a64845",
+      "referenceId": "actor_operator",
+      "type": "actor",
+      "x": 1.779799490305379,
+      "y": 242.00856948059533,
+      "customLabel": "Nurse Practitioner",
+      "notes": "Triage, care coordination, patient education",
+      "measuredW": 140,
+      "measuredH": 40,
+      "personaId": "persona-clinician"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-mobile-intake",
+      "source": "tp-mobile",
+      "target": "human-intake"
+    },
+    {
+      "id": "edge-web-intake",
+      "source": "tp-web",
+      "target": "human-intake"
+    },
+    {
+      "id": "edge-phone-intake",
+      "source": "tp-phone",
+      "target": "human-intake",
+      "label": "Voice to text",
+      "customY": 94.56922162804521
+    },
+    {
+      "id": "edge-wearable-vitals",
+      "source": "tp-wearable",
+      "target": "system-collect-vitals",
+      "customY": 267.44800950683316
+    },
+    {
+      "id": "edge-intake-triage",
+      "source": "human-intake",
+      "target": "ai-triage"
+    },
+    {
+      "id": "edge-vitals-triage",
+      "source": "system-collect-vitals",
+      "target": "ai-triage",
+      "customY": 260
+    },
+    {
+      "id": "edge-triage-emergency",
+      "source": "ai-triage",
+      "target": "human-nurse-review",
+      "label": "If urgent/emergency",
+      "attachments": [
+        {
+          "id": "edge-att-1",
+          "referenceId": "data_classification",
+          "type": "data",
+          "notes": "Urgency classification"
+        }
+      ]
+    },
+    {
+      "id": "edge-triage-schedule",
+      "source": "ai-triage",
+      "target": "ai-scheduling",
+      "label": "If routine",
+      "customY": 240
+    },
+    {
+      "id": "edge-nurse-schedule",
+      "source": "human-nurse-review",
+      "target": "ai-scheduling",
+      "customY": 180,
+      "sourceX": 1281.5655080331717,
+      "targetX": 1036.7088256639888
+    },
+    {
+      "id": "edge-schedule-calendar",
+      "source": "ai-scheduling",
+      "target": "system-calendar",
+      "customX": 1406.2773710607198
+    },
+    {
+      "id": "edge-calendar-notify",
+      "source": "system-calendar",
+      "target": "system-notify",
+      "customY": 300.4961568559248,
+      "targetX": 1469.8891395870598,
+      "sourceX": 1725.1502920714172
+    },
+    {
+      "id": "edge-notify-clinic",
+      "source": "system-notify",
+      "target": "tp-clinic",
+      "customY": 340,
+      "targetX": 1615.5560247232022,
+      "customX": 1781.551312600672
+    },
+    {
+      "id": "edge-clinic-consult",
+      "source": "tp-clinic",
+      "target": "human-consultation",
+      "customY": -2.3235294117646923,
+      "targetX": 2081.6649737667326,
+      "customX": 2086.9305924002488
+    },
+    {
+      "id": "edge-consult-scribe",
+      "source": "human-consultation",
+      "target": "ai-documentation",
+      "label": "Conversation audio",
+      "customX": 2434.3052079940344
+    },
+    {
+      "id": "edge-consult-cds",
+      "source": "human-consultation",
+      "target": "ai-diagnosis-support",
+      "customY": 457.5838077166351,
+      "customX": 2306.2963633190643,
+      "targetX": 2033.3649696104349,
+      "sourceX": 2360.141910310845
+    },
+    {
+      "id": "edge-cds-consult",
+      "source": "ai-diagnosis-support",
+      "target": "human-consultation",
+      "label": "Suggestions",
+      "customY": 178.3018495030239,
+      "sourceX": 2320.5634154692193,
+      "targetX": 2082.139404444864,
+      "attachments": [
+        {
+          "id": "edge-att-2",
+          "referenceId": "data_structured_text",
+          "type": "data",
+          "notes": "Differential diagnoses"
+        }
+      ]
+    },
+    {
+      "id": "edge-consult-rx",
+      "source": "human-consultation",
+      "target": "human-prescription",
+      "customX": 2791.5003706789767
+    },
+    {
+      "id": "edge-rx-send",
+      "source": "human-prescription",
+      "target": "system-send-rx"
+    },
+    {
+      "id": "edge-send-pharmacy",
+      "source": "system-send-rx",
+      "target": "tp-pharmacy"
+    },
+    {
+      "id": "edge-consult-careplan",
+      "source": "human-consultation",
+      "target": "ai-care-plan",
+      "customY": 330,
+      "customX": 2769.791110138131
+    },
+    {
+      "id": "edge-careplan-ehr",
+      "source": "ai-care-plan",
+      "target": "system-update-ehr"
+    },
+    {
+      "id": "edge-scribe-ehr",
+      "source": "ai-documentation",
+      "target": "system-update-ehr",
+      "customY": 220,
+      "targetX": 2760.8937524853336,
+      "customX": 2780.095832108762
+    },
+    {
+      "id": "edge-careplan-followup",
+      "source": "ai-care-plan",
+      "target": "ai-follow-up",
+      "customY": 694.4759595613028
+    },
+    {
+      "id": "edge-ehr-analytics",
+      "source": "system-update-ehr",
+      "target": "system-analytics",
+      "customY": 919.5585149225772,
+      "targetX": 3843.508610502222
+    },
+    {
+      "id": "edge-consult-billing",
+      "source": "human-consultation",
+      "target": "human-admin-billing",
+      "customY": 434.578313253012,
+      "targetX": 2660.459955448563,
+      "sourceX": 2359.4634092030833,
+      "customX": 2560.183562192735
+    },
+    {
+      "id": "edge-billing-insurance",
+      "source": "human-admin-billing",
+      "target": "ai-insurance-verify",
+      "customY": -344.55908806996536,
+      "targetX": 2856.26091947263,
+      "sourceX": 3128.486866846398
+    },
+    {
+      "id": "edge-record-triage",
+      "source": "data-patient-record",
+      "target": "ai-triage",
+      "customY": 639.1358024691356,
+      "sourceX": 1329.7588285960376,
+      "targetX": 588.8574081929677,
+      "customX": 577.436453784451
+    },
+    {
+      "id": "edge-record-consult",
+      "source": "data-patient-record",
+      "target": "human-consultation",
+      "customY": 600,
+      "sourceX": 1246.4254952627043,
+      "customX": 1927.2631990830766
+    },
+    {
+      "id": "edge-kb-cds",
+      "source": "data-knowledge-base",
+      "target": "ai-diagnosis-support",
+      "customY": 640,
+      "customX": 1996.2901778460305
+    },
+    {
+      "id": "edge-hipaa-intake",
+      "source": "const-hipaa",
+      "target": "human-intake",
+      "customY": 580,
+      "targetX": 178.2956499984364,
+      "customX": 178.43204173308425
+    },
+    {
+      "id": "edge-hipaa-ehr",
+      "source": "const-hipaa",
+      "target": "system-update-ehr",
+      "customY": 620,
+      "sourceX": 102.02487300753201,
+      "targetX": 2780.8937524853336,
+      "customX": 2774.959533642356
+    },
+    {
+      "id": "edge-sla-triage",
+      "source": "const-response-time",
+      "target": "ai-triage",
+      "customY": 540,
+      "targetX": 608.8574081929677,
+      "customX": 559.188217484987
+    },
+    {
+      "id": "edge-quality-cds",
+      "source": "const-quality",
+      "target": "ai-diagnosis-support",
+      "customY": 640,
+      "targetX": 1801.1476477291571,
+      "customX": 1966.4902732470189
+    },
+    {
+      "id": "edge-budget-scheduling",
+      "source": "const-budget",
+      "target": "ai-scheduling",
+      "customY": 717.2916666666665,
+      "targetX": 995.2583323824391,
+      "customX": 940.698426726019
+    },
+    {
+      "id": "63342af1-911f-48f4-9d90-d25747c31df5",
+      "source": "actor-patient",
+      "target": "tp-mobile",
+      "customX": -357.9751968846467
+    },
+    {
+      "id": "a191f027-9d68-4b5d-a745-dae19b3543e1",
+      "source": "actor-patient",
+      "target": "tp-web"
+    },
+    {
+      "id": "31876da4-e5aa-48ab-b2f8-429bfed10f90",
+      "source": "actor-patient",
+      "target": "tp-phone"
+    },
+    {
+      "id": "26f4ef07-5252-4db5-b9f7-7b902b36c755",
+      "source": "actor-patient",
+      "target": "tp-wearable",
+      "customX": -369.67379912990987
+    },
+    {
+      "id": "65d4fca5-ff3f-410a-be68-c2fb46a9ae6f",
+      "source": "actor-doctor",
+      "target": "tp-clinic",
+      "customX": 1826.934407878928,
+      "customY": -23.21768172112556,
+      "targetX": 1894.8898559784843
+    },
+    {
+      "id": "f0b4241c-6859-46b0-a712-e59642e18040",
+      "source": "actor-admin",
+      "target": "human-admin-billing",
+      "customY": -497.694192073007,
+      "targetX": 2853.4392358103787,
+      "sourceX": 3037.1104307477576
+    },
+    {
+      "id": "d2e3d152-106a-4708-969b-67b7bf5ee79d",
+      "source": "b97e067f-a627-4c43-af55-1bd97299a2c2",
+      "target": "human-prescription"
+    },
+    {
+      "id": "6c57b90e-af63-4db0-a3e2-bfef00435330",
+      "source": "6f1d8a33-7ac1-40fd-80d6-02487e7fb239",
+      "target": "system-calendar",
+      "customX": 1440.2108718060679
+    },
+    {
+      "id": "11cea990-0da7-49e5-855b-216ad4752212",
+      "source": "actor-nurse",
+      "target": "human-nurse-review"
+    },
+    {
+      "id": "43586e44-c150-4597-b847-d63550c8db16",
+      "source": "tp-pharmacy",
+      "target": "b735cd1f-65ff-4846-a259-eb8d7d038c74"
+    },
+    {
+      "id": "81fe4eb6-9660-4f54-a192-7a278e22ae61",
+      "source": "tp-phone",
+      "target": "1712822b-a4a4-4fc2-8cc1-dab340a64845",
+      "customY": 219.45631605229744,
+      "targetX": -35.87928126143036,
+      "sourceX": 95.83679926358704
+    }
+  ],
+  "personas": [
+    {
+      "id": "persona-patient",
+      "name": "Patient",
+      "role": "Healthcare Consumer",
+      "color": "#3B82F6",
+      "initials": "PT",
+      "category": "human"
+    },
+    {
+      "id": "persona-clinician",
+      "name": "Clinician",
+      "role": "Physician / Nurse Practitioner",
+      "color": "#10B981",
+      "initials": "MD",
+      "category": "human"
+    },
+    {
+      "id": "persona-admin",
+      "name": "Admin",
+      "role": "Administrative Staff",
+      "color": "#6B7280",
+      "initials": "AD",
+      "category": "human"
+    },
+    {
+      "id": "persona-ai-coordinator",
+      "name": "AI Care Coordinator",
+      "role": "Intelligent automation layer handling triage, scheduling, documentation, decision support",
+      "color": "#8B5CF6",
+      "initials": "AI",
+      "category": "ai"
+    }
+  ]
+}
