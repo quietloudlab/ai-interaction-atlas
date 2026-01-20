@@ -1,5 +1,9 @@
 # AI Interaction Atlas
 
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Live Demo](https://img.shields.io/badge/demo-live-green.svg)](https://ai-interaction.com)
+[![GitHub](https://img.shields.io/github/stars/quietloudlab/ai-interaction-atlas?style=social)](https://github.com/quietloudlab/ai-interaction-atlas)
+
 A shared language for designing AI experiences across human actions, AI tasks, system operations, data, constraints, and touchpoints.
 
 ## What is the Atlas?
@@ -32,12 +36,26 @@ The Atlas organizes AI interactions into six core dimensions:
 
 ## Getting Started
 
+### Prerequisites
+
+- **Node.js**: 18.x or higher
+- **npm**: 9.x or higher (or yarn/pnpm)
+
 ### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/quietloudlab/ai-interaction-atlas.git
+cd ai-interaction-atlas
+
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
 ```
+
+Visit `http://localhost:5173` to view the Atlas locally.
 
 ### Building for Production
 

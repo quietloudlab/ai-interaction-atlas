@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions & Discussions
+    url: https://github.com/quietloudlab/ai-interaction-atlas/discussions
+    about: Ask questions or discuss ideas with the community
+  - name: Email Contact
+    url: mailto:brandon@quietloudlab.com
+    about: Reach out directly for other inquiries

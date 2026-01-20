@@ -1,0 +1,10 @@
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow crawling of environment files
+Disallow: /.env
+Disallow: /node_modules/
+
+# Sitemap location (will be available once generated)
+Sitemap: https://ai-interaction.com/sitemap.xml
