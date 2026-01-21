@@ -9,6 +9,7 @@ import {
   Sliders,
   Smartphone
 } from 'lucide-react';
+import { HeroSearchWidget } from './HeroSearchWidget';
 
 const SectionHeader = ({ number, title }: { number: string; title: string }) => (
   <div className="flex flex-col md:flex-row items-baseline border-t border-black pt-6 pb-12 mb-8">
@@ -25,27 +26,34 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
   return (
     <div className="bg-white text-black selection:bg-black selection:text-white">
       {/* Hero Section - Above the Fold */}
-      <section className="min-h-[50vh] flex flex-col justify-center px-4 md:px-8 max-w-screen-2xl mx-auto pt-20">
-        <div className="max-w-6xl">
-          <h1 className="text-5xl md:text-7xl lg:text-9xl font-sans tracking-tighter leading-[0.95] font-medium mb-12">
-            The Atlas of AI<br />Interaction<br />Design
-          </h1>
+      <section className="min-h-[60vh] flex flex-col justify-center px-4 md:px-8 max-w-screen-2xl mx-auto pt-20 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Left: Hero Text */}
+          <div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans tracking-tighter leading-[0.95] font-medium mb-8">
+              The Atlas of AI<br />Interaction<br />Design
+            </h1>
 
-          {/* Glass card with description */}
-          <div className="max-w-2xl">
-            <p className="text-xl md:text-2xl font-sans font-light text-gray-700 leading-snug mb-6">
-              A shared language for designing AI experiences across human actions, AI tasks,
-              system operations, data, constraints, and touchpoints.
-            </p>
+            <div className="max-w-xl">
+              <p className="text-xl md:text-2xl font-sans font-light text-gray-700 leading-snug mb-8">
+                A shared language for designing AI experiences across human actions, AI tasks,
+                system operations, data, constraints, and touchpoints.
+              </p>
+            </div>
+
+            <div>
+              <button
+                onClick={() => onNavigate('atlas')}
+                className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg"
+              >
+                View the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
           </div>
 
-          <div>
-            <button
-              onClick={() => onNavigate('atlas')}
-              className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg"
-            >
-              View the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+          {/* Right: Search Widget */}
+          <div className="lg:pt-8">
+            <HeroSearchWidget onTaskClick={(taskId) => onNavigate(`atlas/task/${taskId}`)} />
           </div>
         </div>
       </section>

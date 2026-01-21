@@ -18,8 +18,16 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          <button onClick={() => onNavigate('atlas')} className="cursor-pointer text-sm font-medium text-[#6E6E6E] hover:text-black transition-colors">Browse Atlas</button>
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          <button onClick={() => onNavigate('atlas')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">Overview</button>
+          <span className="text-gray-300">|</span>
+          <button onClick={() => onNavigate('atlas/ai')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">AI Patterns</button>
+          <button onClick={() => onNavigate('atlas/human')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">Human Actions</button>
+          <button onClick={() => onNavigate('atlas/system')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">System Ops</button>
+          <span className="text-gray-300">|</span>
+          <button onClick={() => onNavigate('atlas/data')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">Data</button>
+          <button onClick={() => onNavigate('atlas/constraints')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">Constraints</button>
+          <button onClick={() => onNavigate('atlas/touchpoints')} className="cursor-pointer font-medium text-[#6E6E6E] hover:text-black transition-colors">Touchpoints</button>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -30,8 +38,16 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
 
       {/* Mobile Nav */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#F9F9F7] border-b border-[#E6E6E6] p-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top-2">
-          <button onClick={() => { onNavigate('atlas'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium">Browse Atlas</button>
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#F9F9F7] border-b border-[#E6E6E6] p-4 flex flex-col gap-2 shadow-lg animate-in slide-in-from-top-2">
+          <button onClick={() => { onNavigate('atlas'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium text-[#111111]">Overview</button>
+          <div className="h-px bg-[#E6E6E6] my-2"></div>
+          <button onClick={() => { onNavigate('atlas/ai'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 text-sm text-[#6E6E6E]">AI Patterns</button>
+          <button onClick={() => { onNavigate('atlas/human'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 text-sm text-[#6E6E6E]">Human Actions</button>
+          <button onClick={() => { onNavigate('atlas/system'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 text-sm text-[#6E6E6E]">System Ops</button>
+          <div className="h-px bg-[#E6E6E6] my-2"></div>
+          <button onClick={() => { onNavigate('atlas/data'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 text-sm text-[#6E6E6E]">Data Types</button>
+          <button onClick={() => { onNavigate('atlas/constraints'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 text-sm text-[#6E6E6E]">Constraints</button>
+          <button onClick={() => { onNavigate('atlas/touchpoints'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 text-sm text-[#6E6E6E]">Touchpoints</button>
         </div>
       )}
     </header>
@@ -70,9 +86,20 @@ const SiteFooter = ({ onNavigate }: any) => (
         </div>
         </div>
         <div>
+          <h4 className="font-bold text-[#111111] mb-4">Atlas</h4>
+          <ul className="space-y-2 text-sm text-[#6E6E6E]">
+            <li><button onClick={() => onNavigate('atlas')} className="cursor-pointer hover:text-black">Overview</button></li>
+            <li><button onClick={() => onNavigate('atlas/ai')} className="cursor-pointer hover:text-black">AI Patterns</button></li>
+            <li><button onClick={() => onNavigate('atlas/human')} className="cursor-pointer hover:text-black">Human Actions</button></li>
+            <li><button onClick={() => onNavigate('atlas/system')} className="cursor-pointer hover:text-black">System Ops</button></li>
+            <li><button onClick={() => onNavigate('atlas/data')} className="cursor-pointer hover:text-black">Data Types</button></li>
+            <li><button onClick={() => onNavigate('atlas/constraints')} className="cursor-pointer hover:text-black">Constraints</button></li>
+            <li><button onClick={() => onNavigate('atlas/touchpoints')} className="cursor-pointer hover:text-black">Touchpoints</button></li>
+          </ul>
+        </div>
+        <div>
           <h4 className="font-bold text-[#111111] mb-4">Resources</h4>
           <ul className="space-y-2 text-sm text-[#6E6E6E]">
-            <li><button onClick={() => onNavigate('atlas')} className="cursor-pointer hover:text-black">Browse Atlas</button></li>
             <li><a href="https://github.com/quietloudlab/ai-interaction-atlas" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:text-black">GitHub</a></li>
           </ul>
         </div>
