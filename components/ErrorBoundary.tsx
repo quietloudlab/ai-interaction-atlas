@@ -1,5 +1,4 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { trackErrorOccurred } from '../lib/posthog';
 
 interface Props {
   children: ReactNode;
@@ -46,13 +45,6 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({
       errorInfo,
     });
-
-    // Track error in analytics
-    trackErrorOccurred(
-      'React Error Boundary',
-      error.message,
-      errorInfo.componentStack?.split('\n')[0] || 'Unknown component'
-    );
   }
 
   handleReset = (): void => {

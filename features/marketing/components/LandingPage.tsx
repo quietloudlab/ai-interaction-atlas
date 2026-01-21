@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ArrowRight,
   BrainCircuit,
@@ -10,6 +10,7 @@ import {
   Smartphone
 } from 'lucide-react';
 import { HeroSearchWidget } from './HeroSearchWidget';
+import diagramExample from '../../../src/img/diagram_example.png';
 
 const SectionHeader = ({ number, title }: { number: string; title: string }) => (
   <div className="flex flex-col md:flex-row items-baseline border-t border-black pt-6 pb-12 mb-8">
@@ -23,10 +24,46 @@ const SectionHeader = ({ number, title }: { number: string; title: string }) => 
 );
 
 export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://submit-form.com/wD0F0mjLN', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+        form.reset();
+        // Reset status after 5 seconds
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        setFormStatus('error');
+        setTimeout(() => setFormStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus('idle'), 5000);
+    }
+  };
+
   return (
     <div className="bg-white text-black selection:bg-black selection:text-white">
       {/* Hero Section - Above the Fold */}
-      <section className="min-h-[60vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 pb-12 w-full">
+      <section className="min-h-[40vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 pb-12 w-full relative">
+        {/* Subtle top light */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/5 to-transparent" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start w-full">
           {/* Left: Hero Text */}
           <div className="min-w-0">
@@ -34,17 +71,17 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               The Atlas of AI<br />Interaction<br />Design
             </h1>
 
-            <div className="max-w-xl">
+            <div className="max-w-xxl">
               <p className="text-xl md:text-2xl font-sans font-light text-gray-700 leading-snug mb-8">
-                A shared language for designing AI experiences across human actions, AI tasks,
-                system operations, data, constraints, and touchpoints.
+              A shared language for designing human-AI interaction systems.
               </p>
             </div>
 
             <div>
               <button
                 onClick={() => onNavigate('atlas')}
-                className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg"
+                className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px"
+                style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
               >
                 View the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -70,7 +107,9 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* The Problem */}
-      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto">
+      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
+        {/* Subtle shadow transition from above */}
+        <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none" />
         <SectionHeader number="01" title="The Problem" />
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
@@ -117,7 +156,9 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* Six System Dimensions */}
-      <section className="py-20 md:py-32 bg-black text-white">
+      <section className="py-20 md:py-32 bg-black text-white relative">
+        {/* Subtle top light gradient on dark section */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
           <div className="flex flex-col md:flex-row justify-between items-start mb-20 border-b border-white/20 pb-12">
             <div>
@@ -134,56 +175,60 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-white/20 group/list">
-            {/* AI Tasks */}
+            {/* AI Patterns */}
             <button
-              onClick={() => onNavigate('atlas')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              onClick={() => onNavigate('atlas/ai')}
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
                 <BrainCircuit className="w-8 h-8 mb-4" style={{ color: '#8B22F1' }} />
-                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">AI Tasks</h3>
+                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">AI Patterns</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Probabilistic capabilities: detect, classify, transform, generate. Tools, not intelligence.
                 </p>
               </div>
             </button>
 
-            {/* Human Tasks */}
+            {/* Human Actions */}
             <button
-              onClick={() => onNavigate('atlas')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              onClick={() => onNavigate('atlas/human')}
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
                 <UserCircle className="w-8 h-8 mb-4" style={{ color: '#2B5CF3' }} />
-                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Human Tasks</h3>
+                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Human Actions</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Where agency lives: review, decide, configure, approve. People control what matters.
                 </p>
               </div>
             </button>
 
-            {/* System Tasks */}
+            {/* System Operations */}
             <button
-              onClick={() => onNavigate('atlas')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              onClick={() => onNavigate('atlas/system')}
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
                 <Settings className="w-8 h-8 mb-4" style={{ color: '#4C5564' }} />
-                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">System Tasks</h3>
+                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">System Operations</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Deterministic operations: routing, caching, logging. Infrastructure that shapes reliability.
                 </p>
               </div>
             </button>
 
-            {/* Data Artifacts */}
+            {/* Data Modalities */}
             <button
-              onClick={() => onNavigate('atlas')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              onClick={() => onNavigate('atlas/data')}
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
                 <Database className="w-8 h-8 mb-4" style={{ color: '#D37709' }} />
-                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Data Artifacts</h3>
+                <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Data Modalities</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   What flows through: inputs, outputs, context. The raw material AI transforms.
                 </p>
@@ -192,8 +237,9 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
             {/* Constraints */}
             <button
-              onClick={() => onNavigate('atlas')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              onClick={() => onNavigate('atlas/constraints')}
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
                 <Sliders className="w-8 h-8 mb-4" style={{ color: '#D91A45' }} />
@@ -206,8 +252,9 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
             {/* Touchpoints */}
             <button
-              onClick={() => onNavigate('atlas')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              onClick={() => onNavigate('atlas/touchpoints')}
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
                 <Smartphone className="w-8 h-8 mb-4" style={{ color: '#3090B5' }} />
@@ -227,19 +274,20 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* From Vocabulary to Practice */}
-      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto">
+      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
+        {/* Subtle shadow transition from above */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/[0.02] to-transparent pointer-events-none" />
         <SectionHeader number="03" title="From vocabulary to practice" />
 
         <div className="border-t border-black pt-12 mb-16">
           <p className="text-2xl md:text-3xl font-sans font-light text-gray-700 leading-snug mb-8 max-w-4xl">
-            The Atlas is the foundation. It's how <a href="https://quietloudlab.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-black">quietloudlab</a> approaches
-            AI product design—translating abstract capabilities into concrete systems, surfacing
+            The Atlas is how <a href="https://quietloudlab.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-black">quietloudlab</a> approaches
+            AI product design, translating abstract capabilities into concrete systems, surfacing
             tradeoffs early, and making responsibility explicit.
           </p>
           <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
             Using the Atlas is free and open. Working with quietloudlab means applying this thinking
-            to your specific organizational, technical, and human constraints—moving from vocabulary
-            to strategy, from patterns to decisions, from clarity to shipping.
+            to your specific organizational, technical, and human constraints.
           </p>
         </div>
 
@@ -299,18 +347,19 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* Open Source Section */}
-      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto bg-gray-50">
+      <section className="py-20 md:py-16 mb-20 md:mb-32 px-4 md:px-8 max-w-screen-2xl mx-auto bg-gray-50 relative">
+        {/* Subtle top shadow on light background */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/[0.03] to-transparent pointer-events-none" />
         <div className="max-w-screen-2xl mx-auto">
           <SectionHeader number="04" title="Free and open source" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 border-t border-black pt-12 gap-12">
             <div>
               <p className="text-2xl md:text-3xl font-sans font-light text-gray-700 leading-snug mb-8">
-                The Atlas is open source because legibility demands transparency. You can inspect
-                the patterns, contribute new ones, and adapt the system to your needs.
+                Legibility demands transparency. You can inspect the patterns, contribute new ones, and adapt the system to your needs.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                This isn't a SaaS product or vendor lock-in—it's a shared resource for teams who
+                The AI Interaction Atlas is a shared resource for teams who
                 believe AI systems should be understandable. Open sourcing the Atlas is a commitment
                 to the same principles it encodes: visibility, accountability, and collective intelligence.
               </p>
@@ -319,14 +368,15 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   href="https://github.com/quietloudlab/ai-interaction-atlas"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg group"
+                  className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px group"
+                  style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
                 >
                   View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
             </div>
             <div className="border-l border-black/10 pl-8 md:pl-12">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-gray-600 mb-6">What this means</h3>
+              <h3 className="font-mono text-xs uppercase tracking-widest text-gray-600 mb-6">Apache 2.0 licensed</h3>
               <div className="space-y-4 font-mono text-sm text-gray-600">
                 <div className="flex items-start gap-2">
                   <span className="text-black">/</span> Use it commercially
@@ -335,10 +385,10 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   <span className="text-black">/</span> Modify and adapt it
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-black">/</span> Contribute improvements back
+                  <span className="text-black">/</span> Contribute improvements
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-black">/</span> Apache 2.0 licensed
+                  <span className="text-black">/</span> No vendor lock-in
                 </div>
               </div>
             </div>
@@ -347,27 +397,67 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* Contact Form Section */}
-      <section id="contact-form" className="py-20 md:py-32 bg-black text-white">
+      <section id="contact-form" className="pt-32 md:pt-48 pb-20 md:pb-32 bg-black text-white relative">
+        {/* Subtle top light gradient on dark section */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
+          {/* Diagram Example */}
+          <div className="mb-16">
+            <h2 className="text-3xl md:text-5xl text-center font-sans tracking-tight font-medium mb-8 leading-tight">
+            Make the system visible.<br className="md:hidden" /> Decide with clarity.
+            </h2>
+            <div className="-mx-4 md:-mx-8">
+              <img
+                src={diagramExample}
+                alt="Example of an AI system diagram using the Atlas framework"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left: Copy */}
             <div>
-              <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium mb-6 leading-tight">
-                Ready to design AI systems that feel intentional, not magical?
-              </h2>
-              <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
-                quietloudlab helps organizations apply the Atlas vocabulary to real product challenges.
-                From system mapping to product blueprints to ongoing advisory—we bring structure to AI strategy.
-              </p>
+              <span className="text-xl md:text-2xl leading-relaxed font-light">quietloudlab works with teams to map AI products as inspectable systems so ownership, constraints, and tradeoffs are explicit before build decisions harden.<br /><br></br>
+              Have a system or product in mind? Share a bit about it and we'll take a look.</span>
+
+              <div className="mt-8">
+                <a
+                  href="https://quietloudlab.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors group"
+                >
+                  Visit quietloudlab.com <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
             </div>
 
             {/* Right: Form */}
             <div>
+              {formStatus === 'success' && (
+                <div className="mb-6 p-4 bg-white/10 border border-white/20 text-white font-mono text-sm">
+                  Thank you! We'll be in touch soon.
+                </div>
+              )}
+              {formStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 text-red-200 font-mono text-sm">
+                  Something went wrong. Please try again or email us directly.
+                </div>
+              )}
               <form
-                action="https://submit-form.com/wD0F0mjLN"
-                method="POST"
+                onSubmit={handleSubmit}
                 className="space-y-6"
               >
+                {/* Honeypot field for spam protection - hidden from users */}
+                <input
+                  type="text"
+                  name="_honeypot"
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
                 <div>
                   <label htmlFor="name" className="block text-sm font-mono text-gray-400 mb-2">
                     Name *
@@ -377,7 +467,8 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     id="name"
                     name="name"
                     required
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all"
+                    style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="Your name"
                   />
                 </div>
@@ -391,7 +482,8 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     id="email"
                     name="email"
                     required
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all"
+                    style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="your@email.com"
                   />
                 </div>
@@ -404,7 +496,8 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     type="text"
                     id="organization"
                     name="organization"
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all"
+                    style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="Your organization (optional)"
                   />
                 </div>
@@ -418,26 +511,21 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     name="message"
                     required
                     rows={5}
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-colors resize-none"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all resize-none"
+                    style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="What AI product challenge are you working on?"
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div>
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-200 transition-colors shadow-lg group"
+                    disabled={formStatus === 'submitting'}
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-200 transition-all active:translate-y-px group disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
                   >
-                    Send inquiry <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    {formStatus === 'submitting' ? 'Sending...' : 'Send inquiry'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <a
-                    href="https://quietloudlab.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors group"
-                  >
-                    Visit quietloudlab.com <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
                 </div>
               </form>
             </div>

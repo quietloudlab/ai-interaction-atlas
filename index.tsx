@@ -4,14 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { initSentry } from './lib/sentry';
-import { initPostHog } from './lib/posthog';
-
-// Initialize error monitoring (optional - only if VITE_SENTRY_DSN is set)
-initSentry();
-
-// Initialize analytics (optional - only if VITE_POSTHOG_KEY is set)
-initPostHog();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

@@ -2,7 +2,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import {
   X,
-  LayoutGrid,
   BookOpen,
   Search,
   BrainCircuit,
@@ -20,7 +19,6 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
-import { trackAtlasSearchPerformed, trackSemanticSearchUsed } from '../../../lib/posthog';
 import { semanticSearch, isSemanticSearchAvailable, type SearchResult } from '../../../lib/semanticSearch';
 
 interface SidebarProps {
@@ -71,9 +69,6 @@ export const Sidebar = ({
   useEffect(() => {
     isSemanticSearchAvailable().then(available => {
       setIsSemanticSearchEnabled(available);
-      if (available) {
-        console.log('✨ Semantic search is enabled');
-      }
     });
   }, []);
 
@@ -166,21 +161,6 @@ export const Sidebar = ({
     return atlasService.searchTasks(searchTerm, filterType === 'all' ? undefined : filterType);
   }, [searchTerm, filterType, filteredSemanticResults, isSemanticSearchEnabled]);
 
-  // Track search events (debounced)
-  useEffect(() => {
-    if (searchTerm.trim().length >= 2) {
-      const timer = setTimeout(() => {
-        const isSemanticActive = isSemanticSearchEnabled && semanticResults.length > 0;
-        trackAtlasSearchPerformed(searchTerm, filteredTasks.length, isSemanticActive);
-
-        // Track semantic search separately for analytics
-        if (isSemanticActive) {
-          trackSemanticSearchUsed('atlas', searchTerm, semanticResults.length);
-        }
-      }, 500); // Wait 500ms after user stops typing
-      return () => clearTimeout(timer);
-    }
-  }, [searchTerm, filteredTasks.length, isSemanticSearchEnabled, semanticResults.length]);
 
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
     e.dataTransfer.setData('taskId', taskId);
@@ -346,14 +326,6 @@ export const Sidebar = ({
               <div className="h-px bg-gray-100 my-2 mx-2"></div>
 
               <button
-                onClick={() => window.location.href = '/examples'}
-                className="cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 text-[#111111] font-medium hover:bg-gray-100 border border-transparent"
-              >
-                <LayoutGrid className="w-4 h-4" />
-                <span>Examples</span>
-              </button>
-
-              <button
                 onClick={() => handleAtlasNav('reference')}
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
@@ -374,7 +346,7 @@ export const Sidebar = ({
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder={isSemanticSearchEnabled ? "Search with AI..." : "Find a task..."}
+                  placeholder={isSemanticSearchEnabled ? "Search across patterns..." : "Find a task..."}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full bg-[#F4F4F5] border border-gray-200 py-1.5 pl-8 pr-9 text-sm focus:ring-1 focus:ring-black placeholder:text-gray-400"

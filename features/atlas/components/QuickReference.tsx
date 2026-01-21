@@ -126,11 +126,11 @@ export const QuickReference = () => {
           </div>
         </CollapsibleSection>
 
-        {/* AI Tasks */}
+        {/* AI Patterns */}
         <CollapsibleSection
-          title={`AI Tasks (${aiTasks.length})`}
+          title={`AI Patterns (${aiTasks.length})`}
           icon={BrainCircuit}
-          color="#8B5CF6"
+          color="#8B22F1"
           defaultOpen={true}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -178,11 +178,11 @@ export const QuickReference = () => {
           </div>
         </CollapsibleSection>
 
-        {/* Human Tasks */}
+        {/* Human Actions */}
         <CollapsibleSection
-          title={`Human Tasks (${humanTasks.length})`}
+          title={`Human Actions (${humanTasks.length})`}
           icon={UserCircle}
-          color="#3B82F6"
+          color="#2B5CF3"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {humanTasks.map((task) => {
@@ -220,11 +220,11 @@ export const QuickReference = () => {
           </div>
         </CollapsibleSection>
 
-        {/* System Tasks */}
+        {/* System Operations */}
         <CollapsibleSection
-          title={`System Tasks (${systemTasks.length})`}
+          title={`System Operations (${systemTasks.length})`}
           icon={Settings}
-          color="#6B7280"
+          color="#4C5564"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {systemTasks.map((task) => {
@@ -262,11 +262,11 @@ export const QuickReference = () => {
           </div>
         </CollapsibleSection>
 
-        {/* Data Artifacts */}
+        {/* Data Modalities */}
         <CollapsibleSection
-          title={`Data Artifacts (${dataArtifacts.length})`}
+          title={`Data Modalities (${dataArtifacts.length})`}
           icon={Database}
-          color="#10B981"
+          color="#D37709"
         >
           <div className="space-y-3">
             {dataArtifacts.map((artifact) => (
@@ -298,7 +298,7 @@ export const QuickReference = () => {
         <CollapsibleSection
           title={`Constraints (${constraints.length})`}
           icon={Shield}
-          color="#EF4444"
+          color="#D91A45"
         >
           <div className="space-y-3">
             {constraints.map((constraint) => (
@@ -333,7 +333,7 @@ export const QuickReference = () => {
         <CollapsibleSection
           title={`Touchpoints (${touchpoints.length})`}
           icon={Users}
-          color="#F59E0B"
+          color="#3090B5"
         >
           <div className="space-y-3">
             {touchpoints.map((touchpoint) => (
@@ -365,27 +365,27 @@ export const QuickReference = () => {
             <div className="text-xs text-gray-500 uppercase tracking-wider">Layers</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-purple-600">{aiTasks.length}</div>
-            <div className="text-xs text-gray-500 uppercase tracking-wider">AI Tasks</div>
+            <div className="text-2xl font-bold" style={{ color: '#8B22F1' }}>{aiTasks.length}</div>
+            <div className="text-xs text-gray-500 uppercase tracking-wider">AI Patterns</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-blue-600">{humanTasks.length}</div>
-            <div className="text-xs text-gray-500 uppercase tracking-wider">Human Tasks</div>
+            <div className="text-2xl font-bold" style={{ color: '#2B5CF3' }}>{humanTasks.length}</div>
+            <div className="text-xs text-gray-500 uppercase tracking-wider">Human Actions</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-gray-600">{systemTasks.length}</div>
-            <div className="text-xs text-gray-500 uppercase tracking-wider">System Tasks</div>
+            <div className="text-2xl font-bold" style={{ color: '#4C5564' }}>{systemTasks.length}</div>
+            <div className="text-xs text-gray-500 uppercase tracking-wider">System Operations</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-green-600">{dataArtifacts.length}</div>
-            <div className="text-xs text-gray-500 uppercase tracking-wider">Data Types</div>
+            <div className="text-2xl font-bold" style={{ color: '#D37709' }}>{dataArtifacts.length}</div>
+            <div className="text-xs text-gray-500 uppercase tracking-wider">Data Modalities</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-red-600">{constraints.length}</div>
+            <div className="text-2xl font-bold" style={{ color: '#D91A45' }}>{constraints.length}</div>
             <div className="text-xs text-gray-500 uppercase tracking-wider">Constraints</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-amber-600">{touchpoints.length}</div>
+            <div className="text-2xl font-bold" style={{ color: '#3090B5' }}>{touchpoints.length}</div>
             <div className="text-xs text-gray-500 uppercase tracking-wider">Touchpoints</div>
           </div>
         </div>

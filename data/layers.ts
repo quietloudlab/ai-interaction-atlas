@@ -8,7 +8,7 @@ export const LAYERS: Layer[] = [
     slug: "Sensing",
     role: "Sensing & Structuring",
     description: "How the system perceives and organizes input from the world.",
-    color: "#2D5A27",
+    color: "#4A8A3F",
     guidance: {
       when_to_use: "When handling raw user input or environmental data.",
       typical_position: "Start of flow.",
@@ -21,7 +21,7 @@ export const LAYERS: Layer[] = [
     slug: "Reasoning",
     role: "Reasoning & Deciding",
     description: "The cognitive processing and business logic application.",
-    color: "#27405A",
+    color: "#3D6B8F",
     guidance: {
       when_to_use: "For complex decision making or analysis.",
       typical_position: "Middle of flow.",
@@ -34,7 +34,7 @@ export const LAYERS: Layer[] = [
     slug: "Expressing",
     role: "Expressing & Creating",
     description: "Generating outputs and presenting them to the user.",
-    color: "#5A2727",
+    color: "#8F3D3D",
     guidance: {
       when_to_use: "When presenting results.",
       typical_position: "End of flow.",
@@ -47,7 +47,7 @@ export const LAYERS: Layer[] = [
     slug: "Learning",
     role: "Acting & Learning",
     description: "Feedback loops, continuous improvement, and environmental interaction.",
-    color: "#5A4827",
+    color: "#8F6E3D",
     guidance: {
       when_to_use: "For systems that adapt over time or act in environments.",
       typical_position: "Continuous loop.",

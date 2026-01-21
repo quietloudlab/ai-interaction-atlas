@@ -71,7 +71,7 @@ export const AtlasFooter = () => {
                   rel="noopener noreferrer"
                   className="text-[#6E6E6E] hover:text-black transition-colors"
                 >
-                  MIT License
+                  Apache 2.0 License
                 </a>
               </li>
               <li>

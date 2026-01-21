@@ -69,7 +69,7 @@ export const TouchpointsPage = () => {
           <span>/</span>
           <span>Touchpoints</span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">Interface Touchpoints</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">Touchpoints</h1>
         <p className="text-xl md:text-2xl font-sans font-light text-[#6E6E6E] leading-snug max-w-3xl mb-12">
           The surfaces and channels where humans interact with the AI system.
         </p>
