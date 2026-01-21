@@ -1,16 +1,18 @@
 
 import React from 'react';
-import { ArrowLeft, AlertTriangle, CheckCircle2, BrainCircuit, UserCircle, Settings } from 'lucide-react';
+import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle2, BrainCircuit, UserCircle, Settings } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
 
-export const LayerDetail = ({ 
-  layerId, 
+export const LayerDetail = ({
+  layerId,
   onBack,
-  onTaskClick 
-}: { 
-  layerId: string, 
+  onTaskClick,
+  onLayerClick
+}: {
+  layerId: string,
   onBack: () => void,
-  onTaskClick: (id: string) => void
+  onTaskClick: (id: string) => void,
+  onLayerClick?: (id: string) => void
 }) => {
   const layer = atlasService.getLayerById(layerId);
   if (!layer) return null;
@@ -20,15 +22,54 @@ export const LayerDetail = ({
   const humanTasks = layerTasks.filter(t => t.task_type === 'human');
   const systemTasks = layerTasks.filter(t => t.task_type === 'system');
 
+  // Get all layers for prev/next navigation
+  const allLayers = atlasService.getLayers();
+  const currentIndex = allLayers.findIndex(l => l.id === layerId);
+  const prevLayer = currentIndex > 0 ? allLayers[currentIndex - 1] : null;
+  const nextLayer = currentIndex < allLayers.length - 1 ? allLayers[currentIndex + 1] : null;
+
   return (
     <div className="pb-20">
-      <button
-        onClick={onBack}
-        className="mb-8 flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-[#111111] transition-colors font-mono group"
-      >
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        Back
-      </button>
+      <div className="mb-8 flex items-center justify-between">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-[#111111] transition-colors font-mono group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back
+        </button>
+
+        {onLayerClick && (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => prevLayer && onLayerClick(prevLayer.id)}
+              disabled={!prevLayer}
+              title={prevLayer ? prevLayer.name : undefined}
+              className={`flex items-center gap-2 px-3 py-2 text-sm font-mono border border-[#E6E6E6] transition-colors ${
+                prevLayer
+                  ? 'text-[#111111] hover:bg-[#FAFAFA] cursor-pointer'
+                  : 'text-[#E6E6E6] cursor-not-allowed'
+              }`}
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Previous</span>
+            </button>
+            <button
+              onClick={() => nextLayer && onLayerClick(nextLayer.id)}
+              disabled={!nextLayer}
+              title={nextLayer ? nextLayer.name : undefined}
+              className={`flex items-center gap-2 px-3 py-2 text-sm font-mono border border-[#E6E6E6] transition-colors ${
+                nextLayer
+                  ? 'text-[#111111] hover:bg-[#FAFAFA] cursor-pointer'
+                  : 'text-[#E6E6E6] cursor-not-allowed'
+              }`}
+            >
+              <span className="hidden sm:inline">Next</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+      </div>
 
       <header className="mb-16 pb-12 border-b border-[#E6E6E6]">
         <div className="flex items-center gap-3 mb-6">

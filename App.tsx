@@ -66,6 +66,7 @@ function LayerDetailRoute() {
       layerId={layerId!}
       onBack={() => navigate(-1)}
       onTaskClick={(id) => navigate(`/atlas/task/${id}`)}
+      onLayerClick={(id) => navigate(`/atlas/layer/${id}`)}
     />
   );
 }
