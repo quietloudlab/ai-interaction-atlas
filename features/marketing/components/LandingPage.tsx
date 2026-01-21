@@ -61,8 +61,16 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
   return (
     <div className="bg-white text-black selection:bg-black selection:text-white">
+      {/* Skip Navigation Link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+      >
+        Skip to main content
+      </a>
+
       {/* Hero Section - Above the Fold */}
-      <section className="min-h-[40vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 pb-12 w-full relative">
+      <section id="main-content" className="min-h-[40vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 pb-12 w-full relative">
         {/* Subtle top light */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/5 to-transparent" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start w-full">
@@ -78,7 +86,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 href="https://www.linkedin.com/company/quietloudlab"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-60 hover:opacity-100 transition-opacity p-1 -m-1"
+                className="opacity-60 hover:opacity-100 transition-opacity p-1 -m-1 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded"
               >
                 <img src={quietloudlabLogo} alt="quietloudlab" className="h-4" />
               </a>
@@ -93,7 +101,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             <div>
               <button
                 onClick={() => onNavigate('atlas')}
-                className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px"
+                className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
                 style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
               >
                 View the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -191,7 +199,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* AI Patterns */}
             <button
               onClick={() => onNavigate('atlas/ai')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
@@ -206,7 +214,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* Human Actions */}
             <button
               onClick={() => onNavigate('atlas/human')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
@@ -221,7 +229,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* System Operations */}
             <button
               onClick={() => onNavigate('atlas/system')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
@@ -236,7 +244,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* Data Modalities */}
             <button
               onClick={() => onNavigate('atlas/data')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
@@ -251,7 +259,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* Constraints */}
             <button
               onClick={() => onNavigate('atlas/constraints')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
@@ -266,7 +274,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* Touchpoints */}
             <button
               onClick={() => onNavigate('atlas/touchpoints')}
-              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden"
+              className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
             >
               <div>
@@ -381,7 +389,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   href="https://github.com/quietloudlab/ai-interaction-atlas"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px group"
+                  className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px group focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
                   style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
                 >
                   View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -449,12 +457,20 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             {/* Right: Form */}
             <div>
               {formStatus === 'success' && (
-                <div className="mb-6 p-4 bg-white/10 border border-white/20 text-white font-mono text-sm">
+                <div
+                  className="mb-6 p-4 bg-white/10 border border-white/20 text-white font-mono text-sm"
+                  role="alert"
+                  aria-live="polite"
+                >
                   Thank you! We'll be in touch soon.
                 </div>
               )}
               {formStatus === 'error' && (
-                <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 text-red-200 font-mono text-sm">
+                <div
+                  className="mb-6 p-4 bg-red-900/20 border border-red-500/30 text-red-200 font-mono text-sm"
+                  role="alert"
+                  aria-live="assertive"
+                >
                   Something went wrong. Please try again or email us directly.
                 </div>
               )}
@@ -472,7 +488,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 />
 
                 <div>
-                  <label htmlFor="name" className="block text-sm font-mono text-gray-400 mb-2">
+                  <label htmlFor="name" className="block text-sm font-mono text-gray-300 mb-2">
                     Name *
                   </label>
                   <input
@@ -480,14 +496,14 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     id="name"
                     name="name"
                     required
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:border-white transition-all"
                     style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="Your name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-mono text-gray-400 mb-2">
+                  <label htmlFor="email" className="block text-sm font-mono text-gray-300 mb-2">
                     Email *
                   </label>
                   <input
@@ -495,28 +511,28 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     id="email"
                     name="email"
                     required
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:border-white transition-all"
                     style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="your@email.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="organization" className="block text-sm font-mono text-gray-400 mb-2">
+                  <label htmlFor="organization" className="block text-sm font-mono text-gray-300 mb-2">
                     Organization
                   </label>
                   <input
                     type="text"
                     id="organization"
                     name="organization"
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:border-white transition-all"
                     style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="Your organization (optional)"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-mono text-gray-400 mb-2">
+                  <label htmlFor="message" className="block text-sm font-mono text-gray-300 mb-2">
                     Tell us about your project *
                   </label>
                   <textarea
@@ -524,7 +540,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     name="message"
                     required
                     rows={5}
-                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-white transition-all resize-none"
+                    className="w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:border-white transition-all resize-none"
                     style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
                     placeholder="What AI product challenge are you working on?"
                   />
@@ -534,7 +550,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   <button
                     type="submit"
                     disabled={formStatus === 'submitting'}
-                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-200 transition-all active:translate-y-px group disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-200 transition-all active:translate-y-px group disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
                     style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
                   >
                     {formStatus === 'submitting' ? 'Sending...' : 'Send inquiry'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
