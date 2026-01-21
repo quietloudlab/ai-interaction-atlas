@@ -125,7 +125,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
             >
               <div>
-                <BrainCircuit className="w-8 h-8 text-[#5A2D82] mb-4" />
+                <BrainCircuit className="w-8 h-8 mb-4" style={{ color: '#8B22F1' }} />
                 <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">AI Tasks</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   What AI capabilities do: detect, classify, transform, generate, verify, and more.
@@ -139,7 +139,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
             >
               <div>
-                <UserCircle className="w-8 h-8 text-[#2D5A27] mb-4" />
+                <UserCircle className="w-8 h-8 mb-4" style={{ color: '#2B5CF3' }} />
                 <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Human Tasks</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   What people do: review, approve, compare, edit, provide feedback, and decide.
@@ -153,7 +153,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
             >
               <div>
-                <Settings className="w-8 h-8 text-[#27405A] mb-4" />
+                <Settings className="w-8 h-8 mb-4" style={{ color: '#4C5564' }} />
                 <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">System Tasks</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Infrastructure operations: session management, state tracking, logging, and routing.
@@ -167,7 +167,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
             >
               <div>
-                <Database className="w-8 h-8 text-[#5A4827] mb-4" />
+                <Database className="w-8 h-8 mb-4" style={{ color: '#D37709' }} />
                 <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Data Artifacts</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Information that flows through the system: inputs, outputs, context, and state.
@@ -181,7 +181,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
             >
               <div>
-                <Sliders className="w-8 h-8 text-[#8B4513] mb-4" />
+                <Sliders className="w-8 h-8 mb-4" style={{ color: '#D91A45' }} />
                 <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Constraints</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Boundaries and requirements: latency, privacy, accuracy, cost, and safety.
@@ -195,7 +195,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               className="text-left border-r border-t border-b border-white/20 p-8 min-h-[300px] flex flex-col justify-between hover:bg-white/5 transition-all group opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
             >
               <div>
-                <Smartphone className="w-8 h-8 text-[#D2691E] mb-4" />
+                <Smartphone className="w-8 h-8 mb-4" style={{ color: '#3090B5' }} />
                 <h3 className="text-xl font-sans mb-2 group-hover:translate-x-1 transition-transform">Touchpoints</h3>
                 <p className="text-sm font-mono text-gray-400 leading-relaxed">
                   Where interactions happen: interfaces, notifications, integrations, and channels.

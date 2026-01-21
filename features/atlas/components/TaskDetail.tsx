@@ -153,27 +153,27 @@ export const TaskDetail = ({
   };
 
   return (
-    <div className="animate-in fade-in duration-500 pb-20">
+    <div className="pb-20">
       <button
         onClick={onBack}
-        className="mb-8 flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-black transition-colors font-medium group"
+        className="mb-8 flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-[#111111] transition-colors font-mono group"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
         Back
       </button>
 
       {/* Header */}
-      <header className="mb-12 lg:mb-20">
-        <div className="text-xs uppercase tracking-wider text-[#6E6E6E] mb-4 lg:mb-6 flex items-center gap-3">
-          <span className="font-medium flex items-center gap-1.5" style={{ color: layer?.color }}>
+      <header className="mb-16 pb-12 border-b border-[#E6E6E6]">
+        <div className="text-xs uppercase tracking-widest text-[#6E6E6E] mb-6 flex items-center gap-3 font-mono">
+          <span className="flex items-center gap-2" style={{ color: layer?.color }}>
              <span className="w-2 h-2 rounded-full" style={{backgroundColor: layer?.color}}></span>
              {layer?.name} Layer
           </span>
           <span className="text-[#E6E6E6]">/</span>
-          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1.5 ${
-             task.task_type === 'ai' ? 'bg-black text-white border-black' : 
-             task.task_type === 'human' ? 'bg-blue-600 text-white border-blue-600' : 
-             'bg-white text-gray-600 border-gray-300'
+          <span className={`px-2 py-0.5 text-[10px] font-bold border flex items-center gap-1.5 ${
+             task.task_type === 'ai' ? 'bg-[#F9F9F7] text-[#111111] border-[#E6E6E6]' :
+             task.task_type === 'human' ? 'bg-[#F9F9F7] text-[#111111] border-[#E6E6E6]' :
+             'bg-[#F9F9F7] text-[#111111] border-[#E6E6E6]'
           }`}>
              {task.task_type === 'ai' && <BrainCircuit className="w-3 h-3" />}
              {task.task_type === 'human' && <UserCircle className="w-3 h-3" />}
@@ -181,16 +181,16 @@ export const TaskDetail = ({
              {task.task_type.toUpperCase()}
           </span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-light tracking-tighter text-[#111111] mb-6 lg:mb-8">{task.name}</h1>
-        
-        <div className="max-w-4xl border-l-4 border-[#111111] pl-6 lg:pl-8 py-2">
-           <p className="text-xl md:text-2xl lg:text-3xl font-light text-[#111111] leading-relaxed text-pretty mb-6">
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">{task.name}</h1>
+
+        <div className="max-w-4xl border-l-2 pl-6 lg:pl-8 py-2" style={{ borderColor: layer?.color }}>
+           <p className="text-xl md:text-2xl font-sans font-light text-[#111111] leading-snug mb-6">
              <HighlightedText text={task.elevator_pitch} />
            </p>
            {task.example_usage && (
-             <div className="flex items-start gap-3 text-lg text-[#6E6E6E]">
-                <span className="font-bold uppercase text-xs tracking-wider mt-1.5 text-black bg-gray-100 px-2 py-0.5 rounded">Example</span>
-                <span className="font-light italic"><HighlightedText text={task.example_usage} /></span>
+             <div className="flex items-start gap-3 text-base text-[#6E6E6E]">
+                <span className="font-mono text-[10px] uppercase tracking-wider mt-1 text-[#999]">Example</span>
+                <span className="font-light"><HighlightedText text={task.example_usage} /></span>
              </div>
            )}
         </div>
@@ -204,9 +204,12 @@ export const TaskDetail = ({
           {/* AI Specific: Implementation Notes */}
           {task.task_type === 'ai' && (
             <section>
-              <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-6 lg:mb-8 font-medium">
-                Implementation Constraints
-              </h2>
+              <div className="mb-6">
+                <span className="font-mono text-sm text-gray-500">(01)</span>
+                <h2 className="text-xl font-sans font-medium tracking-tight mt-2 text-[#111111]">
+                  Implementation Constraints
+                </h2>
+              </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="p-4 rounded-lg bg-white border border-[#E6E6E6]">
                   <div className="flex items-center gap-2 mb-2 text-[#6E6E6E]">
@@ -254,9 +257,12 @@ export const TaskDetail = ({
           {/* AI Specific: Capabilities */}
           {task.task_type === 'ai' && (
             <section>
-              <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-6 lg:mb-8 font-medium">
-                Technical Capabilities
-              </h2>
+              <div className="mb-6">
+                <span className="font-mono text-sm text-gray-500">(02)</span>
+                <h2 className="text-xl font-sans font-medium tracking-tight mt-2 text-[#111111]">
+                  Technical Capabilities
+                </h2>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {task.capabilities.map((cap, i) => (
                   <div 
@@ -284,9 +290,12 @@ export const TaskDetail = ({
           {/* AI Specific: UX Guardrails */}
           {task.task_type === 'ai' && (
             <section>
-              <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-6 lg:mb-8 font-medium">
-                UX Guardrails
-              </h2>
+              <div className="mb-6">
+                <span className="font-mono text-sm text-gray-500">(03)</span>
+                <h2 className="text-xl font-sans font-medium tracking-tight mt-2 text-[#111111]">
+                  UX Guardrails
+                </h2>
+              </div>
               <div className="bg-[#F0F0EE] p-6 lg:p-8 rounded-xl shadow-sm inset-shadow-sm" >
                 <div className="mb-6 lg:mb-8">
                   <div className="text-[11px] uppercase tracking-wider text-[#6E6E6E] mb-2">Primary Risk</div>
@@ -322,9 +331,12 @@ export const TaskDetail = ({
           {/* Human/System Specific: Variants */}
           {(task.task_type === 'human' || task.task_type === 'system') && (
             <section>
-              <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-6 lg:mb-8 font-medium">
-                Common Variants
-              </h2>
+              <div className="mb-6">
+                <span className="font-mono text-sm text-gray-500">(01)</span>
+                <h2 className="text-xl font-sans font-medium tracking-tight mt-2 text-[#111111]">
+                  Common Variants
+                </h2>
+              </div>
               <div className="flex flex-wrap gap-3">
                  {task.common_variants.map((variant, i) => (
                     <div key={i} className="px-4 py-3 bg-white border border-[#E6E6E6] rounded-lg text-sm text-[#111111] font-medium shadow-sm">
@@ -339,11 +351,14 @@ export const TaskDetail = ({
 
         {/* Right Col */}
         <div className="space-y-12 lg:space-y-20">
-          
+
           <section>
-            <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-6 lg:mb-8 font-medium">
-              Data Compatibility
-            </h2>
+            <div className="mb-6">
+              <span className="font-mono text-sm text-gray-500">Data Flow</span>
+              <h2 className="text-lg font-sans font-medium tracking-tight mt-2 text-[#111111]">
+                Inputs & Outputs
+              </h2>
+            </div>
             <div className="space-y-8">
               
               {/* Inputs */}
@@ -388,10 +403,13 @@ export const TaskDetail = ({
 
           {relations.length > 0 && (
             <section>
-              <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-6 lg:mb-8 font-medium">
-                System Map Relations
-              </h2>
-              <div className="bg-white border border-[#E6E6E6] rounded-xl p-6 lg:p-8 shadow-sm">
+              <div className="mb-6">
+                <span className="font-mono text-sm text-gray-500">Relations</span>
+                <h2 className="text-lg font-sans font-medium tracking-tight mt-2 text-[#111111]">
+                  System Map
+                </h2>
+              </div>
+              <div className="bg-white border border-[#E6E6E6] p-6 lg:p-8">
                 <div className="space-y-8">
                   {/* Upstream */}
                   {relations.filter(r => r.category === 'upstream').length > 0 && (

@@ -152,16 +152,19 @@ export const DataArtifactsPage = () => {
 
   const filteredArtifacts = atlasService.getDataArtifacts(activeFilter);
 
+  const primary = '#D37709';
+  const secondary = '#FFFBEC';
+
   return (
-    <div className="animate-in fade-in duration-500 pb-20">
-      <header className="mb-12 lg:mb-16 pt-4 lg:pt-10">
-        <div className="text-xs uppercase tracking-wider text-[#6E6E6E] mb-4 lg:mb-6 flex items-center gap-2">
+    <div className="pb-20">
+      <header className="pt-8 pb-12 mb-16 border-b border-[#E6E6E6]">
+        <div className="text-xs font-mono uppercase tracking-widest text-[#6E6E6E] mb-6 flex items-center gap-2">
           <span>Atlas</span>
-          <span className="text-[#E6E6E6]">/</span>
+          <span>/</span>
           <span>Data Artifacts</span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-light tracking-tighter text-[#111111] mb-6 lg:mb-8">Data Modalities</h1>
-        <p className="text-xl md:text-2xl font-light text-[#111111] leading-relaxed max-w-3xl mb-8">
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">Data Modalities</h1>
+        <p className="text-xl md:text-2xl font-sans font-light text-[#6E6E6E] leading-snug max-w-3xl mb-12">
           A standardized library of data types to validate connections and ensure system compatibility.
         </p>
 
@@ -171,10 +174,10 @@ export const DataArtifactsPage = () => {
                 <button
                     key={cat.id}
                     onClick={() => setActiveFilter(cat.id)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide transition-all border ${
-                        activeFilter === cat.id 
-                        ? 'bg-black text-white border-black' 
-                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400 hover:text-black'
+                    className={`px-4 py-2 text-xs font-mono uppercase tracking-widest transition-all border ${
+                        activeFilter === cat.id
+                        ? 'bg-[#111111] text-white border-[#111111]'
+                        : 'bg-white text-[#6E6E6E] border-[#E6E6E6] hover:border-[#111111] hover:text-[#111111]'
                     }`}
                 >
                     {cat.label}
@@ -183,36 +186,33 @@ export const DataArtifactsPage = () => {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 group/list">
         {filteredArtifacts.map(artifact => {
           const Icon = ICON_MAP[artifact.icon] || Database;
-          
-          let colorClass = "bg-gray-100 text-gray-600 border-gray-200";
           const cat = artifact.category as DataCategory;
 
-          if (cat === 'text') colorClass = "bg-slate-50 text-slate-600 border-slate-200";
-          if (cat === 'visual') colorClass = "bg-pink-50 text-pink-600 border-pink-200";
-          if (cat === 'audio') colorClass = "bg-indigo-50 text-indigo-600 border-indigo-200";
-          if (cat === 'structured') colorClass = "bg-cyan-50 text-cyan-600 border-cyan-200";
-          if (cat === 'system') colorClass = "bg-gray-50 text-gray-600 border-gray-200";
-          if (cat === 'generic') colorClass = "bg-emerald-50 text-emerald-600 border-emerald-200";
-
           return (
-            <div key={artifact.id} className="bg-white border border-[#E6E6E6] rounded-xl p-6 hover:shadow-lg hover:border-blue-300 transition-all group flex flex-col h-full animate-in fade-in zoom-in-95 duration-300">
+            <div key={artifact.id} className="bg-white border border-[#E6E6E6] p-6 transition-all hover:bg-[#FAFAFA] group flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-3 rounded-lg border ${colorClass} group-hover:scale-105 transition-transform`}>
-                   <Icon className="w-6 h-6" />
+                <div
+                  className="p-3 border group-hover:scale-105 transition-transform"
+                  style={{
+                    backgroundColor: secondary,
+                    borderColor: primary + '40'
+                  }}
+                >
+                   <Icon className="w-6 h-6" style={{ color: primary }} />
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#999] bg-[#F9F9F7] px-2 py-1 rounded">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#999] bg-[#F9F9F7] px-2 py-1 border border-[#E6E6E6]">
                    {artifact.category.replace('_', ' ')}
                 </span>
               </div>
-              
+
               <div className="mb-6 flex-1">
-                 <h3 className="text-lg font-bold text-[#111111] mb-2">{artifact.name}</h3>
+                 <h3 className="text-lg font-sans font-medium text-[#111111] mb-2">{artifact.name}</h3>
                  <p className="text-[#6E6E6E] text-sm leading-relaxed mb-3">{artifact.description}</p>
                  {artifact.format_notes && (
-                    <div className="text-xs text-gray-500 font-mono bg-gray-50 px-2 py-1 rounded inline-block">
+                    <div className="text-xs text-gray-500 font-mono bg-gray-50 px-2 py-1 border border-[#E6E6E6] inline-block">
                        {artifact.format_notes}
                     </div>
                  )}
@@ -221,10 +221,10 @@ export const DataArtifactsPage = () => {
               {/* Examples */}
               {artifact.examples && artifact.examples.length > 0 && (
                  <div className="mb-4">
-                    <div className="text-[10px] uppercase font-bold text-gray-400 mb-1">Examples</div>
+                    <div className="text-[10px] font-mono uppercase text-gray-400 mb-2">Examples</div>
                     <div className="flex flex-wrap gap-1.5">
                        {artifact.examples.map((ex, i) => (
-                          <span key={i} className="text-xs bg-[#F9F9F7] text-gray-600 px-2 py-1 rounded border border-[#E6E6E6]">
+                          <span key={i} className="text-xs font-mono bg-[#F9F9F7] text-gray-600 px-2 py-1 border border-[#E6E6E6]">
                              {ex}
                           </span>
                        ))}
@@ -234,8 +234,8 @@ export const DataArtifactsPage = () => {
 
               {/* Compatible */}
               {artifact.compatible_with && artifact.compatible_with.length > 0 && (
-                 <div className="mt-auto pt-4 border-t border-[#F0F0EE]">
-                    <div className="text-[10px] uppercase font-bold text-gray-400 mb-1">Compatible Tasks</div>
+                 <div className="mt-auto pt-4 border-t border-[#E6E6E6]">
+                    <div className="text-[10px] font-mono uppercase text-gray-400 mb-2">Compatible Tasks</div>
                     <div className="text-xs text-gray-600 leading-relaxed">
                        {artifact.compatible_with.join(", ")}
                     </div>

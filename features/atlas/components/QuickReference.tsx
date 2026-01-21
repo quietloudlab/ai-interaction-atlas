@@ -30,16 +30,16 @@ const CollapsibleSection = ({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border border-[#E6E6E6] rounded-lg overflow-hidden bg-white">
+    <div className="border border-[#E6E6E6] bg-white">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between p-4 hover:bg-[#FAFAFA] transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-md" style={{ backgroundColor: `${color}15` }}>
+          <div className="p-2 border border-[#E6E6E6]" style={{ backgroundColor: color + '15' }}>
             <Icon className="w-5 h-5" style={{ color }} />
           </div>
-          <h2 className="text-lg font-bold text-[#111111]">{title}</h2>
+          <h2 className="text-lg font-sans font-medium text-[#111111]">{title}</h2>
         </div>
         {isOpen ? (
           <ChevronDown className="w-5 h-5 text-gray-400" />
@@ -49,7 +49,7 @@ const CollapsibleSection = ({
       </button>
 
       {isOpen && (
-        <div className="p-6 pt-2 border-t border-[#E6E6E6] bg-[#F9F9F7]">
+        <div className="p-6 pt-4 border-t border-[#E6E6E6] bg-white">
           {children}
         </div>
       )}
@@ -89,13 +89,13 @@ export const QuickReference = () => {
         >
           <div className="space-y-6">
             {layers.map((layer, idx) => (
-              <div key={layer.id} className="bg-white p-4 rounded-lg border border-[#E6E6E6]">
+              <div key={layer.id} className="bg-white p-4 border border-[#E6E6E6]">
                 <div className="flex items-center gap-3 mb-3">
                   <div
-                    className="w-3 h-3 rounded-full"
+                    className="w-3 h-3"
                     style={{ backgroundColor: layer.color }}
                   />
-                  <h3 className="font-bold text-[#111111]">{layer.name}</h3>
+                  <h3 className="font-sans font-medium text-[#111111]">{layer.name}</h3>
                   <span className="text-xs text-gray-400 font-mono">Layer {idx + 1}</span>
                 </div>
 
@@ -137,9 +137,9 @@ export const QuickReference = () => {
             {aiTasks.map((task) => {
               const aiTask = task as AiTask;
               return (
-                <div key={task.id} className="bg-white p-4 rounded-lg border border-[#E6E6E6]">
+                <div key={task.id} className="bg-white p-4 border border-[#E6E6E6]">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-[#111111]">{task.name}</h3>
+                    <h3 className="font-sans font-medium text-[#111111]">{task.name}</h3>
                     <span className="text-[9px] font-mono text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
                       {task.slug}
                     </span>
@@ -188,9 +188,9 @@ export const QuickReference = () => {
             {humanTasks.map((task) => {
               const humanTask = task as HumanTask;
               return (
-                <div key={task.id} className="bg-white p-4 rounded-lg border border-[#E6E6E6]">
+                <div key={task.id} className="bg-white p-4 border border-[#E6E6E6]">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-[#111111]">{task.name}</h3>
+                    <h3 className="font-sans font-medium text-[#111111]">{task.name}</h3>
                     <span className="text-[9px] font-mono text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
                       {task.slug}
                     </span>
@@ -230,9 +230,9 @@ export const QuickReference = () => {
             {systemTasks.map((task) => {
               const systemTask = task as SystemTask;
               return (
-                <div key={task.id} className="bg-white p-4 rounded-lg border border-[#E6E6E6]">
+                <div key={task.id} className="bg-white p-4 border border-[#E6E6E6]">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-[#111111]">{task.name}</h3>
+                    <h3 className="font-sans font-medium text-[#111111]">{task.name}</h3>
                     <span className="text-[9px] font-mono text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
                       {task.slug}
                     </span>
@@ -270,9 +270,9 @@ export const QuickReference = () => {
         >
           <div className="space-y-3">
             {dataArtifacts.map((artifact) => (
-              <div key={artifact.id} className="bg-white p-3 rounded-lg border border-[#E6E6E6]">
+              <div key={artifact.id} className="bg-white p-3 border border-[#E6E6E6]">
                 <div className="flex items-start justify-between mb-1">
-                  <h3 className="font-bold text-sm text-[#111111]">{artifact.name}</h3>
+                  <h3 className="font-sans font-medium text-sm text-[#111111]">{artifact.name}</h3>
                   <span className="text-[9px] font-mono text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
                     {artifact.id}
                   </span>
@@ -302,9 +302,9 @@ export const QuickReference = () => {
         >
           <div className="space-y-3">
             {constraints.map((constraint) => (
-              <div key={constraint.id} className="bg-white p-3 rounded-lg border border-[#E6E6E6]">
+              <div key={constraint.id} className="bg-white p-3 border border-[#E6E6E6]">
                 <div className="flex items-start justify-between mb-1">
-                  <h3 className="font-bold text-sm text-[#111111]">{constraint.name}</h3>
+                  <h3 className="font-sans font-medium text-sm text-[#111111]">{constraint.name}</h3>
                   <span className="text-[9px] font-mono text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
                     {constraint.id}
                   </span>
@@ -337,9 +337,9 @@ export const QuickReference = () => {
         >
           <div className="space-y-3">
             {touchpoints.map((touchpoint) => (
-              <div key={touchpoint.id} className="bg-white p-3 rounded-lg border border-[#E6E6E6]">
+              <div key={touchpoint.id} className="bg-white p-3 border border-[#E6E6E6]">
                 <div className="flex items-start justify-between mb-1">
-                  <h3 className="font-bold text-sm text-[#111111]">{touchpoint.name}</h3>
+                  <h3 className="font-sans font-medium text-sm text-[#111111]">{touchpoint.name}</h3>
                   <span className="text-[9px] font-mono text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
                     {touchpoint.id}
                   </span>
@@ -358,7 +358,7 @@ export const QuickReference = () => {
       </div>
 
       {/* Footer Stats */}
-      <div className="mt-12 p-6 bg-[#F9F9F7] rounded-lg border border-[#E6E6E6]">
+      <div className="mt-12 p-6 bg-[#F9F9F7] border border-[#E6E6E6]">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold text-[#111111]">{layers.length}</div>

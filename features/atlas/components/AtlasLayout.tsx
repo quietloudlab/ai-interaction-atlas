@@ -67,9 +67,9 @@ export const AtlasLayout = ({
   }, [location.pathname, navigationType]);
 
   return (
-    <div className="flex h-screen bg-[#F9F9F7] overflow-hidden">
+    <div className="flex h-screen bg-white overflow-hidden">
       {/* Desktop Sidebar (Fixed) */}
-      <div className="hidden lg:block w-[280px] h-full flex-shrink-0 shadow-[1px_0_0_0_#E6E6E6] z-20">
+      <div className="hidden lg:block w-[280px] h-full flex-shrink-0 border-r border-black z-20">
         <Sidebar 
           activeTaskId={activeTaskId}
           onSelectTask={onSelectTask}
@@ -105,12 +105,12 @@ export const AtlasLayout = ({
         {/* Desktop Top Right Button - Removed for now */}
 
         {/* Mobile Header Trigger */}
-        <div className="lg:hidden h-14 bg-white border-b border-[#E6E6E6] flex items-center justify-between px-4 flex-shrink-0 z-10">
-           <div className="flex items-center gap-2 font-bold text-[#111111]">
-              <div className="w-6 h-6 bg-black text-white rounded flex items-center justify-center text-xs">A</div>
+        <div className="lg:hidden h-14 bg-white border-b border-black flex items-center justify-between px-4 flex-shrink-0 z-10">
+           <div className="flex items-center gap-2 font-sans font-medium text-black">
+              <div className="w-6 h-6 bg-black text-white flex items-center justify-center text-xs font-mono">A</div>
               Atlas
            </div>
-           <button onClick={() => setMobileMenuOpen(true)} className="cursor-pointer p-2 text-gray-600">
+           <button onClick={() => setMobileMenuOpen(true)} className="cursor-pointer p-2 text-black">
               <Menu className="w-5 h-5" />
            </button>
         </div>

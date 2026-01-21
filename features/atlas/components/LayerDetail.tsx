@@ -21,22 +21,22 @@ export const LayerDetail = ({
   const systemTasks = layerTasks.filter(t => t.task_type === 'system');
 
   return (
-    <div className="animate-in fade-in duration-500 pb-20">
+    <div className="pb-20">
       <button
         onClick={onBack}
-        className="mb-8 flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-black transition-colors font-medium group"
+        className="mb-8 flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-[#111111] transition-colors font-mono group"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
         Back
       </button>
 
-      <header className="mb-16">
+      <header className="mb-16 pb-12 border-b border-[#E6E6E6]">
         <div className="flex items-center gap-3 mb-6">
-           <div className="w-4 h-4 rounded-full" style={{ backgroundColor: layer.color }}></div>
-           <span className="text-sm font-bold uppercase tracking-widest text-[#6E6E6E]">{layer.name} Layer</span>
+           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: layer.color }}></div>
+           <span className="text-xs font-mono uppercase tracking-widest text-[#6E6E6E]">{layer.name} Layer</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-light tracking-tighter text-[#111111] mb-8">{layer.role}</h1>
-        <p className="text-xl md:text-2xl font-light text-[#111111] leading-relaxed max-w-4xl border-l-4 pl-8 py-2" style={{ borderColor: layer.color }}>
+        <h1 className="text-5xl md:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">{layer.role}</h1>
+        <p className="text-xl md:text-2xl font-sans font-light text-[#111111] leading-snug max-w-4xl border-l-2 pl-8 py-2" style={{ borderColor: layer.color }}>
           {layer.description}
         </p>
       </header>
@@ -45,7 +45,10 @@ export const LayerDetail = ({
          <div className="lg:col-span-2 space-y-16">
             {/* Guidance */}
             <section>
-               <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-8 font-medium">Layer Guidelines</h2>
+               <div className="mb-6">
+                 <span className="font-mono text-sm text-gray-500">(01)</span>
+                 <h2 className="text-xl font-sans font-medium tracking-tight mt-2 text-[#111111]">Layer Guidelines</h2>
+               </div>
                
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="bg-[#F9F9F7] p-6 rounded-xl border border-[#F0F0EE]">
@@ -76,7 +79,10 @@ export const LayerDetail = ({
 
             {/* Tasks */}
             <section>
-               <h2 className="text-xs uppercase tracking-widest text-[#6E6E6E] border-b border-[#E6E6E6] pb-3 mb-8 font-medium">Available Patterns</h2>
+               <div className="mb-6">
+                 <span className="font-mono text-sm text-gray-500">(02)</span>
+                 <h2 className="text-xl font-sans font-medium tracking-tight mt-2 text-[#111111]">Available Patterns</h2>
+               </div>
                
                <div className="space-y-12">
                   {/* AI Tasks */}

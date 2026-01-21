@@ -28,143 +28,134 @@ export const HomeDashboard = ({ onNavigate }: HomeDashboardProps) => {
   const layers = atlasService.getLayers();
 
   const stats = [
-    { id: 'ai', label: 'AI Patterns', count: tasks.filter(t => t.task_type === 'ai').length, icon: BrainCircuit, color: 'text-purple-600', bg: 'bg-purple-50', border: 'hover:border-purple-200' },
-    { id: 'human', label: 'Human Actions', count: tasks.filter(t => t.task_type === 'human').length, icon: UserCircle, color: 'text-blue-600', bg: 'bg-blue-50', border: 'hover:border-blue-200' },
-    { id: 'system', label: 'System Ops', count: tasks.filter(t => t.task_type === 'system').length, icon: Settings, color: 'text-gray-600', bg: 'bg-gray-50', border: 'hover:border-gray-200' },
-    { id: 'data', label: 'Data Types', count: dataArtifacts.length, icon: Database, color: 'text-amber-600', bg: 'bg-amber-50', border: 'hover:border-amber-200' },
-    { id: 'constraints', label: 'Constraints', count: constraints.length, icon: Sliders, color: 'text-rose-600', bg: 'bg-rose-50', border: 'hover:border-rose-200' },
-    { id: 'touchpoints', label: 'Touchpoints', count: touchpoints.length, icon: Smartphone, color: 'text-cyan-600', bg: 'bg-cyan-50', border: 'hover:border-cyan-200' },
+    { id: 'ai', label: 'AI Patterns', count: tasks.filter(t => t.task_type === 'ai').length, icon: BrainCircuit, primary: '#8B22F1', secondary: '#F9F5FE' },
+    { id: 'human', label: 'Human Actions', count: tasks.filter(t => t.task_type === 'human').length, icon: UserCircle, primary: '#2B5CF3', secondary: '#F0F6FE' },
+    { id: 'system', label: 'System Ops', count: tasks.filter(t => t.task_type === 'system').length, icon: Settings, primary: '#4C5564', secondary: '#F9FAFB' },
+    { id: 'data', label: 'Data Types', count: dataArtifacts.length, icon: Database, primary: '#D37709', secondary: '#FFFBEC' },
+    { id: 'constraints', label: 'Constraints', count: constraints.length, icon: Sliders, primary: '#D91A45', secondary: '#FDF2F2' },
+    { id: 'touchpoints', label: 'Touchpoints', count: touchpoints.length, icon: Smartphone, primary: '#3090B5', secondary: '#EFFEFF' },
   ];
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-16 pb-20">
-      
+    <div className="space-y-20 pb-20">
+
       {/* Hero Section */}
-      <header className="relative">
+      <header className="pt-8 border-b border-[#E6E6E6] pb-12">
         <div className="max-w-4xl">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tighter text-[#111111] mb-6 leading-[0.9]">
-            AI Interaction <br/> <span className="text-[#6E6E6E]">Atlas</span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans tracking-tighter text-[#111111] mb-8 leading-[0.95] font-medium">
+            AI Interaction<br/>Atlas
           </h1>
-          <p className="text-xl md:text-2xl font-light text-[#6E6E6E] leading-relaxed max-w-2xl">
+          <p className="text-xl md:text-2xl font-sans font-light text-[#6E6E6E] leading-snug max-w-2xl">
             {meta.description}
           </p>
-
-          {/* CTA */}
-          <div className="mt-8">
-            <button
-              onClick={() => onNavigate('ai')}
-              className="cursor-pointer px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"
-            >
-              Explore the Atlas
-            </button>
-          </div>
         </div>
       </header>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {stats.map((stat) => (
-          <button 
-            key={stat.id}
-            onClick={() => onNavigate(stat.id as any)}
-            className={`group flex flex-col p-5 bg-white border border-[#E6E6E6] rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${stat.border}`}
-          >
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-4 ${stat.bg} ${stat.color} transition-transform group-hover:scale-110`}>
-              <stat.icon className="w-5 h-5" />
-            </div>
-            <div className="text-3xl font-light text-[#111111] mb-1">{stat.count}</div>
-            <div className="text-xs font-bold uppercase tracking-wider text-[#6E6E6E]">{stat.label}</div>
-          </button>
-        ))}
-      </div>
+      {/* Stats Grid - Group hover */}
+      <section>
+        <div className="mb-8">
+          <span className="font-mono text-sm text-gray-500">(01)</span>
+          <h2 className="text-2xl md:text-3xl font-sans tracking-tight font-medium mt-2 text-[#111111]">Browse by Dimension</h2>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border-l border-[#E6E6E6] group/list">
+          {stats.map((stat) => (
+            <button
+              key={stat.id}
+              onClick={() => onNavigate(stat.id as any)}
+              className="group text-left border-r border-t border-b border-[#E6E6E6] p-6 min-h-[160px] flex flex-col justify-between transition-all opacity-100 group-hover/list:opacity-40 hover:!opacity-100"
+              style={{
+                backgroundColor: 'transparent',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = stat.secondary;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <stat.icon className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: stat.primary }} />
+              <div>
+                <div className="text-3xl font-sans font-light mb-2 text-[#111111]">{stat.count}</div>
+                <div className="text-xs font-mono uppercase tracking-widest text-[#6E6E6E]">{stat.label}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
 
       {/* Architecture Flow */}
       <section>
-        <div className="max-w-4xl">
-           <h2 className="text-2xl font-light text-[#111111] pb-4">The 4-Layer Architecture</h2>
-          <p className="font-light text-[#6E6E6E] leading-relaxed max-w-xl pb-8">A mental model for AI experiences as a composed system. <br/> Layers describe what kind of work the system is doing, and are not strictly ordered. Many systems loop through and across layers. </p>
+        <div className="mb-8">
+          <span className="font-mono text-sm text-gray-500">(02)</span>
+          <h2 className="text-2xl md:text-3xl font-sans tracking-tight font-medium mt-2 mb-4 text-[#111111]">The 4-Layer Architecture</h2>
+          <p className="text-base text-[#6E6E6E] leading-relaxed max-w-2xl">
+            A mental model for AI experiences as a composed system. Layers describe what kind of work
+            the system is doing, and are not strictly ordered. Many systems loop through and across layers.
+          </p>
         </div>
 
-        <div className="relative space-y-8">
-          {/* Connector Line */}
-          <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent hidden md:block"></div>
-
+        <div className="border-t border-[#E6E6E6] pt-12 space-y-0 group/layers">
           {layers.map((layer, index) => {
             const layerTasks = tasks.filter(t => t.layer_id === layer.id);
             const isLast = index === layers.length - 1;
-            
+
             // Layer specific icons
-            const LayerIcon = 
+            const LayerIcon =
                layer.id === 'layer_inbound' ? Layers :
                layer.id === 'layer_internal' ? BrainCircuit :
                layer.id === 'layer_outbound' ? MessageSquare :
                Activity;
 
             return (
-              <div 
+              <button
                 key={layer.id}
-                className="relative md:pl-24 group"
+                onClick={() => onNavigate('layer', layer.id)}
+                className="relative w-full text-left border-b border-[#E6E6E6] p-8 transition-all duration-300 hover:bg-[#F9F9F7] group opacity-100 group-hover/layers:opacity-50 hover:!opacity-100"
               >
-                {/* Node on line */}
-                <div 
-                  className="absolute left-[23px] top-8 w-5 h-5 rounded-full border-4 border-white shadow-sm z-10 hidden md:block transition-transform duration-500 group-hover:scale-125"
-                  style={{ backgroundColor: layer.color }}
-                ></div>
+                {/* Accent Bar */}
+                <div className="absolute left-0 top-0 bottom-0 w-1.5 transition-all group-hover:w-2" style={{ backgroundColor: layer.color }}></div>
 
-                <div 
-                   onClick={() => onNavigate('layer', layer.id)}
-                   className="bg-white border border-[#E6E6E6] rounded-2xl p-6 md:p-8 hover:shadow-xl transition-all duration-300 cursor-pointer group/card relative overflow-hidden"
-                >
-                   {/* Color Accent Bar */}
-                   <div className="absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 group-hover/card:w-2" style={{ backgroundColor: layer.color }}></div>
-
-                   <div className="flex flex-col lg:flex-row gap-8 lg:items-start">
-                      <div className="flex-1">
-                         <div className="flex items-center gap-3 mb-4">
-                            <div className={`p-2 rounded-lg bg-gray-50 text-gray-900`}>
-                               <LayerIcon className="w-5 h-5" />
-                            </div>
-                            <div>
-                               <h3 className="text-xl font-bold text-[#111111]">{layer.name}</h3>
-                               <div className="text-[10px] font-bold uppercase tracking-widest text-[#6E6E6E]">{layer.role}</div>
-                            </div>
-                         </div>
-                         <p className="text-[#6E6E6E] leading-relaxed mb-6 font-light">{layer.description}</p>
-                         
-                         <div className="flex items-center gap-4 text-xs font-medium">
-                            <span className="bg-[#F9F9F7] px-3 py-1.5 rounded-full border border-[#E6E6E6] text-[#111111]">
-                               {layerTasks.length} Patterns
-                            </span>
-                            <span className="text-blue-600 group-hover/card:translate-x-1 transition-transform flex items-center gap-1">
-                               Explore Layer <ArrowRight className="w-3 h-3" />
-                            </span>
-                         </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                  {/* Left: Identity */}
+                  <div className="lg:col-span-4">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="p-3 border border-[#E6E6E6] group-hover:border-gray-300 transition-colors">
+                        <LayerIcon className="w-6 h-6" style={{ color: layer.color }} />
                       </div>
-
-                      {/* Mini Grid of Tasks */}
-                      <div className="flex-1 bg-[#F9F9F7]/50 rounded-xl p-4 border border-[#F0F0EE]">
-                         <div className="text-[10px] font-bold uppercase tracking-wider text-[#999] mb-3">Common Capabilities</div>
-                         <div className="flex flex-wrap gap-2">
-                            {layerTasks.slice(0, 6).map(task => (
-                               <button
-                                  key={task.id}
-                                  onClick={(e) => {
-                                     e.stopPropagation();
-                                     onNavigate('task', task.id);
-                                  }}
-                                  className="px-2.5 py-1.5 bg-white border border-[#E6E6E6] rounded text-[11px] font-medium text-gray-600 hover:text-black hover:border-gray-400 transition-colors shadow-sm"
-                               >
-                                  {task.name}
-                               </button>
-                            ))}
-                            {layerTasks.length > 6 && (
-                               <span className="px-2 py-1.5 text-[10px] text-gray-400 font-medium">+{layerTasks.length - 6} more</span>
-                            )}
-                         </div>
+                      <div>
+                        <h3 className="text-2xl font-sans font-medium mb-1 text-[#111111]">{layer.name}</h3>
+                        <div className="text-xs font-mono uppercase tracking-widest text-[#6E6E6E]">{layer.role}</div>
                       </div>
-                   </div>
+                    </div>
+                    <p className="text-sm leading-relaxed text-[#6E6E6E]">
+                      {layer.description}
+                    </p>
+                  </div>
+
+                  {/* Right: Capabilities Preview */}
+                  <div className="lg:col-span-8 border-l border-[#E6E6E6] pl-8">
+                    <div className="text-xs font-mono uppercase tracking-widest text-[#999] mb-4">
+                      {layerTasks.length} Patterns
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {layerTasks.slice(0, 8).map(task => (
+                        <span
+                          key={task.id}
+                          className="px-3 py-1.5 border border-[#E6E6E6] text-xs font-mono text-[#6E6E6E] bg-white"
+                        >
+                          {task.name}
+                        </span>
+                      ))}
+                      {layerTasks.length > 8 && (
+                        <span className="px-3 py-1.5 text-xs font-mono text-[#999]">
+                          +{layerTasks.length - 8} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
