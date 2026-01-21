@@ -199,56 +199,90 @@ export const TaskDetail = ({
       {/* Simple Section Layout */}
       <div className="space-y-12">
 
-        {/* Data Flow Section */}
-        <section>
-          <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
-            <span className="font-mono text-xs text-gray-500">(01)</span>
-            <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
-              Data Flow
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Inputs */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs uppercase tracking-wider text-[#6E6E6E] font-mono font-medium">Inputs</span>
-                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 font-mono">{task.io_spec.inputs.required.length + task.io_spec.inputs.optional.length}</span>
-              </div>
-              <div className="space-y-2">
-                {task.io_spec.inputs.required.length === 0 && task.io_spec.inputs.optional.length === 0 && (
-                  <span className="text-sm text-gray-400 italic">No explicit inputs</span>
-                )}
-                {task.io_spec.inputs.required.map((item, i) => (
-                  <DataArtifactCard key={`req-${i}`} item={item} type="required" />
-                ))}
-                {task.io_spec.inputs.optional.map((item, i) => (
-                  <DataArtifactCard key={`opt-${i}`} item={item} type="optional" />
-                ))}
-              </div>
+        {/* AI Specific: UX Guardrails Section */}
+        {task.task_type === 'ai' && (
+          <section>
+            <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
+              <span className="font-mono text-xs text-gray-500">(01)</span>
+              <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
+                UX Guardrails
+              </h2>
             </div>
-
-            {/* Outputs */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs uppercase tracking-wider text-[#6E6E6E] font-mono font-medium">Outputs</span>
-                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 font-mono">{1 + task.io_spec.outputs.metadata.length}</span>
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-[#6E6E6E] mb-3 font-mono font-medium flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-orange-600" />
+                    Primary Risk
+                  </div>
+                  <div className="text-sm text-[#111111] leading-relaxed">
+                    {task.ux_notes.risk}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-[#6E6E6E] mb-3 font-mono font-medium flex items-center gap-2">
+                    <Lightbulb className="w-4 h-4 text-blue-600" />
+                    Designer Tip
+                  </div>
+                  <div className="text-sm text-[#111111] leading-relaxed">
+                    {task.ux_notes.tip}
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2">
-                <DataArtifactCard item={task.io_spec.outputs.primary} type="output" />
-                {task.io_spec.outputs.metadata.map((item, i) => (
-                  <DataArtifactCard key={`meta-${i}`} item={item} type="optional" />
-                ))}
-              </div>
+              {task.ux_notes.anti_patterns.length > 0 && (
+                <div>
+                  <div className="text-xs uppercase text-[#6E6E6E] mb-4 tracking-wider font-mono font-medium">Avoid When:</div>
+                  <ul className="space-y-2">
+                    {task.ux_notes.anti_patterns.map((pat, i) => (
+                      <li key={i} className="text-sm text-[#6E6E6E] flex items-start gap-3 pl-6 relative">
+                        <span className="absolute left-0 text-red-400">•</span>
+                        {pat}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
+        {/* AI Specific: Capabilities Section */}
+        {task.task_type === 'ai' && (
+          <section>
+            <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
+              <span className="font-mono text-xs text-gray-500">(02)</span>
+              <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
+                Technical Capabilities
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {task.capabilities.map((cap, i) => (
+                <div
+                  key={i}
+                  className="px-4 py-3 bg-white border border-[#E6E6E6] hover:border-gray-400 transition-colors flex items-center justify-between gap-3"
+                >
+                  <span className="font-medium text-sm text-[#111111]">{cap.name}</span>
+                  <a
+                    href={`https://huggingface.co/models?pipeline_tag=${cap.tag}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 px-2 py-1 bg-gray-50 hover:bg-[#FFF8E0] border border-gray-200 hover:border-[#FFD21E] transition-colors group/hf flex-shrink-0"
+                    title="View models on Hugging Face"
+                  >
+                    <span className="text-xs filter grayscale opacity-60 group-hover/hf:grayscale-0 group-hover/hf:opacity-100 transition-all">🤗</span>
+                    <ArrowUpRight className="w-3 h-3 text-gray-400 group-hover/hf:text-gray-700" />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* AI Specific: Implementation Section */}
         {task.task_type === 'ai' && (
           <section>
             <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
-              <span className="font-mono text-xs text-gray-500">(02)</span>
+              <span className="font-mono text-xs text-gray-500">(03)</span>
               <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
                 Implementation Constraints
               </h2>
@@ -297,11 +331,75 @@ export const TaskDetail = ({
           </section>
         )}
 
+        {/* Human/System Specific: Variants Section */}
+        {(task.task_type === 'human' || task.task_type === 'system') && (
+          <section>
+            <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
+              <span className="font-mono text-xs text-gray-500">(01)</span>
+              <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
+                Common Variants
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {task.common_variants.map((variant, i) => (
+                <div key={i} className="px-4 py-3 bg-white border border-[#E6E6E6] text-sm text-[#111111] font-medium text-center">
+                  {variant.replace(/_/g, ' ')}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Data Flow Section */}
+        <section>
+          <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
+            <span className="font-mono text-xs text-gray-500">{task.task_type === 'ai' ? '(04)' : '(02)'}</span>
+            <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
+              Data Flow
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Inputs */}
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs uppercase tracking-wider text-[#6E6E6E] font-mono font-medium">Inputs</span>
+                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 font-mono">{task.io_spec.inputs.required.length + task.io_spec.inputs.optional.length}</span>
+              </div>
+              <div className="space-y-2">
+                {task.io_spec.inputs.required.length === 0 && task.io_spec.inputs.optional.length === 0 && (
+                  <span className="text-sm text-gray-400 italic">No explicit inputs</span>
+                )}
+                {task.io_spec.inputs.required.map((item, i) => (
+                  <DataArtifactCard key={`req-${i}`} item={item} type="required" />
+                ))}
+                {task.io_spec.inputs.optional.map((item, i) => (
+                  <DataArtifactCard key={`opt-${i}`} item={item} type="optional" />
+                ))}
+              </div>
+            </div>
+
+            {/* Outputs */}
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs uppercase tracking-wider text-[#6E6E6E] font-mono font-medium">Outputs</span>
+                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 font-mono">{1 + task.io_spec.outputs.metadata.length}</span>
+              </div>
+              <div className="space-y-2">
+                <DataArtifactCard item={task.io_spec.outputs.primary} type="output" />
+                {task.io_spec.outputs.metadata.map((item, i) => (
+                  <DataArtifactCard key={`meta-${i}`} item={item} type="optional" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Relations Section */}
         {relations.length > 0 && (
           <section>
             <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
-              <span className="font-mono text-xs text-gray-500">(03)</span>
+              <span className="font-mono text-xs text-gray-500">{task.task_type === 'ai' ? '(05)' : '(03)'}</span>
               <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
                 Related Patterns
               </h2>
@@ -383,104 +481,6 @@ export const TaskDetail = ({
                   )}
                 </div>
               </div>
-            </div>
-          </section>
-        )}
-
-        {/* AI Specific: Capabilities Section */}
-        {task.task_type === 'ai' && (
-          <section>
-            <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
-              <span className="font-mono text-xs text-gray-500">(04)</span>
-              <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
-                Technical Capabilities
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {task.capabilities.map((cap, i) => (
-                <div
-                  key={i}
-                  className="px-4 py-3 bg-white border border-[#E6E6E6] hover:border-gray-400 transition-colors flex items-center justify-between gap-3"
-                >
-                  <span className="font-medium text-sm text-[#111111]">{cap.name}</span>
-                  <a
-                    href={`https://huggingface.co/models?pipeline_tag=${cap.tag}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 bg-gray-50 hover:bg-[#FFF8E0] border border-gray-200 hover:border-[#FFD21E] transition-colors group/hf flex-shrink-0"
-                    title="View models on Hugging Face"
-                  >
-                    <span className="text-xs filter grayscale opacity-60 group-hover/hf:grayscale-0 group-hover/hf:opacity-100 transition-all">🤗</span>
-                    <ArrowUpRight className="w-3 h-3 text-gray-400 group-hover/hf:text-gray-700" />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* AI Specific: UX Guardrails Section */}
-        {task.task_type === 'ai' && (
-          <section>
-            <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
-              <span className="font-mono text-xs text-gray-500">(05)</span>
-              <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
-                UX Guardrails
-              </h2>
-            </div>
-            <div className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-[#6E6E6E] mb-3 font-mono font-medium flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-orange-600" />
-                    Primary Risk
-                  </div>
-                  <div className="text-sm text-[#111111] leading-relaxed">
-                    {task.ux_notes.risk}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-[#6E6E6E] mb-3 font-mono font-medium flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4 text-blue-600" />
-                    Designer Tip
-                  </div>
-                  <div className="text-sm text-[#111111] leading-relaxed">
-                    {task.ux_notes.tip}
-                  </div>
-                </div>
-              </div>
-              {task.ux_notes.anti_patterns.length > 0 && (
-                <div>
-                  <div className="text-xs uppercase text-[#6E6E6E] mb-4 tracking-wider font-mono font-medium">Avoid When:</div>
-                  <ul className="space-y-2">
-                    {task.ux_notes.anti_patterns.map((pat, i) => (
-                      <li key={i} className="text-sm text-[#6E6E6E] flex items-start gap-3 pl-6 relative">
-                        <span className="absolute left-0 text-red-400">•</span>
-                        {pat}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
-
-        {/* Human/System Specific: Variants Section */}
-        {(task.task_type === 'human' || task.task_type === 'system') && (
-          <section>
-            <div className="mb-6 pb-3 border-b border-[#E6E6E6]">
-              <span className="font-mono text-xs text-gray-500">(02)</span>
-              <h2 className="text-2xl font-sans font-medium tracking-tight mt-1 text-[#111111]">
-                Common Variants
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-              {task.common_variants.map((variant, i) => (
-                <div key={i} className="px-4 py-3 bg-white border border-[#E6E6E6] text-sm text-[#111111] font-medium text-center">
-                  {variant.replace(/_/g, ' ')}
-                </div>
-              ))}
             </div>
           </section>
         )}
