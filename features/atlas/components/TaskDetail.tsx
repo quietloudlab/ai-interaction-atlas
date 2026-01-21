@@ -207,16 +207,18 @@ export const TaskDetail = ({
               Data Flow
             </h2>
           </div>
-          <div className="space-y-6">
-            {/* Inputs */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
+
+          {/* Two Column Layout: Inputs | Outputs */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Inputs Column */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase tracking-wider text-[#6E6E6E] font-mono font-medium">Inputs</span>
                 <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 font-mono">{task.io_spec.inputs.required.length + task.io_spec.inputs.optional.length}</span>
               </div>
               <div className="flex flex-col gap-2">
                 {task.io_spec.inputs.required.length === 0 && task.io_spec.inputs.optional.length === 0 && (
-                  <span className="text-xs text-gray-400 italic">No explicit inputs</span>
+                  <span className="text-xs text-gray-400 italic">None</span>
                 )}
                 {task.io_spec.inputs.required.map((item, i) => (
                   <DataArtifactCard key={`req-${i}`} item={item} type="required" />
@@ -227,15 +229,11 @@ export const TaskDetail = ({
               </div>
             </div>
 
-            {/* Arrow */}
-            <div className="flex justify-center text-[#E6E6E6]">
-              <ArrowRight className="w-4 h-4 rotate-90" />
-            </div>
-
-            {/* Outputs */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
+            {/* Outputs Column */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase tracking-wider text-[#6E6E6E] font-mono font-medium">Outputs</span>
+                <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 font-mono">{1 + task.io_spec.outputs.metadata.length}</span>
               </div>
               <div className="flex flex-col gap-2">
                 <DataArtifactCard item={task.io_spec.outputs.primary} type="output" />
@@ -309,64 +307,84 @@ export const TaskDetail = ({
                 System Map
               </h2>
             </div>
-            <div className="space-y-6">
-              {/* Upstream */}
-              {relations.filter(r => r.category === 'upstream').length > 0 && (
-                <div className="space-y-3">
-                  <div className="text-[10px] uppercase text-[#6E6E6E] flex items-center gap-1.5 font-mono font-medium tracking-wider">
-                    <ArrowLeft className="w-3 h-3" /> Upstream
-                  </div>
-                  {relations.filter(r => r.category === 'upstream').map((rel, i) => (
-                    <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-[#FAFAFA] border border-transparent hover:border-[#E6E6E6] transition-all">
-                      <span className="text-sm font-medium text-[#111111] group-hover:text-blue-600 transition-colors">{rel.targetName}</span>
-                      <span className="text-[10px] text-[#999]">{rel.reason}</span>
+
+            {/* Grid Layout for Relations */}
+            <div className="grid grid-cols-1 gap-6">
+              {/* Row 1: Upstream & Downstream */}
+              {(relations.filter(r => r.category === 'upstream').length > 0 || relations.filter(r => r.category === 'downstream').length > 0) && (
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Upstream */}
+                  <div className="space-y-2">
+                    <div className="text-[10px] uppercase text-[#6E6E6E] flex items-center gap-1.5 font-mono font-medium tracking-wider mb-2">
+                      <ArrowLeft className="w-3 h-3" /> Upstream
                     </div>
-                  ))}
+                    {relations.filter(r => r.category === 'upstream').length === 0 ? (
+                      <span className="text-xs text-gray-400 italic">None</span>
+                    ) : (
+                      relations.filter(r => r.category === 'upstream').map((rel, i) => (
+                        <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-[#FAFAFA] border border-transparent hover:border-[#E6E6E6] transition-all">
+                          <span className="text-xs font-medium text-[#111111] group-hover:text-blue-600 transition-colors leading-tight">{rel.targetName}</span>
+                          <span className="text-[9px] text-[#999] mt-0.5">{rel.reason}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  {/* Downstream */}
+                  <div className="space-y-2">
+                    <div className="text-[10px] uppercase text-[#6E6E6E] flex items-center gap-1.5 font-mono font-medium tracking-wider mb-2">
+                      <ArrowRight className="w-3 h-3" /> Downstream
+                    </div>
+                    {relations.filter(r => r.category === 'downstream').length === 0 ? (
+                      <span className="text-xs text-gray-400 italic">None</span>
+                    ) : (
+                      relations.filter(r => r.category === 'downstream').map((rel, i) => (
+                        <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-[#FAFAFA] border border-transparent hover:border-[#E6E6E6] transition-all">
+                          <span className="text-xs font-medium text-[#111111] group-hover:text-blue-600 transition-colors leading-tight">{rel.targetName}</span>
+                          <span className="text-[9px] text-[#999] mt-0.5">{rel.reason}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
               )}
 
-              {/* Downstream */}
-              {relations.filter(r => r.category === 'downstream').length > 0 && (
-                <div className="space-y-3">
-                  <div className="text-[10px] uppercase text-[#6E6E6E] flex items-center gap-1.5 font-mono font-medium tracking-wider">
-                    <ArrowRight className="w-3 h-3" /> Downstream
-                  </div>
-                  {relations.filter(r => r.category === 'downstream').map((rel, i) => (
-                    <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-[#FAFAFA] border border-transparent hover:border-[#E6E6E6] transition-all">
-                      <span className="text-sm font-medium text-[#111111] group-hover:text-blue-600 transition-colors">{rel.targetName}</span>
-                      <span className="text-[10px] text-[#999]">{rel.reason}</span>
+              {/* Row 2: Lateral & Conflicts */}
+              {(relations.filter(r => r.category === 'lateral').length > 0 || relations.filter(r => r.category === 'conflict').length > 0) && (
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Lateral */}
+                  <div className="space-y-2">
+                    <div className="text-[10px] uppercase text-[#6E6E6E] flex items-center gap-1.5 font-mono font-medium tracking-wider mb-2">
+                      <GitCommit className="w-3 h-3" /> Related
                     </div>
-                  ))}
-                </div>
-              )}
+                    {relations.filter(r => r.category === 'lateral').length === 0 ? (
+                      <span className="text-xs text-gray-400 italic">None</span>
+                    ) : (
+                      relations.filter(r => r.category === 'lateral').map((rel, i) => (
+                        <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-[#FAFAFA] border border-transparent hover:border-[#E6E6E6] transition-all">
+                          <span className="text-xs font-medium text-[#111111] group-hover:text-blue-600 transition-colors leading-tight">{rel.targetName}</span>
+                          <span className="text-[9px] text-[#999] mt-0.5">{rel.reason}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
 
-              {/* Lateral */}
-              {relations.filter(r => r.category === 'lateral').length > 0 && (
-                <div className="space-y-3">
-                  <div className="text-[10px] uppercase text-[#6E6E6E] flex items-center gap-1.5 font-mono font-medium tracking-wider">
-                    <GitCommit className="w-3 h-3" /> Related
-                  </div>
-                  {relations.filter(r => r.category === 'lateral').map((rel, i) => (
-                    <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-[#FAFAFA] border border-transparent hover:border-[#E6E6E6] transition-all">
-                      <span className="text-sm font-medium text-[#111111] group-hover:text-blue-600 transition-colors">{rel.targetName}</span>
-                      <span className="text-[10px] text-[#999]">{rel.reason}</span>
+                  {/* Conflicts */}
+                  <div className="space-y-2">
+                    <div className="text-[10px] uppercase text-red-600 flex items-center gap-1.5 font-mono font-medium tracking-wider mb-2">
+                      <XCircle className="w-3 h-3" /> Conflicts
                     </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Conflicts */}
-              {relations.filter(r => r.category === 'conflict').length > 0 && (
-                <div className="space-y-3">
-                  <div className="text-[10px] uppercase text-red-600 flex items-center gap-1.5 font-mono font-medium tracking-wider">
-                    <XCircle className="w-3 h-3" /> Conflicts
+                    {relations.filter(r => r.category === 'conflict').length === 0 ? (
+                      <span className="text-xs text-gray-400 italic">None</span>
+                    ) : (
+                      relations.filter(r => r.category === 'conflict').map((rel, i) => (
+                        <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all">
+                          <span className="text-xs font-medium text-red-700 group-hover:text-red-800 transition-colors line-through decoration-red-300 leading-tight">{rel.targetName}</span>
+                          <span className="text-[9px] text-red-500 mt-0.5">{rel.reason}</span>
+                        </div>
+                      ))
+                    )}
                   </div>
-                  {relations.filter(r => r.category === 'conflict').map((rel, i) => (
-                    <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer flex flex-col p-2 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all">
-                      <span className="text-sm font-medium text-red-700 group-hover:text-red-800 transition-colors line-through decoration-red-300">{rel.targetName}</span>
-                      <span className="text-[10px] text-red-500">{rel.reason}</span>
-                    </div>
-                  ))}
                 </div>
               )}
             </div>
@@ -382,19 +400,20 @@ export const TaskDetail = ({
                 Technical Capabilities
               </h2>
             </div>
-            <div className="flex flex-wrap gap-2">
+            {/* Multi-column grid for capabilities */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {task.capabilities.map((cap, i) => (
                 <div
                   key={i}
                   className="px-3 py-2 bg-white border border-[#E6E6E6] text-sm text-[#111111] hover:border-gray-400 transition-colors flex items-center gap-2 cursor-default"
                 >
-                  <span className="font-medium">{cap.name}</span>
-                  <span className="text-[10px] text-[#999] font-mono bg-[#F9F9F7] px-1.5 py-0.5 border border-[#E6E6E6] hidden sm:inline-block">{cap.tag}</span>
+                  <span className="font-medium flex-1 min-w-0 truncate">{cap.name}</span>
+                  <span className="text-[10px] text-[#999] font-mono bg-[#F9F9F7] px-1.5 py-0.5 border border-[#E6E6E6] hidden lg:inline-block">{cap.tag}</span>
                   <a
                     href={`https://huggingface.co/models?pipeline_tag=${cap.tag}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-1 flex items-center gap-1 px-1.5 py-0.5 bg-gray-50 hover:bg-[#FFF8E0] border border-gray-200 hover:border-[#FFD21E] transition-colors group/hf"
+                    className="flex items-center gap-1 px-1.5 py-0.5 bg-gray-50 hover:bg-[#FFF8E0] border border-gray-200 hover:border-[#FFD21E] transition-colors group/hf flex-shrink-0"
                     title="View models on Hugging Face"
                   >
                     <span className="text-xs filter grayscale opacity-60 group-hover/hf:grayscale-0 group-hover/hf:opacity-100 transition-all">🤗</span>
@@ -458,9 +477,10 @@ export const TaskDetail = ({
                 Common Variants
               </h2>
             </div>
-            <div className="flex flex-wrap gap-2">
+            {/* Multi-column grid for variants */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {task.common_variants.map((variant, i) => (
-                <div key={i} className="px-3 py-2 bg-white border border-[#E6E6E6] text-sm text-[#111111] font-medium">
+                <div key={i} className="px-3 py-2 bg-white border border-[#E6E6E6] text-sm text-[#111111] font-medium text-center">
                   {variant.replace(/_/g, ' ')}
                 </div>
               ))}
