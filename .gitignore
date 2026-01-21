@@ -32,3 +32,11 @@ dist-ssr
 build
 .vercel
 .netlify
+
+# Internal documentation (not for public repo)
+EXTRACTION_SUMMARY.md
+SESSION_SUMMARY.md
+DEPLOYMENT_GUIDE.md
+GITHUB_SETUP.md
+inspiration
+inspo.tsx

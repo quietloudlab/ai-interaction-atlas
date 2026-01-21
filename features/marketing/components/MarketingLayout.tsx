@@ -50,17 +50,17 @@ const SiteFooter = ({ onNavigate }: any) => (
             <span className="font-bold text-[#111111]">AI Interaction Atlas</span>
           </div>
           <p className="text-[#6E6E6E] leading-relaxed max-w-sm">
-            A free tool created by Brandon Harwood at quietloudlab, a design and research studio specializing in human-centered AI.
+            A free tool by quietloudlab, a design and research studio specializing in human-centered AI.
           </p>
         <div className="flex gap-3 mt-4">
-          <a href="https://bah.design" target="_blank" rel="noopener noreferrer" aria-label="Brandon's Website" className="inline-block hover:opacity-70 transition">
+          <a href="https://quietloudlab.com" target="_blank" rel="noopener noreferrer" aria-label="Brandon's Website" className="inline-block hover:opacity-70 transition">
             <svg width="22" height="22" fill="none" viewBox="0 0 22 22" className="h-6 w-6 text-[#222]" xmlns="http://www.w3.org/2000/svg">
               <rect x="1.5" y="1.5" width="19" height="19" rx="4.5" stroke="currentColor" strokeWidth="2"/>
               <circle cx="11" cy="11" r="4" stroke="currentColor" strokeWidth="2"/>
               <circle cx="16.2" cy="5.8" r="1.2" fill="currentColor"/>
             </svg>
           </a>
-          <a href="https://www.linkedin.com/in/brandon-harwood" target="_blank" rel="noopener noreferrer" aria-label="Brandon on LinkedIn" className="inline-block hover:opacity-70 transition">
+          <a href="https://www.linkedin.com/company/quietloudlab" target="_blank" rel="noopener noreferrer" aria-label="Brandon on LinkedIn" className="inline-block hover:opacity-70 transition">
             <svg width="22" height="22" fill="none" viewBox="0 0 22 22" className="h-6 w-6 text-[#222]" xmlns="http://www.w3.org/2000/svg">
               <rect x="1" y="1" width="20" height="20" rx="4" stroke="currentColor" strokeWidth="2"/>
               <rect x="5.7" y="9.2" width="2.1" height="7.1" rx="1" fill="currentColor"/>
