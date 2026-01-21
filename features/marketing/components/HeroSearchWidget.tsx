@@ -7,16 +7,41 @@ interface HeroSearchWidgetProps {
   onTaskClick: (taskId: string) => void;
 }
 
+const EXAMPLE_SEARCHES = [
+  'image detection',
+  'sentiment analysis',
+  'file upload',
+  'review and approve',
+  'text generation',
+  'rate limiting',
+  'classification',
+  'transcribe audio',
+  'user feedback',
+  'caching strategy'
+];
+
 export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onTaskClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  // Cycle through placeholder examples
+  useEffect(() => {
+    if (searchQuery || isSearchFocused) return; // Don't cycle if user is typing or focused
+
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % EXAMPLE_SEARCHES.length);
+    }, 3000); // Change every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [searchQuery, isSearchFocused]);
+
+  const currentPlaceholder = `Try: ${EXAMPLE_SEARCHES[placeholderIndex]}...`;
 
   // Get search results
   const searchResults = useMemo(() => {
     if (searchQuery.trim().length < 2) {
-      // Show popular/featured tasks when no query
-      const allTasks = atlasService.getTasks();
-      return allTasks.slice(0, 6); // Top 6 tasks
+      return []; // Show empty state with helper text
     }
     return atlasService.searchTasks(searchQuery).slice(0, 8); // Top 8 results
   }, [searchQuery]);
@@ -46,7 +71,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onTaskClick 
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         <input
           type="text"
-          placeholder="Search patterns..."
+          placeholder={currentPlaceholder}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsSearchFocused(true)}
@@ -57,13 +82,15 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onTaskClick 
 
       {/* Results Panel */}
       <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] max-h-[400px] overflow-y-auto">
-        {searchQuery.trim().length === 0 && (
-          <div className="p-4 border-b-2 border-black bg-gray-50">
-            <p className="text-xs font-mono uppercase tracking-wider text-gray-500">Featured Patterns</p>
+        {searchQuery.trim().length === 0 ? (
+          <div className="p-8 text-center">
+            <Search className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+            <p className="text-sm font-mono text-gray-600 mb-2">Start typing to explore patterns</p>
+            <p className="text-xs text-gray-400">
+              Search across AI capabilities, human actions, and system operations
+            </p>
           </div>
-        )}
-
-        {searchResults.length > 0 ? (
+        ) : searchResults.length > 0 ? (
           <div className="divide-y-2 divide-gray-200">
             {searchResults.map((task) => {
               const Icon = getTaskIcon(task);
@@ -103,7 +130,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onTaskClick 
             <p className="text-sm text-gray-500 font-mono">No patterns found</p>
             <p className="text-xs text-gray-400 mt-1">Try different keywords</p>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
