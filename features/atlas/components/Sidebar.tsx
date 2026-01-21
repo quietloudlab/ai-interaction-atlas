@@ -15,7 +15,9 @@ import {
   Smartphone,
   Sparkles,
   Loader2,
-  FileText
+  FileText,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
 import { trackAtlasSearchPerformed, trackSemanticSearchUsed } from '../../../lib/posthog';
@@ -52,9 +54,18 @@ export const Sidebar = ({
   const [isSearching, setIsSearching] = useState(false);
   const [semanticResults, setSemanticResults] = useState<SearchResult[]>([]);
   const [searchTypeFilter, setSearchTypeFilter] = useState<Set<string>>(new Set());
+  const [isNavCollapsed, setIsNavCollapsed] = useState(() => {
+    const saved = localStorage.getItem('atlas-sidebar-nav-collapsed');
+    return saved === 'true';
+  });
 
   const meta = atlasService.getMeta();
   const layers = atlasService.getLayers();
+
+  // Save nav collapsed state to localStorage
+  useEffect(() => {
+    localStorage.setItem('atlas-sidebar-nav-collapsed', String(isNavCollapsed));
+  }, [isNavCollapsed]);
 
   // Check if semantic search is available on mount
   useEffect(() => {
@@ -225,8 +236,22 @@ export const Sidebar = ({
 
         {/* Navigation & Search Area */}
         <div className="flex flex-col flex-shrink-0 bg-white border-b border-[#E6E6E6]">
+           {/* Navigation Toggle */}
+           <button
+             onClick={() => setIsNavCollapsed(!isNavCollapsed)}
+             className="w-full flex items-center justify-between px-3 py-2 text-xs font-mono uppercase tracking-wider text-[#6E6E6E] hover:bg-gray-50 transition-colors border-b border-[#E6E6E6]"
+           >
+             <span>Navigation</span>
+             {isNavCollapsed ? (
+               <ChevronRight className="w-3.5 h-3.5" />
+             ) : (
+               <ChevronDown className="w-3.5 h-3.5" />
+             )}
+           </button>
+
            {/* Primary Links */}
-           <div className="p-3 space-y-0.5 pb-3">
+           {!isNavCollapsed && (
+             <div className="p-3 space-y-0.5 pb-3">
               <button
                 onClick={() => handleAtlasNav('dashboard')}
                 className={`
@@ -341,7 +366,8 @@ export const Sidebar = ({
                 <span>Quick Reference</span>
               </button>
            </div>
-           
+           )}
+
            {/* Search Bar */}
            <div className="px-3 pb-3">
              <div className="relative mb-2">
