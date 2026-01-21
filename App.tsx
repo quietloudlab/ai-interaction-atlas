@@ -119,6 +119,7 @@ function AtlasRoutes() {
         }
       }}
       onNavigateAtlas={(page) => handleNavigate(page)}
+      onSelectLayer={(id) => navigate(`/atlas/layer/${id}`)}
       onSelectView={(view) => {
         if (view === 'landing') navigate('/');
         else navigate(`/${view}`);

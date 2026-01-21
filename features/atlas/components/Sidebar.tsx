@@ -28,6 +28,7 @@ interface SidebarProps {
   onSelectView: (view: any) => void;
   activeAtlasPage?: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system';
   onNavigateAtlas?: (page: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system') => void;
+  onSelectLayer?: (id: string) => void;
   isOpen?: boolean;
   onClose?: () => void;
   variant?: 'overlay' | 'static';
@@ -40,6 +41,7 @@ export const Sidebar = ({
   onSelectView,
   activeAtlasPage = 'dashboard',
   onNavigateAtlas,
+  onSelectLayer,
   isOpen,
   onClose,
   variant = 'overlay'
@@ -460,11 +462,22 @@ export const Sidebar = ({
 
             return (
               <div key={layer.id}>
-                <div className="flex items-center gap-2 mb-3 sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm py-1 z-10">
+                <button
+                  onClick={() => {
+                    if (onSelectLayer) {
+                      onSelectLayer(layer.id);
+                      if (variant === 'overlay' && onClose) onClose();
+                    }
+                  }}
+                  className={`w-full flex items-center gap-2 mb-3 sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm py-1 z-10 ${
+                    onSelectLayer ? 'cursor-pointer hover:opacity-70 transition-opacity' : ''
+                  }`}
+                  disabled={!onSelectLayer}
+                >
                   <span className="w-2.5 h-2.5 shadow-sm" style={{ backgroundColor: layer.color }}></span>
                   <span className="text-[10px] uppercase tracking-widest font-mono font-medium text-[#6E6E6E]" style={{ color: layer.color }}>{layer.name}</span>
                   <div className="h-px bg-[#E6E6E6] flex-1"></div>
-                </div>
+                </button>
                 <div className="space-y-0.5">
                   {layerTasks.map(task => {
                      let Icon = BrainCircuit;

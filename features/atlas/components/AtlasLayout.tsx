@@ -13,6 +13,7 @@ interface AtlasLayoutProps {
   onSelectView: (view: any) => void;
   activeAtlasPage?: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system';
   onNavigateAtlas?: (page: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system') => void;
+  onSelectLayer?: (id: string) => void;
 }
 
 export const AtlasLayout = ({
@@ -22,7 +23,8 @@ export const AtlasLayout = ({
   activeView,
   onSelectView,
   activeAtlasPage,
-  onNavigateAtlas
+  onNavigateAtlas,
+  onSelectLayer
 }: AtlasLayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLElement>(null);
@@ -70,19 +72,20 @@ export const AtlasLayout = ({
     <div className="flex h-screen bg-white overflow-hidden">
       {/* Desktop Sidebar (Fixed) */}
       <div className="hidden lg:block w-[280px] h-full flex-shrink-0 border-r border-black z-20">
-        <Sidebar 
+        <Sidebar
           activeTaskId={activeTaskId}
           onSelectTask={onSelectTask}
           activeView={activeView}
           onSelectView={onSelectView}
           activeAtlasPage={activeAtlasPage}
           onNavigateAtlas={onNavigateAtlas}
+          onSelectLayer={onSelectLayer}
           variant="static"
         />
       </div>
 
       {/* Mobile Sidebar (Overlay) */}
-      <Sidebar 
+      <Sidebar
         activeTaskId={activeTaskId}
         onSelectTask={(id) => {
             onSelectTask(id);
@@ -95,6 +98,7 @@ export const AtlasLayout = ({
         }}
         activeAtlasPage={activeAtlasPage}
         onNavigateAtlas={onNavigateAtlas}
+        onSelectLayer={onSelectLayer}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         variant="overlay"
