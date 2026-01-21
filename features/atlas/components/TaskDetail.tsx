@@ -126,20 +126,26 @@ const DataArtifactCard: React.FC<DataArtifactCardProps> = ({ item, type = 'requi
   );
 };
 
-export const TaskDetail = ({ 
-  taskId, 
+export const TaskDetail = ({
+  taskId,
   onTaskClick,
   onBack
-}: { 
-  taskId: string, 
+}: {
+  taskId: string,
   onTaskClick: (id: string) => void,
-  onBack: () => void 
+  onBack: () => void
 }) => {
   const task = atlasService.getTaskById(taskId);
   if (!task) return null;
 
   const layer = atlasService.getLayerById(task.layer_id);
   const relations = atlasService.getTaskRelationships(task.id);
+
+  // Get all tasks for prev/next navigation
+  const allTasks = atlasService.getTasks();
+  const currentIndex = allTasks.findIndex(t => t.id === taskId);
+  const prevTask = currentIndex > 0 ? allTasks[currentIndex - 1] : null;
+  const nextTask = currentIndex < allTasks.length - 1 ? allTasks[currentIndex + 1] : null;
 
   // Helper for status colors
   const getStatusColor = (val: string) => {
@@ -154,13 +160,45 @@ export const TaskDetail = ({
 
   return (
     <div className="pb-20">
-      <button
-        onClick={onBack}
-        className="mb-8 flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-[#111111] transition-colors font-mono group"
-      >
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        Back
-      </button>
+      <div className="mb-8 flex items-center justify-between">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm text-[#6E6E6E] hover:text-[#111111] transition-colors font-mono group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back
+        </button>
+
+        {/* Previous / Next Navigation */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => prevTask && onTaskClick(prevTask.id)}
+            disabled={!prevTask}
+            className={`flex items-center gap-2 px-3 py-2 text-sm font-mono border border-[#E6E6E6] transition-colors ${
+              prevTask
+                ? 'text-[#111111] hover:bg-[#FAFAFA] cursor-pointer'
+                : 'text-[#E6E6E6] cursor-not-allowed'
+            }`}
+            title={prevTask ? `Previous: ${prevTask.name}` : 'No previous task'}
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Previous</span>
+          </button>
+          <button
+            onClick={() => nextTask && onTaskClick(nextTask.id)}
+            disabled={!nextTask}
+            className={`flex items-center gap-2 px-3 py-2 text-sm font-mono border border-[#E6E6E6] transition-colors ${
+              nextTask
+                ? 'text-[#111111] hover:bg-[#FAFAFA] cursor-pointer'
+                : 'text-[#E6E6E6] cursor-not-allowed'
+            }`}
+            title={nextTask ? `Next: ${nextTask.name}` : 'No next task'}
+          >
+            <span className="hidden sm:inline">Next</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
 
       {/* Header */}
       <header className="mb-16 pb-12 border-b border-[#E6E6E6]">
