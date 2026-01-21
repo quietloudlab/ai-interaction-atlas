@@ -19,7 +19,7 @@ The AI Interaction Atlas is an open-source taxonomy for AI interaction design. I
 ### What it is not
 
 - Not a UI framework
-- Not a canvas tool (yet)
+- Not a canvas tool (yet!)
 - Not prescriptive about solutions
 - Not tied to a single model or vendor
 
