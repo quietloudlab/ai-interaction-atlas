@@ -205,14 +205,14 @@ export const Sidebar = ({
               onClick={() => onSelectView('landing')}
               className="cursor-pointer flex items-center gap-2 text-[#111111] hover:opacity-70 transition-opacity group"
             >
-              <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 transition-colors">A</div>
+              <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-sans font-medium text-lg group-hover:bg-blue-600 transition-colors">A</div>
               <div className="flex flex-col text-left">
-                <span className="font-bold tracking-tight leading-none">Atlas</span>
-                <span className="text-[10px] text-[#6E6E6E] font-medium mt-0.5">v{meta.version}</span>
+                <span className="font-sans font-medium tracking-tight leading-none">Atlas</span>
+                <span className="text-[10px] text-[#6E6E6E] font-mono mt-0.5">v{meta.version}</span>
               </div>
             </button>
             {variant === 'overlay' && (
-              <button onClick={onClose} className="cursor-pointer lg:hidden p-1 rounded-md hover:bg-gray-100 text-gray-500">
+              <button onClick={onClose} className="cursor-pointer lg:hidden p-1 hover:bg-gray-100 text-gray-500">
                 <X className="w-5 h-5" />
               </button>
             )}
@@ -228,22 +228,22 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('dashboard')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'dashboard' && !activeTaskId
-                    ? 'bg-blue-50 text-blue-700 font-bold'
+                    ? 'bg-blue-50 text-blue-700 font-medium border-blue-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Overview</span>
               </button>
-              
+
               <button
                 onClick={() => handleAtlasNav('ai')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'ai'
-                    ? 'bg-purple-50 text-purple-700 font-bold'
+                    ? 'bg-purple-50 text-purple-700 font-medium border-purple-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -254,9 +254,9 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('human')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'human'
-                    ? 'bg-blue-50 text-blue-700 font-bold'
+                    ? 'bg-blue-50 text-blue-700 font-medium border-blue-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -267,9 +267,9 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('system')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'system'
-                    ? 'bg-gray-100 text-gray-800 font-bold'
+                    ? 'bg-gray-100 text-gray-800 font-medium border-gray-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -282,9 +282,9 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('data')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'data'
-                    ? 'bg-amber-50 text-amber-700 font-bold'
+                    ? 'bg-amber-50 text-amber-700 font-medium border-amber-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -294,9 +294,9 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('constraints')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'constraints'
-                    ? 'bg-rose-50 text-rose-700 font-bold'
+                    ? 'bg-rose-50 text-rose-700 font-medium border-rose-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -306,9 +306,9 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('touchpoints')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'touchpoints'
-                    ? 'bg-cyan-50 text-cyan-700 font-bold'
+                    ? 'bg-cyan-50 text-cyan-700 font-medium border-cyan-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -320,7 +320,7 @@ export const Sidebar = ({
 
               <button
                 onClick={() => window.location.href = '/examples'}
-                className="cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5 text-[#111111] font-medium hover:bg-gray-100"
+                className="cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 text-[#111111] font-medium hover:bg-gray-100 border border-transparent"
               >
                 <LayoutGrid className="w-4 h-4" />
                 <span>Examples</span>
@@ -329,9 +329,9 @@ export const Sidebar = ({
               <button
                 onClick={() => handleAtlasNav('reference')}
                 className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 rounded-md text-sm transition-all gap-2.5
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'reference'
-                    ? 'bg-indigo-50 text-indigo-700 font-bold'
+                    ? 'bg-indigo-50 text-indigo-700 font-medium border-indigo-200'
                     : 'text-[#111111] font-medium hover:bg-gray-100'}
                 `}
               >
@@ -349,7 +349,7 @@ export const Sidebar = ({
                   placeholder={isSemanticSearchEnabled ? "Search with AI..." : "Find a task..."}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-[#F4F4F5] border-none rounded-md py-1.5 pl-8 pr-9 text-sm focus:ring-1 focus:ring-black placeholder:text-gray-400"
+                  className="w-full bg-[#F4F4F5] border border-gray-200 py-1.5 pl-8 pr-9 text-sm focus:ring-1 focus:ring-black placeholder:text-gray-400"
                 />
                 {isSearching ? (
                   <Loader2 className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-500 animate-spin" />
@@ -359,14 +359,14 @@ export const Sidebar = ({
              </div>
 
 
-             <div className="flex p-1 bg-[#F4F4F5] rounded-lg">
+             <div className="flex p-1 bg-[#F4F4F5] border border-gray-200">
                 {(['all', 'ai', 'human', 'system'] as const).map(type => (
                    <button
                       key={type}
                       onClick={() => setFilterType(type)}
                       className={`
-                         cursor-pointer flex-1 capitalize text-[10px] font-semibold py-1 rounded-md transition-all
-                         ${filterType === type ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}
+                         cursor-pointer flex-1 capitalize text-[10px] font-mono font-medium py-1 transition-all border border-transparent
+                         ${filterType === type ? 'bg-white text-black border-gray-300' : 'text-gray-500 hover:text-gray-700'}
                       `}
                    >
                       {type}
@@ -384,7 +384,7 @@ export const Sidebar = ({
               <div className="flex flex-wrap gap-1 mb-2">
                 <button
                   onClick={() => toggleSearchTypeFilter('ai_task')}
-                  className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                  className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('ai_task')
                       ? 'bg-purple-100 text-purple-700 border border-purple-300'
                       : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
@@ -394,7 +394,7 @@ export const Sidebar = ({
                 </button>
                 <button
                   onClick={() => toggleSearchTypeFilter('human_task')}
-                  className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                  className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('human_task')
                       ? 'bg-blue-100 text-blue-700 border border-blue-300'
                       : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
@@ -404,7 +404,7 @@ export const Sidebar = ({
                 </button>
                 <button
                   onClick={() => toggleSearchTypeFilter('system_task')}
-                  className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                  className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('system_task')
                       ? 'bg-gray-100 text-gray-700 border border-gray-300'
                       : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
@@ -414,7 +414,7 @@ export const Sidebar = ({
                 </button>
                 <button
                   onClick={() => toggleSearchTypeFilter('data')}
-                  className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                  className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('data')
                       ? 'bg-amber-100 text-amber-700 border border-amber-300'
                       : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
@@ -424,7 +424,7 @@ export const Sidebar = ({
                 </button>
                 <button
                   onClick={() => toggleSearchTypeFilter('constraint')}
-                  className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                  className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('constraint')
                       ? 'bg-rose-100 text-rose-700 border border-rose-300'
                       : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
@@ -434,7 +434,7 @@ export const Sidebar = ({
                 </button>
                 <button
                   onClick={() => toggleSearchTypeFilter('touchpoint')}
-                  className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                  className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('touchpoint')
                       ? 'bg-cyan-100 text-cyan-700 border border-cyan-300'
                       : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
@@ -446,7 +446,7 @@ export const Sidebar = ({
               {searchTypeFilter.size > 0 && (
                 <button
                   onClick={() => setSearchTypeFilter(new Set())}
-                  className="w-full py-1 px-2 text-[10px] font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 rounded transition-colors cursor-pointer border border-gray-200"
+                  className="w-full py-1 px-2 text-[10px] font-mono font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer border border-gray-200"
                 >
                   Clear filters
                 </button>
@@ -461,8 +461,8 @@ export const Sidebar = ({
             return (
               <div key={layer.id}>
                 <div className="flex items-center gap-2 mb-3 sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm py-1 z-10">
-                  <span className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: layer.color }}></span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-[#6E6E6E]" style={{ color: layer.color }}>{layer.name}</span>
+                  <span className="w-2.5 h-2.5 shadow-sm" style={{ backgroundColor: layer.color }}></span>
+                  <span className="text-[10px] uppercase tracking-widest font-mono font-medium text-[#6E6E6E]" style={{ color: layer.color }}>{layer.name}</span>
                   <div className="h-px bg-[#E6E6E6] flex-1"></div>
                 </div>
                 <div className="space-y-0.5">
@@ -485,7 +485,7 @@ export const Sidebar = ({
                         }}
                         title={matchReasonMap.get(task.id) || undefined}
                         className={`
-                          group flex items-center w-full text-left px-2 py-1.5 rounded-md text-sm transition-all gap-2.5 border border-transparent
+                          group flex items-center w-full text-left px-2 py-1.5 text-sm transition-all gap-2.5 border border-transparent
                           ${activeView === 'builder' ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'}
                           ${isActive
                             ? 'bg-white text-[#111111] shadow-sm font-medium border-gray-200'
