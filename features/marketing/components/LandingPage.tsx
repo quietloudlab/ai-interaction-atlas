@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { HeroSearchWidget } from './HeroSearchWidget';
 import diagramExample from '../../../src/img/diagram_example.png';
+import quietloudlabLogo from '../../../src/img/quietloudlab_logo.svg';
 
 const SectionHeader = ({ number, title }: { number: string; title: string }) => (
   <div className="flex flex-col md:flex-row items-baseline border-t border-black pt-6 pb-12 mb-8">
@@ -67,9 +68,21 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start w-full">
           {/* Left: Hero Text */}
           <div className="min-w-0">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans tracking-tighter leading-[0.95] font-medium mb-8">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans tracking-tighter leading-[0.95] font-medium mb-3">
               The Atlas of AI<br />Interaction<br />Design
             </h1>
+
+            <div className="inline-flex items-center gap-2 mt-4 mb-8">
+              <span className="text-sm text-black">by</span>
+              <a
+                href="https://www.linkedin.com/company/quietloudlab"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-60 hover:opacity-100 transition-opacity p-1 -m-1"
+              >
+                <img src={quietloudlabLogo} alt="quietloudlab" className="h-4" />
+              </a>
+            </div>
 
             <div className="max-w-xxl">
               <p className="text-xl md:text-2xl font-sans font-light text-gray-700 leading-snug mb-8">
