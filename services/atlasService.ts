@@ -25,6 +25,20 @@ export interface EnrichedRelation {
   reason: string;
 }
 
+export type ArtifactType = 'task' | 'data' | 'constraint' | 'touchpoint';
+
+export interface UnifiedSearchResult {
+  id: string;
+  name: string;
+  type: ArtifactType;
+  taskType?: 'ai' | 'human' | 'system'; // For tasks
+  category?: string; // Category for the artifact
+  description?: string;
+  icon?: string;
+  score: number;
+  artifact: Task | DataArtifactDefinition | ConstraintDefinition | TouchpointDefinition;
+}
+
 class AtlasService {
   private _allTasks: Task[] = [];
   private _data: AtlasData | null = null;
@@ -184,10 +198,13 @@ class AtlasService {
         : this._allTasks;
     }
 
-    // Split query into terms and normalize
+    // Stop words to filter out (common words that don't add search value)
+    const stopWords = new Set(['and', 'or', 'the', 'a', 'an', 'of', 'to', 'in', 'for', 'with', 'on', 'at', 'by', 'from', 'as', 'is', 'are', 'was', 'were']);
+
+    // Split query into terms and normalize, filtering out stop words
     const terms = query.toLowerCase()
       .split(/\s+/)
-      .filter(term => term.length > 0);
+      .filter(term => term.length > 0 && !stopWords.has(term));
 
     // Score and filter tasks
     const scoredTasks = this._allTasks
@@ -430,6 +447,200 @@ class AtlasService {
     });
 
     return rels;
+  }
+
+  /**
+   * Comprehensive search across all artifact types (tasks, data, constraints, touchpoints)
+   * Returns unified results sorted by relevance
+   */
+  searchAll(query: string): UnifiedSearchResult[] {
+    this._getData(); // Ensure data is loaded
+
+    if (!query || query.trim().length === 0) {
+      return [];
+    }
+
+    // Stop words to filter out (common words that don't add search value)
+    const stopWords = new Set(['and', 'or', 'the', 'a', 'an', 'of', 'to', 'in', 'for', 'with', 'on', 'at', 'by', 'from', 'as', 'is', 'are', 'was', 'were']);
+
+    // Split query into terms and normalize, filtering out stop words
+    const terms = query.toLowerCase()
+      .split(/\s+/)
+      .filter(term => term.length > 0 && !stopWords.has(term));
+
+    const results: UnifiedSearchResult[] = [];
+
+    // Search tasks
+    this._allTasks.forEach(task => {
+      const score = this._scoreTask(task, terms);
+      if (score > 0) {
+        results.push({
+          id: task.id,
+          name: task.name,
+          type: 'task',
+          taskType: task.task_type,
+          description: task.elevator_pitch,
+          score,
+          artifact: task
+        });
+      }
+    });
+
+    // Search data artifacts
+    const data = this._getData();
+    data.data_artifacts.forEach(artifact => {
+      const score = this._scoreDataArtifact(artifact, terms);
+      if (score > 0) {
+        results.push({
+          id: artifact.id,
+          name: artifact.name,
+          type: 'data',
+          category: artifact.category,
+          description: artifact.description,
+          icon: artifact.icon,
+          score,
+          artifact
+        });
+      }
+    });
+
+    // Search constraints
+    data.constraints.forEach(constraint => {
+      const score = this._scoreConstraint(constraint, terms);
+      if (score > 0) {
+        results.push({
+          id: constraint.id,
+          name: constraint.name,
+          type: 'constraint',
+          category: constraint.category,
+          description: constraint.description,
+          icon: constraint.icon,
+          score,
+          artifact: constraint
+        });
+      }
+    });
+
+    // Search touchpoints
+    data.touchpoints.forEach(touchpoint => {
+      const score = this._scoreTouchpoint(touchpoint, terms);
+      if (score > 0) {
+        results.push({
+          id: touchpoint.id,
+          name: touchpoint.name,
+          type: 'touchpoint',
+          category: touchpoint.category,
+          description: touchpoint.description,
+          icon: touchpoint.icon,
+          score,
+          artifact: touchpoint
+        });
+      }
+    });
+
+    // Sort by score (highest first)
+    results.sort((a, b) => b.score - a.score);
+
+    return results;
+  }
+
+  /**
+   * Score a data artifact based on search terms
+   */
+  private _scoreDataArtifact(artifact: DataArtifactDefinition, terms: string[]): number {
+    let score = 0;
+    const lowerName = artifact.name.toLowerCase();
+    const lowerDesc = artifact.description?.toLowerCase() || '';
+    const lowerExamples = artifact.examples?.join(' ').toLowerCase() || '';
+    const lowerFormatNotes = artifact.format_notes?.toLowerCase() || '';
+
+    // Check if ALL terms match
+    const allTermsMatch = terms.every(term => {
+      return lowerName.includes(term) ||
+             lowerDesc.includes(term) ||
+             lowerExamples.includes(term) ||
+             lowerFormatNotes.includes(term);
+    });
+
+    if (!allTermsMatch) return 0;
+
+    // Score based on match location
+    for (const term of terms) {
+      if (lowerName === term) score += 100;
+      else if (lowerName.startsWith(term)) score += 50;
+      else if (lowerName.includes(term)) score += 30;
+
+      if (lowerDesc.includes(term)) score += 15;
+      if (lowerExamples.includes(term)) score += 10;
+      if (lowerFormatNotes.includes(term)) score += 8;
+    }
+
+    return score;
+  }
+
+  /**
+   * Score a constraint based on search terms
+   */
+  private _scoreConstraint(constraint: ConstraintDefinition, terms: string[]): number {
+    let score = 0;
+    const lowerName = constraint.name.toLowerCase();
+    const lowerDesc = constraint.description?.toLowerCase() || '';
+    const lowerUxNote = constraint.ux_note?.toLowerCase() || '';
+    const lowerExamples = constraint.example_values?.toLowerCase() || '';
+
+    // Check if ALL terms match
+    const allTermsMatch = terms.every(term => {
+      return lowerName.includes(term) ||
+             lowerDesc.includes(term) ||
+             lowerUxNote.includes(term) ||
+             lowerExamples.includes(term);
+    });
+
+    if (!allTermsMatch) return 0;
+
+    // Score based on match location
+    for (const term of terms) {
+      if (lowerName === term) score += 100;
+      else if (lowerName.startsWith(term)) score += 50;
+      else if (lowerName.includes(term)) score += 30;
+
+      if (lowerDesc.includes(term)) score += 15;
+      if (lowerUxNote.includes(term)) score += 10;
+      if (lowerExamples.includes(term)) score += 8;
+    }
+
+    return score;
+  }
+
+  /**
+   * Score a touchpoint based on search terms
+   */
+  private _scoreTouchpoint(touchpoint: TouchpointDefinition, terms: string[]): number {
+    let score = 0;
+    const lowerName = touchpoint.name.toLowerCase();
+    const lowerDesc = touchpoint.description.toLowerCase();
+    const lowerExamples = touchpoint.examples.join(' ').toLowerCase();
+
+    // Check if ALL terms match
+    const allTermsMatch = terms.every(term => {
+      return lowerName.includes(term) ||
+             lowerDesc.includes(term) ||
+             lowerExamples.includes(term);
+    });
+
+    if (!allTermsMatch) return 0;
+
+    // Score based on match location
+    for (const term of terms) {
+      if (lowerName === term) score += 100;
+      else if (lowerName.startsWith(term)) score += 50;
+      else if (lowerName.includes(term)) score += 30;
+
+      if (lowerDesc.includes(term)) score += 15;
+      if (lowerExamples.includes(term)) score += 10;
+    }
+
+    return score;
   }
 }
 

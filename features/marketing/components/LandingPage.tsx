@@ -26,10 +26,10 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
   return (
     <div className="bg-white text-black selection:bg-black selection:text-white">
       {/* Hero Section - Above the Fold */}
-      <section className="min-h-[60vh] flex flex-col justify-center px-4 md:px-8 max-w-screen-2xl mx-auto pt-20 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <section className="min-h-[60vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 pb-12 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start w-full">
           {/* Left: Hero Text */}
-          <div>
+          <div className="min-w-0">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans tracking-tighter leading-[0.95] font-medium mb-8">
               The Atlas of AI<br />Interaction<br />Design
             </h1>
@@ -52,8 +52,19 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
           </div>
 
           {/* Right: Search Widget */}
-          <div className="lg:pt-8">
-            <HeroSearchWidget onTaskClick={(taskId) => onNavigate(`atlas/task/${taskId}`)} />
+          <div className="lg:pt-8 min-w-0 w-full">
+            <HeroSearchWidget onResultClick={(result) => {
+              // Navigate to the appropriate detail page based on result type
+              if (result.type === 'task') {
+                onNavigate(`atlas/task/${result.id}`);
+              } else if (result.type === 'data') {
+                onNavigate('atlas/data');
+              } else if (result.type === 'constraint') {
+                onNavigate('atlas/constraints');
+              } else if (result.type === 'touchpoint') {
+                onNavigate('atlas/touchpoints');
+              }
+            }} />
           </div>
         </div>
       </section>

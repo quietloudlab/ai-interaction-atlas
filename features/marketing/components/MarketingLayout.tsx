@@ -8,7 +8,7 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
   
   return (
     <header className="sticky top-0 z-50 bg-[#F9F9F7]/80 backdrop-blur-md border-b border-[#E6E6E6]">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         <div 
           className="flex items-center gap-2 cursor-pointer" 
           onClick={() => onNavigate('landing')}
@@ -56,7 +56,7 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
 
 const SiteFooter = ({ onNavigate }: any) => (
   <footer className="bg-white border-t border-[#E6E6E6] pt-16 pb-8">
-    <div className="max-w-7xl mx-auto px-6">
+    <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
