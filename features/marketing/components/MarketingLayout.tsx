@@ -20,7 +20,6 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
           <button onClick={() => onNavigate('atlas')} className="cursor-pointer text-sm font-medium text-[#6E6E6E] hover:text-black transition-colors">Browse Atlas</button>
-          <button onClick={() => onNavigate('rationale')} className="cursor-pointer text-sm font-medium text-[#6E6E6E] hover:text-black transition-colors">Rationale</button>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -33,7 +32,6 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-[#F9F9F7] border-b border-[#E6E6E6] p-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top-2">
           <button onClick={() => { onNavigate('atlas'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium">Browse Atlas</button>
-          <button onClick={() => { onNavigate('rationale'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium">Rationale</button>
         </div>
       )}
     </header>
@@ -75,7 +73,6 @@ const SiteFooter = ({ onNavigate }: any) => (
           <h4 className="font-bold text-[#111111] mb-4">Resources</h4>
           <ul className="space-y-2 text-sm text-[#6E6E6E]">
             <li><button onClick={() => onNavigate('atlas')} className="cursor-pointer hover:text-black">Browse Atlas</button></li>
-            <li><button onClick={() => onNavigate('rationale')} className="cursor-pointer hover:text-black">Rationale</button></li>
             <li><a href="https://github.com/quietloudlab/ai-interaction-atlas" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:text-black">GitHub</a></li>
           </ul>
         </div>

@@ -39,18 +39,12 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4">
+          <div>
             <button
               onClick={() => onNavigate('atlas')}
               className="group inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg"
             >
               View the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button
-              onClick={() => onNavigate('rationale')}
-              className="inline-flex items-center gap-2 border border-black bg-white/50 backdrop-blur-sm text-black px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
-            >
-              Read Rationale
             </button>
           </div>
         </div>

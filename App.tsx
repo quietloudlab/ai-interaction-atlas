@@ -24,7 +24,6 @@ import { preloadAtlasData } from './lib/dataLoader';
 const MarketingLayout = lazy(() => import('./features/marketing/components/MarketingLayout').then(m => ({ default: m.MarketingLayout })));
 const AtlasLayout = lazy(() => import('./features/atlas/components/AtlasLayout').then(m => ({ default: m.AtlasLayout })));
 const LandingPage = lazy(() => import('./features/marketing/components/LandingPage').then(m => ({ default: m.LandingPage })));
-const RationalePage = lazy(() => import('./features/marketing/components/RationalePage').then(m => ({ default: m.RationalePage })));
 const HomeDashboard = lazy(() => import('./features/atlas/components/HomeDashboard').then(m => ({ default: m.HomeDashboard })));
 const TaskDetail = lazy(() => import('./features/atlas/components/TaskDetail').then(m => ({ default: m.TaskDetail })));
 const LayerDetail = lazy(() => import('./features/atlas/components/LayerDetail').then(m => ({ default: m.LayerDetail })));
@@ -185,16 +184,6 @@ export default function App() {
           <MarketingPageRoute>
             <LandingPage onNavigate={(page) => {
               if (page === 'atlas') navigate('/atlas');
-              else navigate(`/${page}`);
-            }} />
-          </MarketingPageRoute>
-        } />
-
-        <Route path="/rationale" element={
-          <MarketingPageRoute>
-            <RationalePage onNavigate={(page) => {
-              if (page === 'atlas') navigate('/atlas');
-              else if (page === 'landing') navigate('/');
               else navigate(`/${page}`);
             }} />
           </MarketingPageRoute>
