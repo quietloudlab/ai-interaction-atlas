@@ -176,15 +176,195 @@ class AtlasService {
 
   searchTasks(query: string, typeFilter?: 'ai' | 'human' | 'system'): Task[] {
     this._getData(); // Ensure data is loaded
-    const lowerQuery = query.toLowerCase();
-    return this._allTasks.filter(task => {
-      const matchesType = typeFilter ? task.task_type === typeFilter : true;
-      // Search name, slug, pitch, and description
-      const matchesSearch = task.name.toLowerCase().includes(lowerQuery) ||
-                            task.slug.toLowerCase().includes(lowerQuery) ||
-                            (task.elevator_pitch && task.elevator_pitch.toLowerCase().includes(lowerQuery));
-      return matchesType && matchesSearch;
+
+    if (!query || query.trim().length === 0) {
+      // Return all tasks if no query
+      return typeFilter
+        ? this._allTasks.filter(t => t.task_type === typeFilter)
+        : this._allTasks;
+    }
+
+    // Split query into terms and normalize
+    const terms = query.toLowerCase()
+      .split(/\s+/)
+      .filter(term => term.length > 0);
+
+    // Score and filter tasks
+    const scoredTasks = this._allTasks
+      .map(task => {
+        // Apply type filter first
+        if (typeFilter && task.task_type !== typeFilter) {
+          return null;
+        }
+
+        const score = this._scoreTask(task, terms);
+        return score > 0 ? { task, score } : null;
+      })
+      .filter(item => item !== null) as Array<{ task: Task; score: number }>;
+
+    // Sort by score (highest first)
+    scoredTasks.sort((a, b) => b.score - a.score);
+
+    return scoredTasks.map(item => item.task);
+  }
+
+  /**
+   * Score a task based on how well it matches search terms
+   * Higher score = better match
+   */
+  private _scoreTask(task: Task, terms: string[]): number {
+    let score = 0;
+    const lowerName = task.name.toLowerCase();
+    const lowerSlug = task.slug.toLowerCase();
+    const lowerPitch = task.elevator_pitch?.toLowerCase() || '';
+    const lowerExample = task.example_usage?.toLowerCase() || '';
+
+    // Check if ALL terms match somewhere in the task
+    const allTermsMatch = terms.every(term => {
+      return lowerName.includes(term) ||
+             lowerSlug.includes(term) ||
+             lowerPitch.includes(term) ||
+             lowerExample.includes(term) ||
+             this._matchesInExtendedFields(task, term);
     });
+
+    if (!allTermsMatch) {
+      return 0; // Must match all terms
+    }
+
+    // Score based on where matches occur (higher weight = more relevant field)
+    for (const term of terms) {
+      // Exact name match = highest priority
+      if (lowerName === term) {
+        score += 100;
+      }
+      // Name starts with term = very high priority
+      else if (lowerName.startsWith(term)) {
+        score += 50;
+      }
+      // Name contains term = high priority
+      else if (lowerName.includes(term)) {
+        score += 30;
+      }
+
+      // Slug match = high priority (often exact technical term)
+      if (lowerSlug.includes(term)) {
+        score += 25;
+      }
+
+      // Elevator pitch = medium-high priority
+      if (lowerPitch.includes(term)) {
+        score += 15;
+      }
+
+      // Example usage = medium priority
+      if (lowerExample.includes(term)) {
+        score += 10;
+      }
+
+      // Extended fields (capabilities, variants, etc.) = lower priority
+      score += this._scoreExtendedFields(task, term);
+    }
+
+    return score;
+  }
+
+  /**
+   * Check if term matches in task-specific extended fields
+   */
+  private _matchesInExtendedFields(task: Task, term: string): boolean {
+    if (task.task_type === 'ai') {
+      const aiTask = task as AiTask;
+
+      // Search capabilities
+      if (aiTask.capabilities?.some(cap =>
+        cap.name.toLowerCase().includes(term) ||
+        cap.tag.toLowerCase().includes(term) ||
+        cap.example.toLowerCase().includes(term)
+      )) {
+        return true;
+      }
+
+      // Search UX notes
+      if (aiTask.ux_notes?.risk.toLowerCase().includes(term) ||
+          aiTask.ux_notes?.tip.toLowerCase().includes(term) ||
+          aiTask.ux_notes?.anti_patterns.some(ap => ap.toLowerCase().includes(term))) {
+        return true;
+      }
+    } else if (task.task_type === 'human' || task.task_type === 'system') {
+      const variantTask = task as HumanTask | SystemTask;
+
+      // Search variants
+      if (variantTask.common_variants?.some(v => v.toLowerCase().includes(term))) {
+        return true;
+      }
+    }
+
+    // Search IO spec
+    const ioSpec = task.io_spec;
+    const searchIO = (item: any) => {
+      if (typeof item === 'string') {
+        return item.toLowerCase().includes(term);
+      }
+      return item.id.toLowerCase().includes(term) || item.label.toLowerCase().includes(term);
+    };
+
+    if (ioSpec.inputs.required.some(searchIO) ||
+        ioSpec.inputs.optional.some(searchIO) ||
+        searchIO(ioSpec.outputs.primary) ||
+        ioSpec.outputs.metadata.some(searchIO)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Score matches in extended fields
+   */
+  private _scoreExtendedFields(task: Task, term: string): number {
+    let score = 0;
+
+    if (task.task_type === 'ai') {
+      const aiTask = task as AiTask;
+
+      // Capabilities
+      aiTask.capabilities?.forEach(cap => {
+        if (cap.name.toLowerCase().includes(term)) score += 8;
+        if (cap.tag.toLowerCase().includes(term)) score += 6;
+        if (cap.example.toLowerCase().includes(term)) score += 4;
+      });
+
+      // UX notes
+      if (aiTask.ux_notes?.risk.toLowerCase().includes(term)) score += 5;
+      if (aiTask.ux_notes?.tip.toLowerCase().includes(term)) score += 5;
+      aiTask.ux_notes?.anti_patterns.forEach(ap => {
+        if (ap.toLowerCase().includes(term)) score += 5;
+      });
+    } else if (task.task_type === 'human' || task.task_type === 'system') {
+      const variantTask = task as HumanTask | SystemTask;
+
+      // Variants
+      variantTask.common_variants?.forEach(v => {
+        if (v.toLowerCase().includes(term)) score += 7;
+      });
+    }
+
+    // IO spec (lower priority)
+    const ioSpec = task.io_spec;
+    const scoreIO = (item: any) => {
+      if (typeof item === 'string') {
+        return item.toLowerCase().includes(term) ? 3 : 0;
+      }
+      return (item.id.toLowerCase().includes(term) || item.label.toLowerCase().includes(term)) ? 3 : 0;
+    };
+
+    ioSpec.inputs.required.forEach(item => score += scoreIO(item));
+    ioSpec.inputs.optional.forEach(item => score += scoreIO(item));
+    score += scoreIO(ioSpec.outputs.primary);
+    ioSpec.outputs.metadata.forEach(item => score += scoreIO(item));
+
+    return score;
   }
 
   /**
