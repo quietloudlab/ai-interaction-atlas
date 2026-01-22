@@ -450,10 +450,10 @@ export const TaskDetail = ({
                     <span className="text-sm text-[var(--text-muted)] italic">None</span>
                   ) : (
                     relations.filter(r => r.category === 'upstream').map((rel, i) => (
-                      <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer">
+                      <button key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer w-full text-left block">
                         <div className="text-sm font-medium text-[var(--text-main)] group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">{rel.targetName}</div>
                         <div className="text-xs text-[#999] dark:text-[#888] mt-1">{rel.reason}</div>
-                      </div>
+                      </button>
                     ))
                   )}
                 </div>
@@ -469,10 +469,10 @@ export const TaskDetail = ({
                     <span className="text-sm text-[var(--text-muted)] italic">None</span>
                   ) : (
                     relations.filter(r => r.category === 'downstream').map((rel, i) => (
-                      <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer">
+                      <button key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer w-full text-left block">
                         <div className="text-sm font-medium text-[var(--text-main)] group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">{rel.targetName}</div>
                         <div className="text-xs text-[#999] dark:text-[#888] mt-1">{rel.reason}</div>
-                      </div>
+                      </button>
                     ))
                   )}
                 </div>
@@ -488,10 +488,10 @@ export const TaskDetail = ({
                     <span className="text-sm text-[var(--text-muted)] italic">None</span>
                   ) : (
                     relations.filter(r => r.category === 'lateral').map((rel, i) => (
-                      <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer">
+                      <button key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer w-full text-left block">
                         <div className="text-sm font-medium text-[var(--text-main)] group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">{rel.targetName}</div>
                         <div className="text-xs text-[#999] dark:text-[#888] mt-1">{rel.reason}</div>
-                      </div>
+                      </button>
                     ))
                   )}
                 </div>
@@ -507,10 +507,10 @@ export const TaskDetail = ({
                     <span className="text-sm text-[var(--text-muted)] italic">None</span>
                   ) : (
                     relations.filter(r => r.category === 'conflict').map((rel, i) => (
-                      <div key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer">
+                      <button key={i} onClick={() => onTaskClick(rel.targetId)} className="group cursor-pointer w-full text-left block">
                         <div className="text-sm font-medium text-red-700 dark:text-red-600 group-hover:text-red-800 dark:group-hover:text-red-500 transition-colors line-through decoration-red-300 dark:decoration-red-700">{rel.targetName}</div>
                         <div className="text-xs text-red-500 dark:text-red-600 mt-1">{rel.reason}</div>
-                      </div>
+                      </button>
                     ))
                   )}
                 </div>

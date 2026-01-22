@@ -447,6 +447,7 @@ export const Sidebar = ({
                   placeholder={isSemanticSearchEnabled ? "Search across patterns..." : "Find a task..."}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  aria-label="Search Atlas patterns and tasks"
                   className="w-full bg-[var(--bg)] border border-[var(--border)] text-[var(--text-main)] py-1.5 pl-8 pr-9 text-sm focus:ring-1 focus:ring-[var(--text-main)] placeholder:text-[var(--text-muted)]"
                 />
                 {isSearching ? (

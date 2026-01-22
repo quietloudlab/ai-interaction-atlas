@@ -134,8 +134,16 @@ export const MarketingLayout = ({ children, onNavigate }: { children?: React.Rea
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)]">
+      {/* Skip Navigation Link for Keyboard Users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--text-main)] focus:text-[var(--bg)] focus:font-mono focus:text-sm"
+      >
+        Skip to main content
+      </a>
+
       <SiteHeader onNavigate={onNavigate} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {children}
       </main>
       <SiteFooter onNavigate={onNavigate} />
