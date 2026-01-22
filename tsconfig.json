@@ -35,5 +35,10 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true
-  }
+  },
+  "exclude": [
+    "inspiration",
+    "node_modules",
+    "dist"
+  ]
 }
