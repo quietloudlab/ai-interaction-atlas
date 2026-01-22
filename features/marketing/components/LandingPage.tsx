@@ -261,12 +261,12 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 name="email"
                 required
                 placeholder="your@email.com"
-                className="flex-1 w-full sm:w-auto px-4 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
+                className="flex-1 w-full sm:w-auto px-4 py-2.5 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
               />
               <button
                 type="submit"
                 disabled={subscribeStatus === 'submitting'}
-                className="px-6 py-2 bg-black text-white text-sm font-mono uppercase tracking-wider hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 whitespace-nowrap"
+                className="px-6 py-2.5 bg-black text-white text-sm font-mono uppercase tracking-wider hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 whitespace-nowrap"
               >
                 {subscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
               </button>
