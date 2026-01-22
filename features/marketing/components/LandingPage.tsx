@@ -173,6 +173,56 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         </div>
       </section>
 
+      {/* How to Use */}
+      <section className="py-20 md:py-28 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
+        <div className="mb-16">
+          <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium mb-4">
+            How to use the Atlas
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl">
+            A step-by-step guide to navigating the taxonomy and building inspectable AI systems.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Step 1 */}
+          <div className="border-l-2 border-black pl-6">
+            <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">Step 01</div>
+            <h3 className="text-xl font-sans font-medium mb-3">Explore</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Navigate 100+ interaction patterns organized by six system dimensions: AI, Human, System, Data, Constraints, and Touchpoints.
+            </p>
+          </div>
+
+          {/* Step 2 */}
+          <div className="border-l-2 border-black pl-6">
+            <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">Step 02</div>
+            <h3 className="text-xl font-sans font-medium mb-3">Search</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Find specific patterns using keyword search or AI-powered semantic search to discover related concepts and connections.
+            </p>
+          </div>
+
+          {/* Step 3 */}
+          <div className="border-l-2 border-black pl-6">
+            <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">Step 03</div>
+            <h3 className="text-xl font-sans font-medium mb-3">Build</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Create visual system maps by dragging patterns onto a canvas, connecting them to model your AI product's interaction flows.
+            </p>
+          </div>
+
+          {/* Step 4 */}
+          <div className="border-l-2 border-black pl-6">
+            <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">Step 04</div>
+            <h3 className="text-xl font-sans font-medium mb-3">Share</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Export diagrams as images or JSON, bookmark patterns, and use the shared vocabulary to align your team on AI system design.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* The Problem */}
       <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
         {/* Subtle shadow transition from above */}
