@@ -464,11 +464,139 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         </div>
       </section>
 
+      {/* Open Source Section */}
+      <section className="py-20 md:py-16 mb-20 md:mb-32 px-4 md:px-8 max-w-screen-2xl mx-auto bg-gray-50 dark:bg-[#0F0F0F] relative">
+        {/* Subtle top shadow on light background */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[var(--border)] to-transparent pointer-events-none" />
+        <div className="max-w-screen-2xl mx-auto">
+          <SectionHeader number="03" title="Free and open source" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 border-t border-[var(--text-main)] pt-12 gap-12">
+            {/* Left Column */}
+            <div>
+              <p className="text-2xl md:text-3xl font-sans font-light text-[var(--text-main)] leading-snug mb-8">
+                Legibility demands transparency. You can inspect the patterns, contribute new ones, and adapt the system to your needs.
+              </p>
+              <p className="text-lg text-[var(--text-muted)] leading-relaxed mb-8">
+                The AI Interaction Atlas is a shared resource for teams who
+                believe AI systems should be understandable. Open sourcing the Atlas is a commitment
+                to the same principles it encodes: visibility, accountability, and collective intelligence.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <a
+                  href="https://github.com/quietloudlab/ai-interaction-atlas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent(EVENTS.GITHUB_CLICKED)}
+                  className="inline-flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:opacity-80 transition-all active:translate-y-px group focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+                  style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
+                >
+                  View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+
+              {/* Apache 2.0 License */}
+              <div className="border-t border-[var(--border)] pt-8">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[var(--text-muted)] mb-6">Apache 2.0 licensed</h3>
+                <div className="space-y-4 font-mono text-sm text-[var(--text-muted)]">
+                  <div className="flex items-start gap-2">
+                    <span className="text-[var(--text-main)]">/</span> Use it commercially
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[var(--text-main)]">/</span> Modify and adapt it
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[var(--text-main)]">/</span> Contribute improvements
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[var(--text-main)]">/</span> No vendor lock-in
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Contribution Paths */}
+            <div className="border-l border-[var(--border)] pl-8 md:pl-12">
+              <h3 className="font-sans text-xl font-medium mb-4 text-[var(--text-main)]">Help grow the Atlas</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-6 leading-relaxed">
+                The Atlas evolves through community input. Whether you've spotted a pattern in the wild,
+                want to contribute documentation, or see a missing dimension—your perspective matters.
+              </p>
+
+              <div className="space-y-4">
+                {/* Suggest a Pattern */}
+                <a
+                  href="https://github.com/quietloudlab/ai-interaction-atlas/issues/new?template=pattern-suggestion.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+                >
+                  <div className="flex items-start gap-2 mb-2">
+                    <span className="text-xl">💡</span>
+                    <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform text-sm">
+                      Suggest a pattern
+                    </h4>
+                  </div>
+                  <p className="text-xs text-[var(--text-muted)] mb-3 leading-relaxed">
+                    Spotted an interaction pattern in the wild? Share what you've observed.
+                  </p>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                    Lowest effort →
+                  </span>
+                </a>
+
+                {/* Contribute a Pattern */}
+                <a
+                  href="https://github.com/quietloudlab/ai-interaction-atlas/blob/main/CONTRIBUTING.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+                >
+                  <div className="flex items-start gap-2 mb-2">
+                    <span className="text-xl">✍️</span>
+                    <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform text-sm">
+                      Contribute a pattern
+                    </h4>
+                  </div>
+                  <p className="text-xs text-[var(--text-muted)] mb-3 leading-relaxed">
+                    Write a full pattern with examples and tradeoffs. Submit a pull request.
+                  </p>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                    Hands-on →
+                  </span>
+                </a>
+
+                {/* Request a Dimension */}
+                <a
+                  href="https://github.com/quietloudlab/ai-interaction-atlas/discussions/new?category=ideas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+                >
+                  <div className="flex items-start gap-2 mb-2">
+                    <span className="text-xl">🔮</span>
+                    <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform text-sm">
+                      Request a dimension
+                    </h4>
+                  </div>
+                  <p className="text-xs text-[var(--text-muted)] mb-3 leading-relaxed">
+                    See a gap in how we map AI systems? Propose a framework extension.
+                  </p>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                    Visionary →
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* From Vocabulary to Practice */}
       <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
         {/* Subtle shadow transition from above */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[var(--border)] to-transparent pointer-events-none" />
-        <SectionHeader number="03" title="From vocabulary to practice" />
+        <SectionHeader number="04" title="From vocabulary to practice" />
 
         <div className="border-t border-[var(--text-main)] pt-12 mb-16">
           <p className="text-2xl md:text-3xl font-sans font-light text-[var(--text-main)] leading-snug mb-8 max-w-4xl">
@@ -533,131 +661,6 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             >
               Learn more about working together <ArrowRight size={16} />
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Open Source Section */}
-      <section className="py-20 md:py-16 mb-20 md:mb-32 px-4 md:px-8 max-w-screen-2xl mx-auto bg-gray-50 dark:bg-[#0F0F0F] relative">
-        {/* Subtle top shadow on light background */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[var(--border)] to-transparent pointer-events-none" />
-        <div className="max-w-screen-2xl mx-auto">
-          <SectionHeader number="04" title="Free and open source" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 border-t border-[var(--text-main)] pt-12 gap-12">
-            <div>
-              <p className="text-2xl md:text-3xl font-sans font-light text-[var(--text-main)] leading-snug mb-8">
-                Legibility demands transparency. You can inspect the patterns, contribute new ones, and adapt the system to your needs.
-              </p>
-              <p className="text-lg text-[var(--text-muted)] leading-relaxed mb-8">
-                The AI Interaction Atlas is a shared resource for teams who
-                believe AI systems should be understandable. Open sourcing the Atlas is a commitment
-                to the same principles it encodes: visibility, accountability, and collective intelligence.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://github.com/quietloudlab/ai-interaction-atlas"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent(EVENTS.GITHUB_CLICKED)}
-                  className="inline-flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:opacity-80 transition-all active:translate-y-px group focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
-                  style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
-                >
-                  View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
-            </div>
-            <div className="border-l border-[var(--border)] pl-8 md:pl-12">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-[var(--text-muted)] mb-6">Apache 2.0 licensed</h3>
-              <div className="space-y-4 font-mono text-sm text-[var(--text-muted)]">
-                <div className="flex items-start gap-2">
-                  <span className="text-[var(--text-main)]">/</span> Use it commercially
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-[var(--text-main)]">/</span> Modify and adapt it
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-[var(--text-main)]">/</span> Contribute improvements
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-[var(--text-main)]">/</span> No vendor lock-in
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Contribution Paths */}
-          <div className="border-t border-[var(--text-main)] pt-12 mt-12">
-            <h3 className="font-sans text-xl font-medium mb-6 text-[var(--text-main)]">Help grow the Atlas</h3>
-            <p className="text-[var(--text-muted)] mb-8 max-w-2xl">
-              The Atlas evolves through community input. Whether you've spotted a pattern in the wild,
-              want to contribute documentation, or see a missing dimension—your perspective matters.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Suggest a Pattern */}
-              <a
-                href="https://github.com/quietloudlab/ai-interaction-atlas/issues/new?template=pattern-suggestion.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-6 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl">💡</span>
-                  <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform">
-                    Suggest a pattern
-                  </h4>
-                </div>
-                <p className="text-sm text-[var(--text-muted)] mb-4 flex-1">
-                  Spotted an interaction pattern in the wild? Share what you've observed and we'll document it.
-                </p>
-                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                  Lowest effort →
-                </span>
-              </a>
-
-              {/* Contribute a Pattern */}
-              <a
-                href="https://github.com/quietloudlab/ai-interaction-atlas/blob/main/CONTRIBUTING.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-6 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl">✍️</span>
-                  <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform">
-                    Contribute a pattern
-                  </h4>
-                </div>
-                <p className="text-sm text-[var(--text-muted)] mb-4 flex-1">
-                  Write a full pattern with examples, context, and tradeoffs. Submit a pull request.
-                </p>
-                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                  Hands-on →
-                </span>
-              </a>
-
-              {/* Request a Dimension */}
-              <a
-                href="https://github.com/quietloudlab/ai-interaction-atlas/discussions/new?category=ideas"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-6 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl">🔮</span>
-                  <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform">
-                    Request a dimension
-                  </h4>
-                </div>
-                <p className="text-sm text-[var(--text-muted)] mb-4 flex-1">
-                  See a gap in how we map AI systems? Propose a new dimension or framework extension.
-                </p>
-                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                  Visionary →
-                </span>
-              </a>
-            </div>
           </div>
         </div>
       </section>
