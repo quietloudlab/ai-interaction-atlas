@@ -1,0 +1,29 @@
+# Source files (we only publish dist)
+src/
+tsconfig.json
+tsup.config.ts
+
+# Development files
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Documentation (we include README.md)
+docs/

@@ -1,0 +1,106 @@
+name: Publish NPM Package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'types.ts'
+      - 'data.ts'
+      - 'atlas-package/**'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      id-token: write  # Required for npm provenance
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        working-directory: atlas-package
+        run: npm install
+
+      - name: Build package
+        working-directory: atlas-package
+        run: npm run build
+
+      - name: Get current version
+        id: current_version
+        working-directory: atlas-package
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Check if version exists on npm
+        id: check_version
+        working-directory: atlas-package
+        run: |
+          if npm view @quietloudlab/ai-interaction-atlas@${{ steps.current_version.outputs.version }} version 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Bump patch version
+        if: steps.check_version.outputs.exists == 'true'
+        working-directory: atlas-package
+        run: npm version patch --no-git-tag-version
+
+      - name: Get new version
+        id: new_version
+        working-directory: atlas-package
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Publish to npm
+        working-directory: atlas-package
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create git tag
+        if: steps.check_version.outputs.exists == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add atlas-package/package.json
+          git commit -m "chore: bump package version to ${{ steps.new_version.outputs.version }}"
+          git tag "v${{ steps.new_version.outputs.version }}"
+          git push origin main
+          git push origin "v${{ steps.new_version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.check_version.outputs.exists == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.new_version.outputs.version }}
+          release_name: Release v${{ steps.new_version.outputs.version }}
+          body: |
+            ## 📦 NPM Package Update
+
+            Published `@quietloudlab/ai-interaction-atlas@${{ steps.new_version.outputs.version }}`
+
+            ### Changes
+            - Updated Atlas data files
+            - See commit history for details
+
+            ### Installation
+            ```bash
+            npm install @quietloudlab/ai-interaction-atlas@${{ steps.new_version.outputs.version }}
+            ```
+
+            [View on npm](https://www.npmjs.com/package/@quietloudlab/ai-interaction-atlas)
+          draft: false
+          prerelease: false

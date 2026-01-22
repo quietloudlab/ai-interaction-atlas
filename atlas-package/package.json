@@ -1,0 +1,69 @@
+{
+  "name": "@quietloudlab/ai-interaction-atlas",
+  "version": "1.0.0",
+  "description": "A shared language for designing AI experiences - 100+ interaction patterns across human actions, AI tasks, system operations, data, constraints, and touchpoints",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "require": "./dist/types.cjs"
+    },
+    "./data": {
+      "types": "./dist/data.d.ts",
+      "import": "./dist/data.js",
+      "require": "./dist/data.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "interaction-design",
+    "taxonomy",
+    "patterns",
+    "llm",
+    "ai-ux",
+    "design-system",
+    "workflow",
+    "ai-design",
+    "human-ai-interaction",
+    "ai-product",
+    "ai-systems",
+    "atlas"
+  ],
+  "author": "Brandon Harwood <brandon@quietloudlab.com>",
+  "homepage": "https://ai-interaction.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quietloudlab/ai-interaction-atlas.git",
+    "directory": "atlas-package"
+  },
+  "bugs": {
+    "url": "https://github.com/quietloudlab/ai-interaction-atlas/issues"
+  },
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
