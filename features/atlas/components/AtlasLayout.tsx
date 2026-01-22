@@ -72,6 +72,14 @@ export const AtlasLayout = ({
 
   return (
     <div className="flex h-screen bg-[var(--surface)] overflow-hidden">
+      {/* Skip Navigation Link for Keyboard Users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--text-main)] focus:text-[var(--bg)] focus:font-mono focus:text-sm"
+      >
+        Skip to main content
+      </a>
+
       {/* Desktop Sidebar (Fixed) */}
       <div className="hidden lg:block w-[280px] h-full flex-shrink-0 border-r border-[var(--text-main)] z-20">
         <Sidebar
@@ -124,7 +132,7 @@ export const AtlasLayout = ({
         </div>
 
         {/* Scrollable Content */}
-        <main ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 lg:p-0">
+        <main id="main-content" ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 lg:p-0">
            <div className="max-w-6xl mx-auto min-h-full flex flex-col">
               <div className="flex-1">
                 {children}

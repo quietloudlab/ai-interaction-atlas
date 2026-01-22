@@ -157,6 +157,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
               }
             }, 200);
           }}
+          aria-label="Search AI interaction patterns"
           className="w-full box-border bg-[var(--surface)] border-2 border-[var(--text-main)] text-[var(--text-main)] py-3.5 pl-12 pr-4 text-base font-mono focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] placeholder:text-[var(--text-muted)] shadow-[4px_4px_0px_0px_var(--text-main)] transition-all"
         />
       </div>
