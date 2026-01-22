@@ -156,7 +156,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
             {/* NPM Install Snippet */}
             <div className="mt-8 pt-8 border-t border-black/10">
-              <p className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">Use programmatically</p>
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">Access the data via npm</p>
               <div className="relative group">
                 <div className="bg-gray-50 border border-gray-200 rounded px-4 py-3 font-mono text-sm text-gray-800 flex items-center justify-between gap-4">
                   <code className="flex-1">npm install @quietloudlab/ai-interaction-atlas</code>
