@@ -1,5 +1,7 @@
 # AI Interaction Atlas
 
+![AI Interaction Atlas](./public/OG.png)
+
 [![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Live Demo](https://img.shields.io/badge/demo-live-green.svg)](https://ai-interaction.com)
 [![GitHub](https://img.shields.io/github/stars/quietloudlab/ai-interaction-atlas?style=social)](https://github.com/quietloudlab/ai-interaction-atlas)
