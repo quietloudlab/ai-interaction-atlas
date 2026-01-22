@@ -81,7 +81,12 @@ function AtlasRoutes() {
     return match ? match[1] : null;
   };
 
-  const getActivePage = () => {
+  const getActiveLayerId = () => {
+    const match = pathname.match(/\/atlas\/layer\/([^/]+)/);
+    return match ? match[1] : null;
+  };
+
+  const getActivePage = (): 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system' | undefined => {
     if (pathname.includes('/atlas/data')) return 'data';
     if (pathname.includes('/atlas/constraints')) return 'constraints';
     if (pathname.includes('/atlas/touchpoints')) return 'touchpoints';
@@ -89,7 +94,10 @@ function AtlasRoutes() {
     if (pathname.includes('/atlas/ai')) return 'ai';
     if (pathname.includes('/atlas/human')) return 'human';
     if (pathname.includes('/atlas/system')) return 'system';
-    return 'dashboard';
+    if (pathname.includes('/atlas/layer')) return undefined; // Don't activate any page button on layer pages
+    if (pathname.includes('/atlas/task')) return undefined; // Don't activate any page button on task pages
+    if (pathname === '/atlas' || pathname === '/atlas/') return 'dashboard';
+    return undefined;
   };
 
   const handleNavigate = (type: 'task' | 'layer' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'dashboard' | 'ai' | 'human' | 'system', id?: string) => {
@@ -108,6 +116,7 @@ function AtlasRoutes() {
   return (
     <AtlasLayout
       activeTaskId={getActiveTaskId()}
+      activeLayerId={getActiveLayerId()}
       activeView="atlas"
       activeAtlasPage={getActivePage()}
       onSelectTask={(id) => {

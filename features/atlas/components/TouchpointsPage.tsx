@@ -47,7 +47,8 @@ const ICON_MAP: Record<string, any> = {
 export const TouchpointsPage = () => {
   const [activeFilter, setActiveFilter] = useState<TouchpointCategory | 'all'>('all');
   const primary = '#3090B5';
-  const secondary = '#EFFEFF';
+  const secondaryLight = '#EFFEFF';
+  const secondaryDark = '#0A2A2E';
 
   const categories: {id: TouchpointCategory | 'all', label: string}[] = [
       { id: 'all', label: 'All' },
@@ -63,14 +64,14 @@ export const TouchpointsPage = () => {
 
   return (
     <div className="pb-20">
-      <header className="pt-8 pb-12 mb-16 border-b border-[#E6E6E6]">
-        <div className="text-xs font-mono uppercase tracking-widest text-[#6E6E6E] mb-6 flex items-center gap-2">
+      <header className="pt-8 pb-12 mb-16 border-b border-[var(--border)]">
+        <div className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] mb-6 flex items-center gap-2">
           <span>Atlas</span>
           <span>/</span>
           <span>Touchpoints</span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">Touchpoints</h1>
-        <p className="text-xl md:text-2xl font-sans font-light text-[#6E6E6E] leading-snug max-w-3xl mb-12">
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[var(--text-main)] mb-8">Touchpoints</h1>
+        <p className="text-xl md:text-2xl font-sans font-light text-[var(--text-muted)] leading-snug max-w-3xl mb-12">
           The surfaces and channels where humans interact with the AI system.
         </p>
 
@@ -82,8 +83,8 @@ export const TouchpointsPage = () => {
                     onClick={() => setActiveFilter(cat.id)}
                     className={`px-4 py-2 text-xs font-mono uppercase tracking-widest transition-all border ${
                         activeFilter === cat.id
-                        ? 'bg-[#111111] text-white border-[#111111]'
-                        : 'bg-white text-[#6E6E6E] border-[#E6E6E6] hover:border-[#111111] hover:text-[#111111]'
+                        ? 'bg-[var(--text-main)] text-[var(--bg)] border-[var(--text-main)]'
+                        : 'bg-[var(--surface)] text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--text-main)] hover:text-[var(--text-main)]'
                     }`}
                 >
                     {cat.label}
@@ -95,9 +96,11 @@ export const TouchpointsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 group/list">
         {filteredTouchpoints.map(touchpoint => {
           const Icon = ICON_MAP[touchpoint.icon] || Smartphone;
+          const isDark = document.documentElement.classList.contains('dark');
+          const secondary = isDark ? secondaryDark : secondaryLight;
 
           return (
-            <div key={touchpoint.id} className="bg-white border border-[#E6E6E6] p-6 transition-all hover:bg-[#FAFAFA] group flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100">
+            <div key={touchpoint.id} className="bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] group flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100">
               <div className="flex items-start justify-between mb-4">
                 <div
                   className="p-3 border group-hover:scale-105 transition-transform"
@@ -108,23 +111,23 @@ export const TouchpointsPage = () => {
                 >
                    <Icon className="w-6 h-6" style={{ color: primary }} />
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#999] bg-[#F9F9F7] px-2 py-1 border border-[#E6E6E6]">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#999] dark:text-[#888] bg-[var(--bg)] px-2 py-1 border border-[var(--border)]">
                    {touchpoint.category.replace('_', ' ')}
                 </span>
               </div>
 
               <div className="mb-6 flex-1">
-                 <h3 className="text-lg font-sans font-medium text-[#111111] mb-2">{touchpoint.name}</h3>
-                 <p className="text-[#6E6E6E] text-sm leading-relaxed mb-3">{touchpoint.description}</p>
+                 <h3 className="text-lg font-sans font-medium text-[var(--text-main)] mb-2">{touchpoint.name}</h3>
+                 <p className="text-[var(--text-muted)] text-sm leading-relaxed mb-3">{touchpoint.description}</p>
               </div>
 
               {/* Examples */}
               {touchpoint.examples && touchpoint.examples.length > 0 && (
-                 <div className="mt-auto pt-4 border-t border-[#E6E6E6]">
-                    <div className="text-[10px] font-mono uppercase text-gray-400 mb-2">Examples</div>
+                 <div className="mt-auto pt-4 border-t border-[var(--border)]">
+                    <div className="text-[10px] font-mono uppercase text-[var(--text-muted)] mb-2">Examples</div>
                     <div className="flex flex-wrap gap-1.5">
                        {touchpoint.examples.map((ex, i) => (
-                          <span key={i} className="text-xs font-mono bg-[#F9F9F7] text-gray-600 px-2 py-1 border border-[#E6E6E6]">
+                          <span key={i} className="text-xs font-mono bg-[var(--bg)] text-[var(--text-muted)] px-2 py-1 border border-[var(--border)]">
                              {ex}
                           </span>
                        ))}

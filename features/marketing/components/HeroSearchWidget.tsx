@@ -131,7 +131,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
     <div className="flex flex-col gap-4 w-full max-w-full">
       {/* Search Input */}
       <div className="relative w-full">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)] pointer-events-none" />
         <input
           type="text"
           placeholder="Search patterns..."
@@ -157,13 +157,13 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
               }
             }, 200);
           }}
-          className="w-full box-border bg-white border-2 border-black py-3.5 pl-12 pr-4 text-base font-mono focus:ring-2 focus:ring-black focus:border-black placeholder:text-gray-400 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+          className="w-full box-border bg-[var(--surface)] border-2 border-[var(--text-main)] text-[var(--text-main)] py-3.5 pl-12 pr-4 text-base font-mono focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] placeholder:text-[var(--text-muted)] shadow-[4px_4px_0px_0px_var(--text-main)] transition-all"
         />
       </div>
 
       {/* Results Panel */}
       <div
-        className="w-full box-border bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-[400px] overflow-y-scroll"
+        className="w-full box-border bg-[var(--surface)] border-2 border-[var(--text-main)] shadow-[4px_4px_0px_0px_var(--text-main)] h-[400px] overflow-y-scroll"
         style={{
           scrollbarWidth: 'auto',
           msOverflowStyle: 'scrollbar'
@@ -171,14 +171,14 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
       >
         {searchQuery.trim().length === 0 ? (
           <div className="p-8 text-center">
-            <Search className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-            <p className="text-sm font-mono text-gray-600 mb-2">Start typing to explore patterns</p>
-            <p className="text-xs text-gray-400">
+            <Search className="w-12 h-12 mx-auto mb-4 text-[var(--border)]" />
+            <p className="text-sm font-mono text-[var(--text-muted)] mb-2">Start typing to explore patterns</p>
+            <p className="text-xs text-[var(--text-muted)] opacity-70">
               Search across tasks, data types, constraints, and touchpoints
             </p>
           </div>
         ) : searchResults.length > 0 ? (
-          <div className="divide-y-2 divide-gray-200">
+          <div className="divide-y-2 divide-[var(--border)]">
             {searchResults.map((result) => {
               const Icon = getResultIcon(result);
               const color = getResultColor(result);
@@ -189,10 +189,10 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
                 <button
                   key={result.id}
                   onClick={() => onResultClick(result)}
-                  className="w-full text-left p-4 hover:bg-gray-50 transition-colors group flex items-start gap-3"
+                  className="w-full text-left p-4 hover:bg-[var(--bg)] transition-colors group flex items-start gap-3"
                 >
                   <div
-                    className="p-2 border border-gray-300 flex-shrink-0 mt-0.5"
+                    className="p-2 border border-[var(--border)] flex-shrink-0 mt-0.5"
                     style={{ backgroundColor: bgColor }}
                   >
                     <Icon className="w-4 h-4" style={{ color }} />
@@ -200,16 +200,16 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-sans font-medium text-black group-hover:text-blue-600 transition-colors">
+                      <h3 className="font-sans font-medium text-[var(--text-main)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         {result.name}
                       </h3>
-                      <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wide">
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wide">
                         {typeLabel}
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
                     </div>
                     {result.description && (
-                      <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-[var(--text-muted)] line-clamp-2 leading-relaxed">
                         {result.description}
                       </p>
                     )}
@@ -220,8 +220,8 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
           </div>
         ) : (
           <div className="p-8 text-center">
-            <p className="text-sm text-gray-500 font-mono">No patterns found</p>
-            <p className="text-xs text-gray-400 mt-1">Try different keywords</p>
+            <p className="text-sm text-[var(--text-muted)] font-mono">No patterns found</p>
+            <p className="text-xs text-[var(--text-muted)] opacity-70 mt-1">Try different keywords</p>
           </div>
         )}
       </div>

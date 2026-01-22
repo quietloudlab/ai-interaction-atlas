@@ -16,11 +16,17 @@ import {
   Loader2,
   FileText,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Layers,
+  MessageSquare,
+  Activity,
+  Minus,
+  Plus
 } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
 import { semanticSearch, isSemanticSearchAvailable, type SearchResult } from '../../../lib/semanticSearch';
 import { trackEvent, EVENTS } from '../../../lib/fathom';
+import { DarkModeToggle } from '../../../components/DarkModeToggle';
 
 interface SidebarProps {
   activeTaskId: string | null;
@@ -30,6 +36,7 @@ interface SidebarProps {
   activeAtlasPage?: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system';
   onNavigateAtlas?: (page: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system') => void;
   onSelectLayer?: (id: string) => void;
+  activeLayerId?: string | null;
   isOpen?: boolean;
   onClose?: () => void;
   variant?: 'overlay' | 'static';
@@ -43,6 +50,7 @@ export const Sidebar = ({
   activeAtlasPage = 'dashboard',
   onNavigateAtlas,
   onSelectLayer,
+  activeLayerId,
   isOpen,
   onClose,
   variant = 'overlay'
@@ -197,16 +205,16 @@ export const Sidebar = ({
      }
   };
 
-  const containerClasses = variant === 'overlay' 
-    ? `fixed top-0 left-0 h-full w-[300px] bg-[#FAFAFA] border-r border-[#E6E6E6] flex flex-col z-50 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`
-    : `w-full h-full bg-[#FAFAFA] border-r border-[#E6E6E6] flex flex-col`; 
+  const containerClasses = variant === 'overlay'
+    ? `fixed top-0 left-0 h-full w-[300px] bg-[var(--bg)] border-r border-[var(--border)] flex flex-col z-50 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`
+    : `w-full h-full bg-[var(--bg)] border-r border-[var(--border)] flex flex-col`; 
 
   return (
     <>
       {/* Mobile Backdrop (Only for overlay mode) */}
       {variant === 'overlay' && (
-        <div 
-          className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        <div
+          className={`fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           onClick={onClose}
         />
       )}
@@ -214,53 +222,57 @@ export const Sidebar = ({
       {/* Sidebar Container */}
       <aside className={containerClasses}>
         {/* Header Area */}
-        <div className="p-5 border-b border-[#E6E6E6] bg-white flex-shrink-0">
+        <div className="p-5 border-b border-[var(--border)] bg-[var(--surface)] flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={() => onSelectView('landing')}
-              className="cursor-pointer flex items-center gap-2 text-[#111111] hover:opacity-70 transition-opacity group"
+              className="cursor-pointer flex items-center gap-2 text-[var(--text-main)] hover:opacity-70 transition-opacity group"
             >
-              <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-sans font-medium text-lg group-hover:bg-blue-600 transition-colors">A</div>
+              <div className="w-8 h-8 bg-[var(--text-main)] text-[var(--bg)] flex items-center justify-center font-sans font-medium text-lg group-hover:bg-blue-600 transition-colors">A</div>
               <div className="flex flex-col text-left">
                 <span className="font-sans font-medium tracking-tight leading-none">Atlas</span>
-                <span className="text-[10px] text-[#6E6E6E] font-mono mt-0.5">v{meta.version}</span>
+                <span className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">v{meta.version}</span>
               </div>
             </button>
-            {variant === 'overlay' && (
-              <button onClick={onClose} className="cursor-pointer lg:hidden p-1 hover:bg-gray-100 text-gray-500">
-                <X className="w-5 h-5" />
-              </button>
-            )}
+            <div className="flex items-center gap-1">
+              <DarkModeToggle />
+              {variant === 'overlay' && (
+                <button onClick={onClose} className="cursor-pointer lg:hidden p-1 hover:bg-[var(--bg)] text-[var(--text-muted)]">
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Mobile CTA - Removed for now */}
         </div>
 
         {/* Navigation & Search Area */}
-        <div className="flex flex-col flex-shrink-0 bg-white border-b border-[#E6E6E6]">
+        <div className="flex flex-col flex-shrink-0 bg-[var(--surface)] border-b border-[var(--border)]">
            {/* Navigation Toggle */}
            <button
              onClick={() => setIsNavCollapsed(!isNavCollapsed)}
-             className="w-full flex items-center justify-between px-3 py-2 text-xs font-mono uppercase tracking-wider text-[#6E6E6E] hover:bg-gray-50 transition-colors border-b border-[#E6E6E6]"
+             className="w-full flex items-center justify-between px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] hover:bg-[var(--bg)] transition-colors border-b border-[var(--border)]"
            >
              <span>Navigation</span>
              {isNavCollapsed ? (
-               <ChevronRight className="w-3.5 h-3.5" />
+               <Plus className="w-3 h-3" />
              ) : (
-               <ChevronDown className="w-3.5 h-3.5" />
+               <Minus className="w-3 h-3" />
              )}
            </button>
 
            {/* Primary Links */}
-           {!isNavCollapsed && (
+           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isNavCollapsed ? 'max-h-0' : 'max-h-[2000px]'}`}>
              <div className="p-3 space-y-0.5 pb-3">
+              {/* Overview & Reference */}
               <button
                 onClick={() => handleAtlasNav('dashboard')}
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
-                  ${activeAtlasPage === 'dashboard' && !activeTaskId
-                    ? 'bg-blue-50 text-blue-700 font-medium border-blue-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                  ${activeAtlasPage === 'dashboard' && !activeTaskId && !activeLayerId
+                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium border-blue-200 dark:border-blue-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <LayoutDashboard className="w-4 h-4" />
@@ -268,12 +280,84 @@ export const Sidebar = ({
               </button>
 
               <button
+                onClick={() => handleAtlasNav('reference')}
+                className={`
+                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
+                  ${activeAtlasPage === 'reference'
+                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-medium border-indigo-200 dark:border-indigo-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
+                `}
+              >
+                <FileText className="w-4 h-4" />
+                <span>Quick Reference</span>
+              </button>
+
+              <div className="h-px bg-[var(--border)] my-2 mx-2"></div>
+
+              {/* Layer Links */}
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1.5">
+                Layers
+              </div>
+              {layers.map(layer => {
+                // Map layer IDs to appropriate icons
+                const getLayerIcon = (layerId: string) => {
+                  if (layerId.includes('inbound')) return MessageSquare;
+                  if (layerId.includes('internal')) return BrainCircuit;
+                  if (layerId.includes('outbound')) return Activity;
+                  if (layerId.includes('execution')) return Settings;
+                  return Layers;
+                };
+
+                const Icon = getLayerIcon(layer.id);
+                const isActive = activeLayerId === layer.id;
+
+                return (
+                  <button
+                    key={layer.id}
+                    onClick={() => {
+                      if (onSelectLayer) {
+                        onSelectLayer(layer.id);
+                        if (variant === 'overlay' && onClose) onClose();
+                      }
+                    }}
+                    className={`
+                      cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border
+                      ${isActive
+                        ? 'bg-[var(--surface)] border-[var(--border)] font-medium'
+                        : 'border-transparent text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
+                    `}
+                    style={isActive ? {
+                      backgroundColor: `${layer.color}10`,
+                      borderColor: `${layer.color}40`,
+                      color: layer.color
+                    } : undefined}
+                  >
+                    <div className="relative">
+                      <Icon className="w-4 h-4" />
+                      <div
+                        className="absolute -bottom-0.5 -right-0.5 w-1.5 h-1.5 rounded-full border border-[var(--bg)]"
+                        style={{ backgroundColor: layer.color }}
+                      />
+                    </div>
+                    <span>{layer.name}</span>
+                  </button>
+                );
+              })}
+
+              <div className="h-px bg-[var(--border)] my-2 mx-2"></div>
+
+              {/* Task Types */}
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1.5">
+                Patterns
+              </div>
+
+              <button
                 onClick={() => handleAtlasNav('ai')}
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'ai'
-                    ? 'bg-purple-50 text-purple-700 font-medium border-purple-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                    ? 'bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium border-purple-200 dark:border-purple-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <BrainCircuit className="w-4 h-4" />
@@ -285,8 +369,8 @@ export const Sidebar = ({
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'human'
-                    ? 'bg-blue-50 text-blue-700 font-medium border-blue-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium border-blue-200 dark:border-blue-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <UserCircle className="w-4 h-4" />
@@ -298,97 +382,89 @@ export const Sidebar = ({
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'system'
-                    ? 'bg-gray-100 text-gray-800 font-medium border-gray-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                    ? 'bg-gray-100 dark:bg-gray-800/40 text-gray-800 dark:text-gray-200 font-medium border-gray-200 dark:border-gray-700'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <Settings className="w-4 h-4" />
                 <span>System Ops</span>
               </button>
 
-              <div className="h-px bg-gray-100 my-2 mx-2"></div>
+              <div className="h-px bg-[var(--border)] my-2 mx-2"></div>
+
+              {/* Artifacts */}
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1.5">
+                Artifacts
+              </div>
 
               <button
                 onClick={() => handleAtlasNav('data')}
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'data'
-                    ? 'bg-amber-50 text-amber-700 font-medium border-amber-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                    ? 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-medium border-amber-200 dark:border-amber-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <Database className="w-4 h-4" />
                 <span>Data Types</span>
               </button>
+
               <button
                 onClick={() => handleAtlasNav('constraints')}
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'constraints'
-                    ? 'bg-rose-50 text-rose-700 font-medium border-rose-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                    ? 'bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 font-medium border-rose-200 dark:border-rose-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <Sliders className="w-4 h-4" />
                 <span>Constraints</span>
               </button>
+
               <button
                 onClick={() => handleAtlasNav('touchpoints')}
                 className={`
                   cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
                   ${activeAtlasPage === 'touchpoints'
-                    ? 'bg-cyan-50 text-cyan-700 font-medium border-cyan-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
+                    ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 font-medium border-cyan-200 dark:border-cyan-800'
+                    : 'text-[var(--text-main)] font-medium hover:bg-[var(--bg)]'}
                 `}
               >
                 <Smartphone className="w-4 h-4" />
                 <span>Touchpoints</span>
               </button>
-
-              <div className="h-px bg-gray-100 my-2 mx-2"></div>
-
-              <button
-                onClick={() => handleAtlasNav('reference')}
-                className={`
-                  cursor-pointer group flex items-center w-full text-left px-2 py-2 text-sm transition-all gap-2.5 border border-transparent
-                  ${activeAtlasPage === 'reference'
-                    ? 'bg-indigo-50 text-indigo-700 font-medium border-indigo-200'
-                    : 'text-[#111111] font-medium hover:bg-gray-100'}
-                `}
-              >
-                <FileText className="w-4 h-4" />
-                <span>Quick Reference</span>
-              </button>
            </div>
-           )}
+           </div>
 
            {/* Search Bar */}
            <div className="p-3">
              <div className="relative mb-2">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]" />
                 <input
                   type="text"
                   placeholder={isSemanticSearchEnabled ? "Search across patterns..." : "Find a task..."}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-[#F4F4F5] border border-gray-200 py-1.5 pl-8 pr-9 text-sm focus:ring-1 focus:ring-black placeholder:text-gray-400"
+                  className="w-full bg-[var(--bg)] border border-[var(--border)] text-[var(--text-main)] py-1.5 pl-8 pr-9 text-sm focus:ring-1 focus:ring-[var(--text-main)] placeholder:text-[var(--text-muted)]"
                 />
                 {isSearching ? (
-                  <Loader2 className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-500 animate-spin" />
+                  <Loader2 className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-500 dark:text-purple-400 animate-spin" />
                 ) : isSemanticSearchEnabled && searchTerm.trim().length >= 2 && (
-                  <Sparkles className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-500" />
+                  <Sparkles className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />
                 )}
              </div>
 
 
-             <div className="flex p-1 bg-[#F4F4F5] border border-gray-200">
+             <div className="flex p-1 bg-[var(--bg)] border border-[var(--border)]">
                 {(['all', 'ai', 'human', 'system'] as const).map(type => (
                    <button
                       key={type}
                       onClick={() => setFilterType(type)}
                       className={`
                          cursor-pointer flex-1 capitalize text-[10px] font-mono font-medium py-1 transition-all border border-transparent
-                         ${filterType === type ? 'bg-white text-black border-gray-300' : 'text-gray-500 hover:text-gray-700'}
+                         ${filterType === type ? 'bg-[var(--surface)] text-[var(--text-main)] border-[var(--border)]' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'}
                       `}
                    >
                       {type}
@@ -402,14 +478,14 @@ export const Sidebar = ({
         <div className="flex-1 overflow-y-auto p-4 space-y-8 custom-scrollbar">
           {/* Type Filters - Show at top when searching */}
           {searchTerm.length >= 2 && (
-            <div className="sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm border-b border-gray-200 pb-3 mb-4 z-20">
+            <div className="sticky top-0 bg-[var(--bg)]/95 backdrop-blur-sm border-b border-[var(--border)] pb-3 mb-4 z-20">
               <div className="flex flex-wrap gap-1 mb-2">
                 <button
                   onClick={() => toggleSearchTypeFilter('ai_task')}
                   className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('ai_task')
-                      ? 'bg-purple-100 text-purple-700 border border-purple-300'
-                      : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-700'
+                      : 'bg-[var(--surface)] text-[var(--text-muted)] border border-[var(--border)] hover:bg-[var(--bg)]'}
                   }`}
                 >
                   AI
@@ -418,8 +494,8 @@ export const Sidebar = ({
                   onClick={() => toggleSearchTypeFilter('human_task')}
                   className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('human_task')
-                      ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                      : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700'
+                      : 'bg-[var(--surface)] text-[var(--text-muted)] border border-[var(--border)] hover:bg-[var(--bg)]'
                   }`}
                 >
                   Human
@@ -428,8 +504,8 @@ export const Sidebar = ({
                   onClick={() => toggleSearchTypeFilter('system_task')}
                   className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('system_task')
-                      ? 'bg-gray-100 text-gray-700 border border-gray-300'
-                      : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-gray-100 dark:bg-gray-800/40 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700'
+                      : 'bg-[var(--surface)] text-[var(--text-muted)] border border-[var(--border)] hover:bg-[var(--bg)]'
                   }`}
                 >
                   System
@@ -438,8 +514,8 @@ export const Sidebar = ({
                   onClick={() => toggleSearchTypeFilter('data')}
                   className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('data')
-                      ? 'bg-amber-100 text-amber-700 border border-amber-300'
-                      : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700'
+                      : 'bg-[var(--surface)] text-[var(--text-muted)] border border-[var(--border)] hover:bg-[var(--bg)]'
                   }`}
                 >
                   Data
@@ -448,8 +524,8 @@ export const Sidebar = ({
                   onClick={() => toggleSearchTypeFilter('constraint')}
                   className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('constraint')
-                      ? 'bg-rose-100 text-rose-700 border border-rose-300'
-                      : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-700'
+                      : 'bg-[var(--surface)] text-[var(--text-muted)] border border-[var(--border)] hover:bg-[var(--bg)]'
                   }`}
                 >
                   Constraint
@@ -458,8 +534,8 @@ export const Sidebar = ({
                   onClick={() => toggleSearchTypeFilter('touchpoint')}
                   className={`px-1.5 py-0.5 text-[10px] font-mono font-medium transition-colors cursor-pointer ${
                     searchTypeFilter.has('touchpoint')
-                      ? 'bg-cyan-100 text-cyan-700 border border-cyan-300'
-                      : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-700'
+                      : 'bg-[var(--surface)] text-[var(--text-muted)] border border-[var(--border)] hover:bg-[var(--bg)]'
                   }`}
                 >
                   Touchpoint
@@ -468,7 +544,7 @@ export const Sidebar = ({
               {searchTypeFilter.size > 0 && (
                 <button
                   onClick={() => setSearchTypeFilter(new Set())}
-                  className="w-full py-1 px-2 text-[10px] font-mono font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer border border-gray-200"
+                  className="w-full py-1 px-2 text-[10px] font-mono font-medium text-[var(--text-muted)] bg-[var(--surface)] hover:bg-[var(--bg)] transition-colors cursor-pointer border border-[var(--border)]"
                 >
                   Clear filters
                 </button>
@@ -489,22 +565,22 @@ export const Sidebar = ({
                       if (variant === 'overlay' && onClose) onClose();
                     }
                   }}
-                  className={`w-full flex items-center gap-2 mb-3 sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm py-1 z-10 ${
+                  className={`w-full flex items-center gap-2 mb-3 sticky top-0 bg-[var(--bg)]/95 backdrop-blur-sm py-1 z-10 ${
                     onSelectLayer ? 'cursor-pointer hover:opacity-70 transition-opacity' : ''
                   }`}
                   disabled={!onSelectLayer}
                 >
                   <span className="w-2.5 h-2.5 shadow-sm" style={{ backgroundColor: layer.color }}></span>
-                  <span className="text-[10px] uppercase tracking-widest font-mono font-medium text-[#6E6E6E]" style={{ color: layer.color }}>{layer.name}</span>
-                  <div className="h-px bg-[#E6E6E6] flex-1"></div>
+                  <span className="text-[10px] uppercase tracking-widest font-mono font-medium text-[var(--text-muted)]" style={{ color: layer.color }}>{layer.name}</span>
+                  <div className="h-px bg-[var(--border)] flex-1"></div>
                 </button>
                 <div className="space-y-0.5">
                   {layerTasks.map(task => {
                      let Icon = BrainCircuit;
-                     let typeColor = 'text-gray-400';
-                     if (task.task_type === 'human') { Icon = UserCircle; typeColor = 'text-blue-500'; }
-                     if (task.task_type === 'system') { Icon = Settings; typeColor = 'text-gray-500'; }
-                     if (task.task_type === 'ai') { typeColor = 'text-purple-500'; }
+                     let typeColor = 'text-gray-400 dark:text-gray-500';
+                     if (task.task_type === 'human') { Icon = UserCircle; typeColor = 'text-blue-500 dark:text-blue-400'; }
+                     if (task.task_type === 'system') { Icon = Settings; typeColor = 'text-gray-500 dark:text-gray-400'; }
+                     if (task.task_type === 'ai') { typeColor = 'text-purple-500 dark:text-purple-400'; }
 
                      const isActive = activeTaskId === task.id;
 
@@ -522,8 +598,8 @@ export const Sidebar = ({
                           group flex items-center w-full text-left px-2 py-1.5 text-sm transition-all gap-2.5 border border-transparent
                           ${activeView === 'builder' ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'}
                           ${isActive
-                            ? 'bg-white text-[#111111] shadow-sm font-medium border-gray-200'
-                            : 'text-[#6E6E6E] hover:bg-white hover:text-[#111111] hover:border-gray-200 hover:shadow-sm'}
+                            ? 'bg-[var(--surface)] text-[var(--text-main)] shadow-sm font-medium border-[var(--border)]'
+                            : 'text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text-main)] hover:border-[var(--border)] hover:shadow-sm'}
                         `}
                       >
                         <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? 'opacity-100' : 'opacity-70'} ${typeColor}`} />
@@ -539,8 +615,8 @@ export const Sidebar = ({
           
           {filteredTasks.length === 0 && (
              <div className="text-center py-10">
-                <p className="text-sm text-gray-500">No tasks found.</p>
-                <button onClick={() => { setSearchTerm(''); setFilterType('all'); }} className="cursor-pointer text-xs text-blue-600 mt-2 hover:underline">Clear filters</button>
+                <p className="text-sm text-[var(--text-muted)]">No tasks found.</p>
+                <button onClick={() => { setSearchTerm(''); setFilterType('all'); }} className="cursor-pointer text-xs text-blue-600 dark:text-blue-400 mt-2 hover:underline">Clear filters</button>
              </div>
           )}
         </div>

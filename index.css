@@ -1,11 +1,21 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --bg: #F9F9F7;
   --surface: #FFFFFF;
   --text-main: #111111;
   --text-muted: #6E6E6E;
   --border: #E6E6E6;
+}
+
+.dark {
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --text-main: #EFEFEF;
+  --text-muted: #B8B8B8;
+  --border: #2A2A2A;
 }
 
 html, body {
@@ -45,6 +55,14 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a3a3a3;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
 }
 
 /* Global cursor rules */

@@ -76,7 +76,8 @@ const ICON_MAP: Record<string, any> = {
 export const ConstraintsPage = () => {
   const [activeFilter, setActiveFilter] = useState<ConstraintCategory | 'all'>('all');
   const primary = '#D91A45';
-  const secondary = '#FDF2F2';
+  const secondaryLight = '#FDF2F2';
+  const secondaryDark = '#2A1414';
 
   const categories: {id: ConstraintCategory | 'all', label: string}[] = [
       { id: 'all', label: 'All' },
@@ -94,14 +95,14 @@ export const ConstraintsPage = () => {
 
   return (
     <div className="pb-20">
-      <header className="pt-8 pb-12 mb-16 border-b border-[#E6E6E6]">
-        <div className="text-xs font-mono uppercase tracking-widest text-[#6E6E6E] mb-6 flex items-center gap-2">
+      <header className="pt-8 pb-12 mb-16 border-b border-[var(--border)]">
+        <div className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] mb-6 flex items-center gap-2">
           <span>Atlas</span>
           <span>/</span>
           <span>Constraints</span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[#111111] mb-8">Constraint Library</h1>
-        <p className="text-xl md:text-2xl font-sans font-light text-[#6E6E6E] leading-snug max-w-3xl mb-12">
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter text-[var(--text-main)] mb-8">Constraint Library</h1>
+        <p className="text-xl md:text-2xl font-sans font-light text-[var(--text-muted)] leading-snug max-w-3xl mb-12">
           Guardrails and non-functional requirements that shape system behavior, safety, and business logic.
         </p>
 
@@ -113,8 +114,8 @@ export const ConstraintsPage = () => {
                     onClick={() => setActiveFilter(cat.id)}
                     className={`px-4 py-2 text-xs font-mono uppercase tracking-widest transition-all border ${
                         activeFilter === cat.id
-                        ? 'bg-[#111111] text-white border-[#111111]'
-                        : 'bg-white text-[#6E6E6E] border-[#E6E6E6] hover:border-[#111111] hover:text-[#111111]'
+                        ? 'bg-[var(--text-main)] text-[var(--bg)] border-[var(--text-main)]'
+                        : 'bg-[var(--surface)] text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--text-main)] hover:text-[var(--text-main)]'
                     }`}
                 >
                     {cat.label}
@@ -126,9 +127,11 @@ export const ConstraintsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 group/list">
         {filteredConstraints.map(constraint => {
           const Icon = ICON_MAP[constraint.icon] || Sliders;
+          const isDark = document.documentElement.classList.contains('dark');
+          const secondary = isDark ? secondaryDark : secondaryLight;
 
           return (
-            <div key={constraint.id} className="relative bg-white border border-[#E6E6E6] p-6 transition-all hover:bg-[#FAFAFA] flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100 group">
+            <div key={constraint.id} className="relative bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100 group">
               {/* Accent bar */}
               <div className="absolute left-0 top-0 bottom-0 w-1.5 group-hover:w-2 transition-all" style={{ backgroundColor: primary }}></div>
 
@@ -144,32 +147,32 @@ export const ConstraintsPage = () => {
                 </div>
                 <div className="flex-1">
                    <div className="flex items-center justify-between">
-                     <h3 className="text-lg font-sans font-medium text-[#111111] mb-1">{constraint.name}</h3>
-                     <span className="text-[10px] font-mono uppercase text-gray-400 tracking-wider">{constraint.type}</span>
+                     <h3 className="text-lg font-sans font-medium text-[var(--text-main)] mb-1">{constraint.name}</h3>
+                     <span className="text-[10px] font-mono uppercase text-[var(--text-muted)] tracking-wider">{constraint.type}</span>
                    </div>
-                   <div className="text-xs font-mono uppercase tracking-wider text-[#999] mb-2">{constraint.category.replace('_', ' ')}</div>
-                   <p className="text-[#6E6E6E] text-sm leading-relaxed">{constraint.description}</p>
+                   <div className="text-xs font-mono uppercase tracking-wider text-[#999] dark:text-[#888] mb-2">{constraint.category.replace('_', ' ')}</div>
+                   <p className="text-[var(--text-muted)] text-sm leading-relaxed">{constraint.description}</p>
                 </div>
               </div>
 
-              <div className="mt-auto space-y-3 pt-4 border-t border-[#E6E6E6]">
+              <div className="mt-auto space-y-3 pt-4 border-t border-[var(--border)]">
                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                       <div className="text-[10px] font-mono uppercase text-gray-400 mb-1">Applies To</div>
-                       <div className="text-xs text-gray-600">
+                       <div className="text-[10px] font-mono uppercase text-[var(--text-muted)] mb-1">Applies To</div>
+                       <div className="text-xs text-[var(--text-muted)]">
                           {constraint.applies_to ? constraint.applies_to.join(", ") : "All"}
                        </div>
                     </div>
                     <div>
-                       <div className="text-[10px] font-mono uppercase text-gray-400 mb-1">Example Values</div>
-                       <div className="text-xs text-gray-600 font-mono bg-gray-50 inline-block px-1 border border-[#E6E6E6]">
+                       <div className="text-[10px] font-mono uppercase text-[var(--text-muted)] mb-1">Example Values</div>
+                       <div className="text-xs text-[var(--text-muted)] font-mono bg-[var(--bg)] inline-block px-1 border border-[var(--border)]">
                           {constraint.example_values}
                        </div>
                     </div>
                  </div>
 
                  {constraint.ux_note && (
-                    <div className="bg-[#F9F9F7] p-2 border border-[#E6E6E6] text-xs text-[#6E6E6E] flex gap-2">
+                    <div className="bg-[var(--bg)] p-2 border border-[var(--border)] text-xs text-[var(--text-muted)] flex gap-2">
                        <span className="font-mono font-bold">UX:</span> {constraint.ux_note}
                     </div>
                  )}

@@ -14,6 +14,7 @@ interface AtlasLayoutProps {
   activeAtlasPage?: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system';
   onNavigateAtlas?: (page: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system') => void;
   onSelectLayer?: (id: string) => void;
+  activeLayerId?: string | null;
 }
 
 export const AtlasLayout = ({
@@ -24,7 +25,8 @@ export const AtlasLayout = ({
   onSelectView,
   activeAtlasPage,
   onNavigateAtlas,
-  onSelectLayer
+  onSelectLayer,
+  activeLayerId
 }: AtlasLayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLElement>(null);
@@ -69,9 +71,9 @@ export const AtlasLayout = ({
   }, [location.pathname, navigationType]);
 
   return (
-    <div className="flex h-screen bg-white overflow-hidden">
+    <div className="flex h-screen bg-[var(--surface)] overflow-hidden">
       {/* Desktop Sidebar (Fixed) */}
-      <div className="hidden lg:block w-[280px] h-full flex-shrink-0 border-r border-black z-20">
+      <div className="hidden lg:block w-[280px] h-full flex-shrink-0 border-r border-[var(--text-main)] z-20">
         <Sidebar
           activeTaskId={activeTaskId}
           onSelectTask={onSelectTask}
@@ -80,6 +82,7 @@ export const AtlasLayout = ({
           activeAtlasPage={activeAtlasPage}
           onNavigateAtlas={onNavigateAtlas}
           onSelectLayer={onSelectLayer}
+          activeLayerId={activeLayerId}
           variant="static"
         />
       </div>
@@ -99,6 +102,7 @@ export const AtlasLayout = ({
         activeAtlasPage={activeAtlasPage}
         onNavigateAtlas={onNavigateAtlas}
         onSelectLayer={onSelectLayer}
+        activeLayerId={activeLayerId}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         variant="overlay"
@@ -109,12 +113,12 @@ export const AtlasLayout = ({
         {/* Desktop Top Right Button - Removed for now */}
 
         {/* Mobile Header Trigger */}
-        <div className="lg:hidden h-14 bg-white border-b border-black flex items-center justify-between px-4 flex-shrink-0 z-10">
-           <div className="flex items-center gap-2 font-sans font-medium text-black">
-              <div className="w-6 h-6 bg-black text-white flex items-center justify-center text-xs font-mono">A</div>
+        <div className="lg:hidden h-14 bg-[var(--surface)] border-b border-[var(--text-main)] flex items-center justify-between px-4 flex-shrink-0 z-10">
+           <div className="flex items-center gap-2 font-sans font-medium text-[var(--text-main)]">
+              <div className="w-6 h-6 bg-[var(--text-main)] text-[var(--bg)] flex items-center justify-center text-xs font-mono">A</div>
               Atlas
            </div>
-           <button onClick={() => setMobileMenuOpen(true)} className="cursor-pointer p-2 text-black">
+           <button onClick={() => setMobileMenuOpen(true)} className="cursor-pointer p-2 text-[var(--text-main)]">
               <Menu className="w-5 h-5" />
            </button>
         </div>
