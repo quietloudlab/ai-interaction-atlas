@@ -566,24 +566,22 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   </span>
                 </a>
 
-                {/* Request a Dimension */}
+                {/* Share Feedback */}
                 <a
-                  href="https://github.com/quietloudlab/ai-interaction-atlas/discussions/new?category=ideas"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:brandon@quietloudlab.com?subject=AI%20Interaction%20Atlas%20Feedback"
                   className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                 >
                   <div className="flex items-start gap-2 mb-2">
-                    <span className="text-xl">🔮</span>
+                    <span className="text-xl">💬</span>
                     <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform text-sm">
-                      Request a dimension
+                      Share feedback
                     </h4>
                   </div>
                   <p className="text-xs text-[var(--text-muted)] mb-3 leading-relaxed">
-                    See a gap in how we map AI systems? Propose a framework extension.
+                    Have ideas, questions, or want to discuss the framework? Reach out directly.
                   </p>
                   <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                    Visionary →
+                    Let's talk →
                   </span>
                 </a>
               </div>
