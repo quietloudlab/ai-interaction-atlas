@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
 import { semanticSearch, isSemanticSearchAvailable, type SearchResult } from '../../../lib/semanticSearch';
+import { trackEvent, EVENTS } from '../../../lib/fathom';
 
 interface SidebarProps {
   activeTaskId: string | null;
@@ -85,6 +86,9 @@ export const Sidebar = ({
 
     const timer = setTimeout(async () => {
       try {
+        // Track semantic search usage
+        trackEvent(EVENTS.SEMANTIC_SEARCH_USED);
+
         // Use lower threshold when filters are active (more forgiving)
         const threshold = searchTypeFilter.size > 0 ? 0.2 : 0.3;
         const results = await semanticSearch(searchTerm.trim(), 20, threshold);
@@ -99,6 +103,16 @@ export const Sidebar = ({
 
     return () => clearTimeout(timer);
   }, [searchTerm, isSemanticSearchEnabled, searchTypeFilter.size]);
+
+  // Track regular search usage
+  useEffect(() => {
+    if (!isSemanticSearchEnabled && searchTerm.trim().length >= 2) {
+      const timer = setTimeout(() => {
+        trackEvent(EVENTS.SEARCH_PERFORMED);
+      }, 500); // Debounce to avoid tracking every keystroke
+      return () => clearTimeout(timer);
+    }
+  }, [searchTerm, isSemanticSearchEnabled]);
 
   // Toggle search type filter
   const toggleSearchTypeFilter = (type: string) => {
@@ -169,6 +183,14 @@ export const Sidebar = ({
 
   const handleAtlasNav = (page: 'dashboard' | 'data' | 'constraints' | 'touchpoints' | 'reference' | 'ai' | 'human' | 'system') => {
      if (onNavigateAtlas) {
+        // Track dimension navigation
+        if (page === 'ai') trackEvent(EVENTS.DIMENSION_VIEW_AI);
+        else if (page === 'human') trackEvent(EVENTS.DIMENSION_VIEW_HUMAN);
+        else if (page === 'system') trackEvent(EVENTS.DIMENSION_VIEW_SYSTEM);
+        else if (page === 'data') trackEvent(EVENTS.DIMENSION_VIEW_DATA);
+        else if (page === 'constraints') trackEvent(EVENTS.DIMENSION_VIEW_CONSTRAINTS);
+        else if (page === 'touchpoints') trackEvent(EVENTS.DIMENSION_VIEW_TOUCHPOINTS);
+
         onNavigateAtlas(page);
         // If we are in overlay mode (mobile), close the sidebar
         if (variant === 'overlay' && onClose) onClose();
@@ -492,6 +514,7 @@ export const Sidebar = ({
                         draggable={activeView === 'builder'}
                         onDragStart={activeView === 'builder' ? (e) => handleDragStart(e, task.id) : undefined}
                         onClick={() => {
+                          trackEvent(EVENTS.PATTERN_VIEW);
                           onSelectTask(task.id);
                         }}
                         title={matchReasonMap.get(task.id) || undefined}

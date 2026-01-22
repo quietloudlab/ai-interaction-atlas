@@ -12,6 +12,7 @@ import {
 import { HeroSearchWidget } from './HeroSearchWidget';
 import diagramExample from '../../../src/img/diagram_example.png';
 import quietloudlabLogo from '../../../src/img/quietloudlab_logo.svg';
+import { trackEvent, EVENTS } from '../../../lib/fathom';
 
 const SectionHeader = ({ number, title }: { number: string; title: string }) => (
   <div className="flex flex-col md:flex-row items-baseline border-t border-black pt-6 pb-12 mb-8">
@@ -389,6 +390,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   href="https://github.com/quietloudlab/ai-interaction-atlas"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent(EVENTS.GITHUB_CLICKED)}
                   className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-all active:translate-y-px group focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
                   style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
                 >
