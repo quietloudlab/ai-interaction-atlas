@@ -585,6 +585,80 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               </div>
             </div>
           </div>
+
+          {/* Contribution Paths */}
+          <div className="border-t border-[var(--text-main)] pt-12 mt-12">
+            <h3 className="font-sans text-xl font-medium mb-6 text-[var(--text-main)]">Help grow the Atlas</h3>
+            <p className="text-[var(--text-muted)] mb-8 max-w-2xl">
+              The Atlas evolves through community input. Whether you've spotted a pattern in the wild,
+              want to contribute documentation, or see a missing dimension—your perspective matters.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Suggest a Pattern */}
+              <a
+                href="https://github.com/quietloudlab/ai-interaction-atlas/issues/new?template=pattern-suggestion.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-6 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-2xl">💡</span>
+                  <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform">
+                    Suggest a pattern
+                  </h4>
+                </div>
+                <p className="text-sm text-[var(--text-muted)] mb-4 flex-1">
+                  Spotted an interaction pattern in the wild? Share what you've observed and we'll document it.
+                </p>
+                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                  Lowest effort →
+                </span>
+              </a>
+
+              {/* Contribute a Pattern */}
+              <a
+                href="https://github.com/quietloudlab/ai-interaction-atlas/blob/main/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-6 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-2xl">✍️</span>
+                  <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform">
+                    Contribute a pattern
+                  </h4>
+                </div>
+                <p className="text-sm text-[var(--text-muted)] mb-4 flex-1">
+                  Write a full pattern with examples, context, and tradeoffs. Submit a pull request.
+                </p>
+                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                  Hands-on →
+                </span>
+              </a>
+
+              {/* Request a Dimension */}
+              <a
+                href="https://github.com/quietloudlab/ai-interaction-atlas/discussions/new?category=ideas"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-6 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-2xl">🔮</span>
+                  <h4 className="font-sans font-medium text-[var(--text-main)] group-hover:translate-x-1 transition-transform">
+                    Request a dimension
+                  </h4>
+                </div>
+                <p className="text-sm text-[var(--text-muted)] mb-4 flex-1">
+                  See a gap in how we map AI systems? Propose a new dimension or framework extension.
+                </p>
+                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                  Visionary →
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
