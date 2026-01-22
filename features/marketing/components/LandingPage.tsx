@@ -174,7 +174,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* How to Use */}
-      <section className="pt-20 md:pt-28 pb-0 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
+      <section className="py-20 md:py-28 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
         <div className="mb-16">
           <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium mb-4">
             How to use the Atlas
@@ -221,62 +221,10 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             </p>
           </div>
         </div>
-
-        {/* Subtle Subscribe */}
-        <div className="my-16 md:my-20 py-8 border-t border-black/10">
-          <div className="max-w-2xl mx-auto text-center">
-            <p className="text-sm text-gray-600 mb-4">Stay updated on new patterns and improvements</p>
-
-            {subscribeStatus === 'success' && (
-              <div
-                className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 text-sm rounded"
-                role="alert"
-                aria-live="polite"
-              >
-                Subscribed! Check your email for confirmation.
-              </div>
-            )}
-            {subscribeStatus === 'error' && (
-              <div
-                className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded"
-                role="alert"
-                aria-live="assertive"
-              >
-                Something went wrong. Please try again.
-              </div>
-            )}
-
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-md mx-auto">
-              {/* Honeypot field */}
-              <input
-                type="text"
-                name="_honeypot"
-                style={{ display: 'none' }}
-                tabIndex={-1}
-                autoComplete="off"
-              />
-
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="your@email.com"
-                className="flex-1 w-full sm:w-auto px-4 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
-              />
-              <button
-                type="submit"
-                disabled={subscribeStatus === 'submitting'}
-                className="px-6 py-2 bg-black text-white text-sm font-mono uppercase tracking-wider hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 whitespace-nowrap"
-              >
-                {subscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
-              </button>
-            </form>
-          </div>
-        </div>
       </section>
 
       {/* The Problem */}
-      <section className="pt-0 pb-20 md:pb-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
+      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
         {/* Subtle shadow transition from above */}
         <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none" />
         <SectionHeader number="01" title="The Problem" />
@@ -313,14 +261,69 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         </div>
 
         <div className="mt-20 border-t border-black pt-12">
-          <p className="text-2xl md:text-4xl font-sans font-light text-gray-800 leading-snug mb-8">
-            The Atlas makes invisible systems visible.
-          </p>
-          <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
-            It provides a vocabulary for designing AI as legible, inspectable systems of interaction—where
-            capabilities, constraints, human agency, and responsibility are explicit by design. It's not a
-            UI kit or code library. It's the language layer underneath, where responsibility and agency get designed.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left: Text */}
+            <div>
+              <p className="text-2xl md:text-4xl font-sans font-light text-gray-800 leading-snug mb-8">
+                The Atlas makes invisible systems visible.
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                It provides a vocabulary for designing AI as legible, inspectable systems of interaction—where
+                capabilities, constraints, human agency, and responsibility are explicit by design. It's not a
+                UI kit or code library. It's the language layer underneath, where responsibility and agency get designed.
+              </p>
+            </div>
+
+            {/* Right: Subscribe */}
+            <div className="border-l border-black/10 pl-8">
+              <p className="text-sm text-gray-600 mb-4">Stay updated on new patterns and improvements</p>
+
+              {subscribeStatus === 'success' && (
+                <div
+                  className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 text-sm rounded"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  Subscribed! Check your email for confirmation.
+                </div>
+              )}
+              {subscribeStatus === 'error' && (
+                <div
+                  className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  Something went wrong. Please try again.
+                </div>
+              )}
+
+              <form onSubmit={handleSubscribe} className="space-y-3">
+                {/* Honeypot field */}
+                <input
+                  type="text"
+                  name="_honeypot"
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
+                />
+                <button
+                  type="submit"
+                  disabled={subscribeStatus === 'submitting'}
+                  className="w-full px-6 py-2 bg-black text-white text-sm font-mono uppercase tracking-wider hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                >
+                  {subscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
 
