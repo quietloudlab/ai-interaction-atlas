@@ -447,18 +447,18 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
           {/* Step 3 */}
           <div className="border-l-2 border-black pl-6">
             <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">Step 03</div>
-            <h3 className="text-xl font-sans font-medium mb-3">Build</h3>
+            <h3 className="text-xl font-sans font-medium mb-3">Apply</h3>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Create visual system maps by dragging patterns onto a canvas, connecting them to model your AI product's interaction flows.
+              Reference patterns when writing specs, PRDs, design docs, and technical plans. Map your system using the shared vocabulary to identify gaps and responsibilities.
             </p>
           </div>
 
           {/* Step 4 */}
           <div className="border-l-2 border-black pl-6">
             <div className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">Step 04</div>
-            <h3 className="text-xl font-sans font-medium mb-3">Share</h3>
+            <h3 className="text-xl font-sans font-medium mb-3">Align</h3>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Export diagrams as images or JSON, bookmark patterns, and use the shared vocabulary to align your team on AI system design.
+              Share pattern links with your team, bookmark key patterns for reference, and use the taxonomy as a common language in planning and design reviews.
             </p>
           </div>
         </div>
