@@ -24,6 +24,8 @@ import { preloadAtlasData } from './lib/dataLoader';
 const MarketingLayout = lazy(() => import('./features/marketing/components/MarketingLayout').then(m => ({ default: m.MarketingLayout })));
 const AtlasLayout = lazy(() => import('./features/atlas/components/AtlasLayout').then(m => ({ default: m.AtlasLayout })));
 const LandingPage = lazy(() => import('./features/marketing/components/LandingPage').then(m => ({ default: m.LandingPage })));
+const PrivacyPage = lazy(() => import('./features/marketing/components/PrivacyPage').then(m => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import('./features/marketing/components/TermsPage').then(m => ({ default: m.TermsPage })));
 const HomeDashboard = lazy(() => import('./features/atlas/components/HomeDashboard').then(m => ({ default: m.HomeDashboard })));
 const TaskDetail = lazy(() => import('./features/atlas/components/TaskDetail').then(m => ({ default: m.TaskDetail })));
 const LayerDetail = lazy(() => import('./features/atlas/components/LayerDetail').then(m => ({ default: m.LayerDetail })));
@@ -195,6 +197,18 @@ export default function App() {
               if (page === 'atlas') navigate('/atlas');
               else navigate(`/${page}`);
             }} />
+          </MarketingPageRoute>
+        } />
+
+        <Route path="/privacy" element={
+          <MarketingPageRoute>
+            <PrivacyPage />
+          </MarketingPageRoute>
+        } />
+
+        <Route path="/terms" element={
+          <MarketingPageRoute>
+            <TermsPage />
           </MarketingPageRoute>
         } />
 
