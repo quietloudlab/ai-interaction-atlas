@@ -2,11 +2,36 @@
 
 ![AI Interaction Atlas](./public/OG.png)
 
+[![npm version](https://img.shields.io/npm/v/@quietloudlab/ai-interaction-atlas)](https://www.npmjs.com/package/@quietloudlab/ai-interaction-atlas)
+[![npm downloads](https://img.shields.io/npm/dm/@quietloudlab/ai-interaction-atlas)](https://www.npmjs.com/package/@quietloudlab/ai-interaction-atlas)
 [![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Live Demo](https://img.shields.io/badge/demo-live-green.svg)](https://ai-interaction.com)
 [![GitHub](https://img.shields.io/github/stars/quietloudlab/ai-interaction-atlas?style=social)](https://github.com/quietloudlab/ai-interaction-atlas)
 
 A shared language for designing AI experiences across human actions, AI tasks, system operations, data, constraints, and touchpoints.
+
+## NPM Package
+
+Use the Atlas data programmatically in your projects:
+
+```bash
+npm install @quietloudlab/ai-interaction-atlas
+```
+
+```javascript
+import { AI_TASKS, searchPatterns, getAtlasStats } from '@quietloudlab/ai-interaction-atlas';
+
+// Get all AI task patterns
+console.log(AI_TASKS);
+
+// Search patterns by keyword
+const results = searchPatterns('review', { dimensions: ['human'] });
+
+// Get Atlas statistics
+console.log(getAtlasStats()); // { ai: 23, human: 19, system: 22, ... }
+```
+
+📦 [View on npm](https://www.npmjs.com/package/@quietloudlab/ai-interaction-atlas) | 📖 [Package Documentation](./atlas-package/README.md)
 
 ## What is the Atlas?
 
