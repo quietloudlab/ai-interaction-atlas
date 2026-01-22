@@ -153,6 +153,25 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
+
+            {/* NPM Install Snippet */}
+            <div className="mt-8 pt-8 border-t border-black/10">
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">Use programmatically</p>
+              <div className="relative group">
+                <div className="bg-gray-50 border border-gray-200 rounded px-4 py-3 font-mono text-sm text-gray-800 flex items-center justify-between gap-4">
+                  <code className="flex-1">npm install @quietloudlab/ai-interaction-atlas</code>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText('npm install @quietloudlab/ai-interaction-atlas');
+                    }}
+                    className="text-gray-400 hover:text-black transition-colors px-2 py-1 text-xs uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded"
+                    aria-label="Copy npm install command"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right: Search Widget */}
