@@ -174,7 +174,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* How to Use */}
-      <section className="pt-20 md:pt-28 pb-12 md:pb-16 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
+      <section className="pt-20 md:pt-28 pb-0 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
         <div className="mb-16">
           <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium mb-4">
             How to use the Atlas
@@ -223,7 +223,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         </div>
 
         {/* Subtle Subscribe */}
-        <div className="mt-12 pt-8 border-t border-black/10">
+        <div className="my-16 md:my-20 py-8 border-t border-black/10">
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-sm text-gray-600 mb-4">Stay updated on new patterns and improvements</p>
 
