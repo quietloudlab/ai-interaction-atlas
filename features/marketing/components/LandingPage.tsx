@@ -27,6 +27,7 @@ const SectionHeader = ({ number, title }: { number: string; title: string }) => 
 
 export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,6 +58,41 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
     } catch (error) {
       setFormStatus('error');
       setTimeout(() => setFormStatus('idle'), 5000);
+    }
+  };
+
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubscribeStatus('submitting');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://submit-form.com/wD0F0mjLN', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...Object.fromEntries(formData),
+          _subject: 'New Atlas Subscription',
+          type: 'subscription'
+        }),
+      });
+
+      if (response.ok) {
+        setSubscribeStatus('success');
+        form.reset();
+        setTimeout(() => setSubscribeStatus('idle'), 5000);
+      } else {
+        setSubscribeStatus('error');
+        setTimeout(() => setSubscribeStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setSubscribeStatus('error');
+      setTimeout(() => setSubscribeStatus('idle'), 5000);
     }
   };
 
@@ -458,6 +494,67 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
             {/* Right: Form */}
             <div>
+              {/* Lightweight Subscribe Option */}
+              <div className="mb-12 p-6 bg-white/5 border border-white/10">
+                <h3 className="text-xl font-sans font-medium text-white mb-2">Get Atlas Updates</h3>
+                <p className="text-sm text-gray-400 mb-4">New patterns, examples, and improvements delivered to your inbox.</p>
+
+                {subscribeStatus === 'success' && (
+                  <div
+                    className="mb-4 p-3 bg-white/10 border border-white/20 text-white font-mono text-xs"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    Subscribed! Check your email for confirmation.
+                  </div>
+                )}
+                {subscribeStatus === 'error' && (
+                  <div
+                    className="mb-4 p-3 bg-red-900/20 border border-red-500/30 text-red-200 font-mono text-xs"
+                    role="alert"
+                    aria-live="assertive"
+                  >
+                    Something went wrong. Please try again.
+                  </div>
+                )}
+
+                <form onSubmit={handleSubscribe} className="space-y-3">
+                  {/* Honeypot field */}
+                  <input
+                    type="text"
+                    name="_honeypot"
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="your@email.com"
+                      className="flex-1 bg-white/10 border border-white/20 px-4 py-2.5 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:border-white transition-all"
+                      style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
+                    />
+                    <button
+                      type="submit"
+                      disabled={subscribeStatus === 'submitting'}
+                      className="inline-flex items-center justify-center px-6 py-2.5 bg-white text-black font-mono text-xs uppercase tracking-widest hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black whitespace-nowrap"
+                    >
+                      {subscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4 my-8">
+                <div className="flex-1 h-px bg-white/20"></div>
+                <span className="text-xs font-mono uppercase tracking-widest text-gray-500">Or discuss a project</span>
+                <div className="flex-1 h-px bg-white/20"></div>
+              </div>
+
               {formStatus === 'success' && (
                 <div
                   className="mb-6 p-4 bg-white/10 border border-white/20 text-white font-mono text-sm"
