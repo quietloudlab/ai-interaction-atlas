@@ -77,12 +77,12 @@ The Atlas organizes AI interactions into six core dimensions:
 
 | Dimension | Description | Count |
 |-----------|-------------|-------|
-| **AI Tasks** | Probabilistic capabilities (detect, classify, generate, transform) | 45+ |
-| **Human Tasks** | Human actions in the loop (review, approve, configure, decide) | 28+ |
-| **System Tasks** | Infrastructure operations (routing, caching, logging, state) | 31+ |
-| **Data Artifacts** | Information types that flow through the system | 52+ |
-| **Constraints** | Boundaries that shape design (latency, privacy, cost, quality) | 42+ |
-| **Touchpoints** | Where interactions happen (UI, API, voice, AR) | 18+ |
+| **AI Patterns** | Probabilistic capabilities (detect, classify, generate, transform) | 23 |
+| **Human Actions** | Human actions in the loop (review, approve, configure, decide) | 19 |
+| **System Operations** | Infrastructure operations (routing, caching, logging, state) | 22 |
+| **Data Artifacts** | Information types that flow through the system | 44 |
+| **Constraints** | Boundaries that shape design (latency, privacy, cost, quality) | 37 |
+| **Touchpoints** | Where interactions happen (UI, API, voice, AR) | 35 |
 
 ---
 
