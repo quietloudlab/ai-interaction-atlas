@@ -276,7 +276,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* The Problem */}
-      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
+      <section className="pt-0 pb-20 md:pb-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
         {/* Subtle shadow transition from above */}
         <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none" />
         <SectionHeader number="01" title="The Problem" />
