@@ -174,7 +174,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* How to Use */}
-      <section className="py-20 md:py-28 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
+      <section className="pt-20 md:pt-28 pb-12 md:pb-16 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-black/10">
         <div className="mb-16">
           <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium mb-4">
             How to use the Atlas
@@ -223,7 +223,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         </div>
 
         {/* Subtle Subscribe */}
-        <div className="mt-16 pt-12 border-t border-black/10">
+        <div className="mt-12 pt-8 border-t border-black/10">
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-sm text-gray-600 mb-4">Stay updated on new patterns and improvements</p>
 
@@ -261,12 +261,12 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 name="email"
                 required
                 placeholder="your@email.com"
-                className="flex-1 w-full sm:w-auto px-4 py-2.5 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
+                className="flex-1 w-full sm:w-auto px-4 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
               />
               <button
                 type="submit"
                 disabled={subscribeStatus === 'submitting'}
-                className="px-6 py-2.5 bg-black text-white text-sm font-mono uppercase tracking-wider hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 whitespace-nowrap"
+                className="px-6 py-2 bg-black text-white text-sm font-mono uppercase tracking-wider hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 whitespace-nowrap"
               >
                 {subscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
               </button>
