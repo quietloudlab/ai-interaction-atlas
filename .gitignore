@@ -38,5 +38,19 @@ EXTRACTION_SUMMARY.md
 SESSION_SUMMARY.md
 DEPLOYMENT_GUIDE.md
 GITHUB_SETUP.md
+UX_AUDIT_SIDEBAR.md
+SIDEBAR_CLEANUP_SUMMARY.md
 inspiration
 inspo.tsx
+drafts/
+
+# WIP role-specific pages (work in progress)
+features/atlas/components/ForDesignersPage.tsx
+features/atlas/components/ForProductPage.tsx
+features/atlas/components/ForEngineersPage.tsx
+features/atlas/components/ForResearchPage.tsx
+features/atlas/components/ForDesignersPage-old.tsx
+features/atlas/components/ForProductPage-old.tsx
+
+# WIP components (experimental)
+features/atlas/components/QuickViewCard.tsx

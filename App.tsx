@@ -34,8 +34,11 @@ const ConstraintsPage = lazy(() => import('./features/atlas/components/Constrain
 const TouchpointsPage = lazy(() => import('./features/atlas/components/TouchpointsPage').then(m => ({ default: m.TouchpointsPage })));
 const TaskCategoryPage = lazy(() => import('./features/atlas/components/TaskCategoryPage').then(m => ({ default: m.TaskCategoryPage })));
 const QuickReference = lazy(() => import('./features/atlas/components/QuickReference').then(m => ({ default: m.QuickReference })));
-const ForDesignersPage = lazy(() => import('./features/atlas/components/ForDesignersPage').then(m => ({ default: m.ForDesignersPage })));
-const ForProductPage = lazy(() => import('./features/atlas/components/ForProductPage').then(m => ({ default: m.ForProductPage })));
+// WIP: Role-specific pages (commented out until ready)
+// const ForDesignersPage = lazy(() => import('./features/atlas/components/ForDesignersPage').then(m => ({ default: m.ForDesignersPage })));
+// const ForProductPage = lazy(() => import('./features/atlas/components/ForProductPage').then(m => ({ default: m.ForProductPage })));
+// const ForEngineersPage = lazy(() => import('./features/atlas/components/ForEngineersPage').then(m => ({ default: m.ForEngineersPage })));
+// const ForResearchPage = lazy(() => import('./features/atlas/components/ForResearchPage').then(m => ({ default: m.ForResearchPage })));
 
 // Loading fallback
 const LoadingFallback = () => (
@@ -159,8 +162,11 @@ function AtlasRoutes() {
             <Route path="ai" element={<TaskCategoryPage type="ai" onTaskClick={(id) => navigate(`/atlas/task/${id}`)} />} />
             <Route path="human" element={<TaskCategoryPage type="human" onTaskClick={(id) => navigate(`/atlas/task/${id}`)} />} />
             <Route path="system" element={<TaskCategoryPage type="system" onTaskClick={(id) => navigate(`/atlas/task/${id}`)} />} />
-            <Route path="for-designers" element={<ForDesignersPage />} />
-            <Route path="for-product" element={<ForProductPage />} />
+            {/* WIP: Role-specific pages (commented out until ready) */}
+            {/* <Route path="for-designers" element={<ForDesignersPage />} /> */}
+            {/* <Route path="for-product" element={<ForProductPage />} /> */}
+            {/* <Route path="for-engineers" element={<ForEngineersPage />} /> */}
+            {/* <Route path="for-research" element={<ForResearchPage />} /> */}
           </Routes>
         </ErrorBoundary>
       </div>
