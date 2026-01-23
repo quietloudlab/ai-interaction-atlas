@@ -5,6 +5,9 @@
 :root {
   --bg: #F9F9F7;
   --surface: #FFFFFF;
+  --bg-1: #F5F5F5;
+  --bg-2: #EFEFEF;
+  --bg-3: #E8E8E8;
   --text-main: #111111;
   --text-muted: #6E6E6E;
   --border: #E6E6E6;
@@ -13,6 +16,9 @@
 .dark {
   --bg: #0A0A0A;
   --surface: #141414;
+  --bg-1: #1A1A1A;
+  --bg-2: #222222;
+  --bg-3: #2A2A2A;
   --text-main: #EFEFEF;
   --text-muted: #B8B8B8;
   --border: #2A2A2A;
