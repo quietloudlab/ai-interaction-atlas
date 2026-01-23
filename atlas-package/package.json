@@ -1,6 +1,6 @@
 {
   "name": "@quietloudlab/ai-interaction-atlas",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A shared language for designing AI experiences - 100+ interaction patterns across human actions, AI tasks, system operations, data, constraints, and touchpoints",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -51,7 +51,7 @@
   "homepage": "https://ai-interaction.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/quietloudlab/ai-interaction-atlas.git",
+    "url": "git+https://github.com/quietloudlab/ai-interaction-atlas.git",
     "directory": "atlas-package"
   },
   "bugs": {

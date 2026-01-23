@@ -6,11 +6,9 @@ import {
   UserCircle,
   Database,
   Sliders,
-  ArrowRight,
   Layers,
   Activity,
   MessageSquare,
-  Zap,
   Smartphone
 } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
