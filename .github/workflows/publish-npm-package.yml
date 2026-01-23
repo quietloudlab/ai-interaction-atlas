@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'atlas-package/**'
+      - 'data/**'           # Trigger on source data changes
+      - 'atlas-package/**'  # Trigger on package changes
 
 jobs:
   publish:
@@ -17,6 +18,34 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Sync data files to package
+        run: |
+          echo "Syncing data files from /data/ to /atlas-package/src/data/..."
+
+          # Copy all .ts files from data/ to atlas-package/src/data/
+          cp -v data/*.ts atlas-package/src/data/
+
+          echo "✓ Data files synced successfully"
+
+      - name: Commit synced data files
+        id: commit_sync
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if there are any changes
+          if [[ -n $(git status --porcelain atlas-package/src/data/) ]]; then
+            echo "Changes detected in atlas-package/src/data/"
+            git add atlas-package/src/data/
+            git commit -m "chore: sync data files from /data/ to /atlas-package/src/data/"
+            git push origin main
+            echo "synced=true" >> $GITHUB_OUTPUT
+            echo "✓ Data files committed and pushed"
+          else
+            echo "No changes detected in atlas-package/src/data/"
+            echo "synced=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -102,6 +131,12 @@ jobs:
           echo "**Version:** ${{ steps.new_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "**NPM:** https://www.npmjs.com/package/@quietloudlab/ai-interaction-atlas" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [[ "${{ steps.commit_sync.outputs.synced }}" == "true" ]]; then
+            echo "**Data Sync:** ✓ Data files synced from \`/data/\` to package" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
           echo "### Installation" >> $GITHUB_STEP_SUMMARY
           echo '```bash' >> $GITHUB_STEP_SUMMARY
           echo "npm install @quietloudlab/ai-interaction-atlas@${{ steps.new_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY

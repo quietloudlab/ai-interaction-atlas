@@ -66,21 +66,40 @@ npm publish --access public
 ### Triggers
 
 The GitHub Action automatically publishes when you push changes to:
-- `atlas-package/**` - Any files in the atlas-package directory
+- **`data/**`** - Any changes to source data files (the authoritative source)
+- **`atlas-package/**`** - Any direct changes to the package directory
 
-This ensures the workflow only runs when the actual package source files change, not when other parts of the repository are updated.
+This makes the repository the authoritative source for both the data and the package.
 
-### Process
+### Data Sync Process
 
-1. **Build:** Compiles TypeScript to ESM + CJS
-2. **Validate Authentication:** Verifies npm token is valid
-3. **Validate Package:** Runs `npm pack --dry-run` to check package integrity
-4. **Version Check:** Checks if current version exists on npm
-5. **Version Bump:** Auto-increments patch version if needed (1.0.0 → 1.0.1)
-6. **Test Publish:** Runs `npm publish --dry-run` to catch errors early
-7. **Publish:** Publishes to npm with provenance
-8. **Tag:** Creates git tag and GitHub release
-9. **Summary:** Generates workflow summary with package details
+**Important:** You should only edit files in `/data/` directory. The workflow automatically syncs them to the package.
+
+1. **Edit Source Data:** Make changes to files in `/data/` (e.g., `ai_tasks.ts`, `human_tasks.ts`)
+2. **Push to GitHub:** Push your changes to the `main` branch
+3. **Auto-Sync:** Workflow copies files from `/data/` to `/atlas-package/src/data/`
+4. **Auto-Commit:** Synced files are committed back to the repo
+5. **Build & Publish:** Package is built with latest data and published to npm
+
+**Key Benefits:**
+- ✅ Single source of truth: `/data/` directory
+- ✅ No manual copying needed
+- ✅ npm package always has latest data
+- ✅ Other apps can stay in sync by updating the npm package
+
+### Publishing Process
+
+1. **Sync Data:** Copies files from `/data/` to `/atlas-package/src/data/`
+2. **Commit Sync:** Commits synced files back to repo (if changes detected)
+3. **Build:** Compiles TypeScript to ESM + CJS
+4. **Validate Authentication:** Verifies npm token is valid
+5. **Validate Package:** Runs `npm pack --dry-run` to check package integrity
+6. **Version Check:** Checks if current version exists on npm
+7. **Version Bump:** Auto-increments patch version if needed (1.0.0 → 1.0.1)
+8. **Test Publish:** Runs `npm publish --dry-run` to catch errors early
+9. **Publish:** Publishes to npm with provenance
+10. **Tag:** Creates git tag and GitHub release
+11. **Summary:** Generates workflow summary with package details
 
 ### Provenance
 
@@ -89,6 +108,31 @@ The `--provenance` flag:
 - ✅ Shows GitHub Actions workflow that built it
 - ✅ Makes supply chain transparent
 - ✅ Increases trust for package consumers
+
+---
+
+## Local Testing (Optional)
+
+If you want to test the package locally before pushing to GitHub:
+
+```bash
+# 1. Sync data files from /data/ to package
+cd atlas-package
+./sync-data.sh
+
+# 2. Build the package
+npm run build
+
+# 3. Test locally (optional)
+npm pack  # Creates a tarball you can install elsewhere
+
+# 4. When ready, commit and push
+git add .
+git commit -m "feat: update atlas data"
+git push origin main
+```
+
+The `sync-data.sh` script does the same sync that GitHub Actions performs, allowing you to test changes locally first.
 
 ---
 
