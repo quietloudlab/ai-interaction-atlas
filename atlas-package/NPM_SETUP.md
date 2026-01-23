@@ -133,9 +133,9 @@ When your token expires (or you see "All jobs have failed" notifications):
 
 ### Current Token Info
 
-<!-- Last renewed: [DATE] -->
-<!-- Next renewal due: [DATE] -->
-<!-- Created by: [YOUR NAME] -->
+<!-- Last renewed: 2026-01-23 -->
+<!-- Next renewal due: 2026-04-23 (90 days) -->
+<!-- Token type: Automation token with 2FA bypass for CI/CD -->
 
 ---
 
