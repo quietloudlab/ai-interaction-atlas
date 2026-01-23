@@ -20,31 +20,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Sync data files to package
+        id: commit_sync
         run: |
           echo "Syncing data files from /data/ to /atlas-package/src/data/..."
 
           # Copy all .ts files from data/ to atlas-package/src/data/
           cp -v data/*.ts atlas-package/src/data/
 
-          echo "✓ Data files synced successfully"
-
-      - name: Commit synced data files
-        id: commit_sync
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Check if there are any changes
+          # Check if there were any changes (for summary reporting)
           if [[ -n $(git status --porcelain atlas-package/src/data/) ]]; then
-            echo "Changes detected in atlas-package/src/data/"
-            git add atlas-package/src/data/
-            git commit -m "chore: sync data files from /data/ to /atlas-package/src/data/"
-            git push origin main
             echo "synced=true" >> $GITHUB_OUTPUT
-            echo "✓ Data files committed and pushed"
+            echo "✓ Data files synced (found differences)"
           else
-            echo "No changes detected in atlas-package/src/data/"
             echo "synced=false" >> $GITHUB_OUTPUT
+            echo "✓ Data files already in sync"
           fi
 
       - name: Setup Node.js
@@ -147,9 +136,17 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Fetch latest to avoid conflicts
+          git fetch origin main
+
           git add atlas-package/package.json
           git commit -m "chore: bump package version to ${{ steps.new_version.outputs.version }}"
           git tag "v${{ steps.new_version.outputs.version }}"
+
+          # Pull with rebase before pushing
+          git pull --rebase origin main
+
           git push origin main
           git push origin "v${{ steps.new_version.outputs.version }}"
         env:

@@ -77,29 +77,29 @@ This makes the repository the authoritative source for both the data and the pac
 
 1. **Edit Source Data:** Make changes to files in `/data/` (e.g., `ai_tasks.ts`, `human_tasks.ts`)
 2. **Push to GitHub:** Push your changes to the `main` branch
-3. **Auto-Sync:** Workflow copies files from `/data/` to `/atlas-package/src/data/`
-4. **Auto-Commit:** Synced files are committed back to the repo
-5. **Build & Publish:** Package is built with latest data and published to npm
+3. **Auto-Sync:** Workflow temporarily copies files from `/data/` to `/atlas-package/src/data/` (for build only)
+4. **Build & Publish:** Package is built with latest data and published to npm
 
 **Key Benefits:**
 - ✅ Single source of truth: `/data/` directory
-- ✅ No manual copying needed
+- ✅ No manual copying needed for npm publishing
 - ✅ npm package always has latest data
 - ✅ Other apps can stay in sync by updating the npm package
 
+**Note:** The sync happens during the workflow run and is not committed back to the repo. To sync files locally (e.g., for local testing), use the `sync-data.sh` script.
+
 ### Publishing Process
 
-1. **Sync Data:** Copies files from `/data/` to `/atlas-package/src/data/`
-2. **Commit Sync:** Commits synced files back to repo (if changes detected)
-3. **Build:** Compiles TypeScript to ESM + CJS
-4. **Validate Authentication:** Verifies npm token is valid
-5. **Validate Package:** Runs `npm pack --dry-run` to check package integrity
-6. **Version Check:** Checks if current version exists on npm
-7. **Version Bump:** Auto-increments patch version if needed (1.0.0 → 1.0.1)
-8. **Test Publish:** Runs `npm publish --dry-run` to catch errors early
-9. **Publish:** Publishes to npm with provenance
-10. **Tag:** Creates git tag and GitHub release
-11. **Summary:** Generates workflow summary with package details
+1. **Sync Data:** Temporarily copies files from `/data/` to `/atlas-package/src/data/` (in-memory, for build)
+2. **Build:** Compiles TypeScript to ESM + CJS with synced data
+3. **Validate Authentication:** Verifies npm token is valid
+4. **Validate Package:** Runs `npm pack --dry-run` to check package integrity
+5. **Version Check:** Checks if current version exists on npm
+6. **Version Bump:** Auto-increments patch version if needed (1.0.0 → 1.0.1)
+7. **Test Publish:** Runs `npm publish --dry-run` to catch errors early
+8. **Publish:** Publishes to npm with provenance
+9. **Tag:** Creates git tag and GitHub release (commits version bump only)
+10. **Summary:** Generates workflow summary with package details
 
 ### Provenance
 
