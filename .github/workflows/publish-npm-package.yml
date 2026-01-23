@@ -4,9 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - 'data/**'
-      - 'types.ts'
-      - 'data.ts'
       - 'atlas-package/**'
 
 jobs:
@@ -35,6 +32,21 @@ jobs:
         working-directory: atlas-package
         run: npm run build
 
+      - name: Verify npm authentication
+        working-directory: atlas-package
+        run: |
+          echo "Verifying npm authentication..."
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Validate package integrity
+        working-directory: atlas-package
+        run: |
+          echo "Validating package contents..."
+          npm pack --dry-run
+          echo "✓ Package validation successful"
+
       - name: Get current version
         id: current_version
         working-directory: atlas-package
@@ -44,9 +56,12 @@ jobs:
         id: check_version
         working-directory: atlas-package
         run: |
-          if npm view @quietloudlab/ai-interaction-atlas@${{ steps.current_version.outputs.version }} version 2>/dev/null; then
+          echo "Checking if version ${{ steps.current_version.outputs.version }} exists on npm..."
+          if npm view @quietloudlab/ai-interaction-atlas@${{ steps.current_version.outputs.version }} version; then
+            echo "Version exists on npm, will bump version"
             echo "exists=true" >> $GITHUB_OUTPUT
           else
+            echo "Version does not exist on npm, will publish as-is"
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
@@ -60,11 +75,37 @@ jobs:
         working-directory: atlas-package
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: Publish to npm
+      - name: Test publish (dry run)
         working-directory: atlas-package
-        run: npm publish --provenance --access public
+        run: |
+          echo "Testing publish for version ${{ steps.new_version.outputs.version }}..."
+          npm publish --dry-run --provenance --access public
+          echo "✓ Dry run successful, proceeding with actual publish"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to npm
+        working-directory: atlas-package
+        run: |
+          echo "Publishing version ${{ steps.new_version.outputs.version }} to npm..."
+          npm publish --provenance --access public
+          echo "✓ Successfully published to npm!"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Generate publish summary
+        if: success()
+        run: |
+          echo "## 📦 Package Published Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Package:** @quietloudlab/ai-interaction-atlas" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.new_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**NPM:** https://www.npmjs.com/package/@quietloudlab/ai-interaction-atlas" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Installation" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "npm install @quietloudlab/ai-interaction-atlas@${{ steps.new_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Create git tag
         if: steps.check_version.outputs.exists == 'true'

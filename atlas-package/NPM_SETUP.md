@@ -53,11 +53,11 @@ cd atlas-package
 # Login to npm (you'll need your 2FA code)
 npm login
 
-# Publish with provenance
-npm publish --provenance --access public
+# Publish without provenance (local publishing doesn't support it)
+npm publish --access public
 ```
 
-This creates the package on npm and allows the GitHub Action to update it.
+**Note:** When publishing locally, don't use the `--provenance` flag - it only works in GitHub Actions. After the first manual publish, the GitHub Action can handle future updates with provenance.
 
 ---
 
@@ -66,18 +66,21 @@ This creates the package on npm and allows the GitHub Action to update it.
 ### Triggers
 
 The GitHub Action automatically publishes when you push changes to:
-- `data/**` - Any data files
-- `types.ts` - Type definitions
-- `data.ts` - Data aggregation file
-- `atlas-package/**` - Package files
+- `atlas-package/**` - Any files in the atlas-package directory
+
+This ensures the workflow only runs when the actual package source files change, not when other parts of the repository are updated.
 
 ### Process
 
 1. **Build:** Compiles TypeScript to ESM + CJS
-2. **Version Check:** Checks if current version exists on npm
-3. **Version Bump:** Auto-increments patch version if needed (1.0.0 → 1.0.1)
-4. **Publish:** Publishes to npm with provenance
-5. **Tag:** Creates git tag and GitHub release
+2. **Validate Authentication:** Verifies npm token is valid
+3. **Validate Package:** Runs `npm pack --dry-run` to check package integrity
+4. **Version Check:** Checks if current version exists on npm
+5. **Version Bump:** Auto-increments patch version if needed (1.0.0 → 1.0.1)
+6. **Test Publish:** Runs `npm publish --dry-run` to catch errors early
+7. **Publish:** Publishes to npm with provenance
+8. **Tag:** Creates git tag and GitHub release
+9. **Summary:** Generates workflow summary with package details
 
 ### Provenance
 
@@ -100,9 +103,39 @@ Granular tokens expire after 90 days. You'll need to:
 3. **Update GitHub secret:** Replace `NPM_TOKEN` with new token
 4. **No code changes needed:** The workflow keeps working
 
-### Automation Tip
+### Quick Token Renewal Steps
 
-Set a calendar reminder for 80 days from now to refresh the token before it expires.
+When your token expires (or you see "All jobs have failed" notifications):
+
+1. **Create New Token (5 minutes):**
+   - Open **incognito browser window** to avoid Apple autofill issues
+   - Go to: https://www.npmjs.com/settings/YOUR_USERNAME/tokens/granular-access-tokens/new
+   - Name: `ai-interaction-atlas-github-actions-YYYY-MM-DD` (include date for tracking)
+   - Expiration: 90 days
+   - Packages: Read and write for `@quietloudlab/ai-interaction-atlas`
+   - Generate and copy token
+
+2. **Update GitHub Secret (2 minutes):**
+   - Go to: https://github.com/quietloudlab/ai-interaction-atlas/settings/secrets/actions
+   - Click on `NPM_TOKEN`
+   - Click "Update secret"
+   - Paste new token
+   - Save
+
+3. **Test the Workflow:**
+   - Make a small change to `atlas-package/README.md`
+   - Commit and push
+   - Check Actions tab for successful publish
+
+4. **Document Expiration Date:**
+   - Add a calendar reminder for 80 days from today
+   - Or update this file with next renewal date: `<!-- Next renewal: [DATE] -->`
+
+### Current Token Info
+
+<!-- Last renewed: [DATE] -->
+<!-- Next renewal due: [DATE] -->
+<!-- Created by: [YOUR NAME] -->
 
 ---
 
@@ -119,13 +152,63 @@ npm install
 # Build the package
 npm run build
 
-# Publish (you'll need 2FA code)
-npm publish --provenance --access public
+# Publish WITHOUT provenance (local publishing doesn't support it)
+npm publish --access public
 ```
+
+**Important:** The `--provenance` flag ONLY works in GitHub Actions, not local publishing. Provenance requires a CI/CD environment to cryptographically sign the package. When publishing locally, omit this flag.
+
+If you see the error:
+```
+npm error Automatic provenance generation not supported for provider: null
+```
+
+Remove the `--provenance` flag and try again with just `npm publish --access public`.
 
 ---
 
 ## Troubleshooting
+
+### Apple/iPhone 2FA Autofill Issues
+
+**Problem:** When setting up 2FA or creating a token, Apple devices automatically try to use password autofill or camera instead of letting you use Google Authenticator.
+
+**Solution - Option 1: Use Incognito/Private Mode:**
+1. Open an **Incognito/Private browser window** (⌘+Shift+N in Chrome/Safari)
+2. Go to https://www.npmjs.com/settings/YOUR_USERNAME/tokens/granular-access-tokens/new
+3. This prevents Apple autofill from interfering
+4. When prompted for 2FA:
+   - Open Google Authenticator app separately
+   - Manually type the 6-digit code from the app
+   - Don't let iOS suggest autofill
+
+**Solution - Option 2: Use a Different Browser:**
+1. If you normally use Safari, try Chrome or Firefox
+2. Make sure you're not signed into iCloud in that browser
+3. This reduces Apple's interference with the 2FA flow
+
+**Solution - Option 3: Desktop Computer Only:**
+1. If possible, use a desktop/laptop computer (not iPhone/iPad)
+2. Keep your phone nearby for Google Authenticator codes
+3. Manually type codes instead of using camera scan
+
+**Pro Tip:** After initial 2FA setup, the token creation process is straightforward and doesn't require additional 2FA prompts.
+
+### "Automatic provenance generation not supported for provider: null"
+
+**Problem:** You're trying to use `--provenance` flag when publishing locally.
+
+**Solution:** Remove the `--provenance` flag. It only works in GitHub Actions, not local publishing.
+
+```bash
+# ❌ Wrong (local)
+npm publish --provenance --access public
+
+# ✅ Correct (local)
+npm publish --access public
+```
+
+Provenance is automatically added when publishing via GitHub Actions.
 
 ### "Invalid authentication token"
 
