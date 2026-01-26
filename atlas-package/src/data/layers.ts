@@ -1,57 +1,86 @@
-
-import { Layer } from '../types';
+// src/data/layers.ts
+import { Layer } from "../types";
 
 export const LAYERS: Layer[] = [
   {
     id: "layer_inbound",
     name: "Inbound",
-    slug: "Sensing",
+    slug: "inbound",
+    label: "Sensing",
     role: "Sensing & Structuring",
-    description: "How the system perceives and organizes input from the world.",
+    description:
+      "How the system perceives inputs from people and the environment, and converts them into usable signals and structured artifacts.",
     color: "#4A8A3F",
     guidance: {
-      when_to_use: "When handling raw user input or environmental data.",
-      typical_position: "Start of flow.",
-      red_flags: ["Ignoring noise", "Assuming structured input"]
+      when_to_use:
+        "When handling raw inputs (text, files, audio, images, sensors) or converting unstructured content into structured forms.",
+      typical_position: "Start of flow (or any time new input enters the system).",
+      red_flags: [
+        "Assuming input is already clean or structured",
+        "Ignoring noise, ambiguity, or missing context",
+        "No provenance (unclear sources / missing grounding)"
+      ]
     }
   },
   {
     id: "layer_internal",
     name: "Internal",
-    slug: "Reasoning",
+    slug: "internal",
+    label: "Reasoning",
     role: "Reasoning & Deciding",
-    description: "The cognitive processing and business logic application.",
+    description:
+      "Model reasoning, scoring, and deterministic business logic that decides what happens next.",
     color: "#3D6B8F",
     guidance: {
-      when_to_use: "For complex decision making or analysis.",
-      typical_position: "Middle of flow.",
-      red_flags: ["Black box logic", "Undefined confidence thresholds"]
+      when_to_use:
+        "When the system must interpret signals, compare options, apply rules, verify constraints, or make decisions under uncertainty.",
+      typical_position: "Middle of flow (can repeat multiple times).",
+      red_flags: [
+        "Black-box decisions without an explanation path",
+        "Undefined thresholds (confidence, risk, cost, eligibility)",
+        "Unclear decision ownership (AI vs rules vs human)"
+      ]
     }
   },
   {
     id: "layer_outbound",
     name: "Outbound",
-    slug: "Expressing",
+    slug: "outbound",
+    label: "Expressing",
     role: "Expressing & Creating",
-    description: "Generating outputs and presenting them to the user.",
+    description:
+      "How the system produces outputs—content, recommendations, summaries, transformations—and communicates them to people or other systems.",
     color: "#8F3D3D",
     guidance: {
-      when_to_use: "When presenting results.",
-      typical_position: "End of flow.",
-      red_flags: ["Overwhelming detail", "Hallucinations"]
+      when_to_use:
+        "When presenting results, generating or transforming content, creating artifacts, or preparing outputs for downstream systems.",
+      typical_position: "End of a loop or step (often followed by user response).",
+      red_flags: [
+        "Ungrounded outputs (no citations, weak linkage to evidence)",
+        "Overwhelming detail with no controllable level-of-detail",
+        "No affordance for correction, editing, or safe fallback"
+      ]
     }
   },
   {
     id: "layer_interactive",
     name: "Interactive",
-    slug: "Learning",
+    slug: "interactive",
+    label: "Acting",
     role: "Acting & Learning",
-    description: "Feedback loops, continuous improvement, and environmental interaction.",
+    description:
+      "Closed-loop behavior over time: actions, feedback, adaptation, monitoring, and state updates (simulate → plan → act → observe → update).",
     color: "#8F6E3D",
     guidance: {
-      when_to_use: "For systems that adapt over time or act in environments.",
-      typical_position: "Continuous loop.",
-      red_flags: ["Feedback ignoring", "Model drift", "Unsafe actions"]
+      when_to_use:
+        "When the system acts in an environment, adapts from feedback, runs experiments, maintains state across sessions, or monitors drift/performance.",
+      typical_position: "Continuous loop or background lifecycle.",
+      red_flags: [
+        "Ignoring feedback signals (explicit or implicit)",
+        "No rollback/stop mechanism or rate limits (runaway loops)",
+        "Model drift without monitoring + triggers",
+        "Unsafe actions without human control points"
+      ]
     }
   }
 ];

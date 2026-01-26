@@ -1,6 +1,6 @@
 {
   "name": "@quietloudlab/ai-interaction-atlas",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A shared language for designing AI experiences - 100+ interaction patterns across human actions, AI tasks, system operations, data, constraints, and touchpoints",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

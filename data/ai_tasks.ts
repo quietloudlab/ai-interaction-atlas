@@ -69,7 +69,7 @@ export const AI_TASKS: AiTask[] = [
       ],
       relations: [
         { target_id: "task_verify", type: "commonly_followed_by", strength: "strong", reason: "LLM extraction is prone to hallucination; always verify critical data against source." },
-        { target_id: "system_save_db", type: "enables", strength: "strong", reason: "Structuring unstructured data is the primary prerequisite for database storage." },
+        { target_id: "system_create_db", type: "enables", strength: "strong", reason: "Structuring unstructured data is the primary prerequisite for database storage." },
         { target_id: "task_classify", type: "commonly_followed_by", strength: "medium", reason: "Extracted structured fields (invoice type, support category) are often classified for routing." }
       ]
     },
@@ -446,6 +446,108 @@ export const AI_TASKS: AiTask[] = [
       ],
       relations: [
         { target_id: "human_review", type: "commonly_followed_by", strength: "strong", reason: "Automated verification is imperfect; human review is the final gate for high-stakes claims." }
+      ]
+    },
+    {
+      id: "task_simulate",
+      layer_id: "layer_internal",
+      name: "Simulate",
+      slug: "simulate",
+      task_type: "ai",
+      elevator_pitch: "Roll forward a world state under hypothetical conditions to predict outcomes and compare scenarios.",
+      example_usage: "Running 'what-if' scenarios to preview system behavior before committing to a plan or action.",
+      io_spec: {
+        inputs: {
+          required: [{ id: "data_state_vector", label: "Initial World State" }],
+          optional: [
+            { id: "data_policy", label: "Policy / Strategy" },
+            { id: "data_action", label: "Proposed Action(s)" },
+            { id: "data_config", label: "Simulation Parameters" },
+            { id: "data_knowledge_graph", label: "World Rules / Graph Context" },
+            { id: "data_sensor_stream", label: "Calibration / Dynamics Data" }
+          ]
+        },
+        outputs: {
+          primary: { id: "data_trajectory", label: "Simulated Rollout" },
+          metadata: [
+            { id: "data_score", label: "Outcome Scores / Risk" },
+            { id: "data_log", label: "Run Trace" }
+          ]
+        }
+      },
+      implementation_notes: {
+        maturity: "emerging",
+        typical_latency: "batch",
+        data_requirements: "large",
+        human_oversight: "recommended"
+      },
+      ux_notes: {
+        risk: "False confidence from plausible-but-wrong rollouts (model mismatch, unmodeled variables, distribution shift).",
+        tip: "Label outputs as hypothetical, show assumptions/config used, and compare multiple scenarios rather than presenting a single future as truth.",
+        anti_patterns: [
+          "Presenting simulated futures as certainty",
+          "Hiding assumptions (policy, constraints, environment model) from users",
+          "Auto-executing actions directly from simulation without verification and oversight"
+        ]
+      },
+      capabilities: [
+        {
+          name: "Reinforcement Learning",
+          tag: "reinforcement-learning",
+          example: "Simulating action sequences in a control environment to estimate expected reward before acting."
+        },
+        {
+          name: "Robotics",
+          tag: "robotics",
+          example: "Previewing a robot motion plan in a simulated environment to catch collisions and failure states before execution."
+        },
+        {
+          name: "Time Series Forecasting",
+          tag: "time-series-forecasting",
+          example: "Simulating multiple demand or load scenarios under different parameter assumptions (best/base/worst case)."
+        },
+        {
+          name: "Graph Machine Learning",
+          tag: "graph-machine-learning",
+          example: "Simulating how changes propagate through a network (e.g., supply chain disruptions spreading across dependencies)."
+        },
+        {
+          name: "Any-to-Any",
+          tag: "any-to-any",
+          example: "Running counterfactual rollouts over mixed inputs (text + state + rules) to compare scenario outcomes."
+        }
+      ],
+      relations: [
+        {
+          target_id: "task_forecast",
+          type: "related_to",
+          strength: "strong",
+          reason: "Forecast predicts future values from historical series; Simulate rolls forward world state under hypothetical interventions and policies."
+        },
+        {
+          target_id: "task_plan",
+          type: "enables",
+          strength: "strong",
+          reason: "Planning often uses simulation to evaluate candidate action sequences ('lookahead') before choosing a plan."
+        },
+        {
+          target_id: "task_act",
+          type: "commonly_followed_by",
+          strength: "medium",
+          reason: "Simulation results may inform actions, but should be gated by verification and human oversight in high-stakes systems."
+        },
+        {
+          target_id: "task_verify",
+          type: "commonly_followed_by",
+          strength: "strong",
+          reason: "Rollouts should be sanity-checked against constraints, historical actuals, and safety rules to reduce harmful over-trust."
+        },
+        {
+          target_id: "task_estimate",
+          type: "requires_input_from",
+          strength: "medium",
+          reason: "Accurate rollouts depend on good initial state and parameters (often derived from estimation and sensor interpretation)."
+        }
       ]
     },
     {

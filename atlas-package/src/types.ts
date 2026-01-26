@@ -31,6 +31,7 @@ export interface Layer {
   id: string;
   name: string;
   slug: string;
+  label: string;
   role: string;
   description: string;
   color: string;
