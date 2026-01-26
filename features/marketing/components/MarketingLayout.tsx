@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe, Linkedin } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
 import { DarkModeToggle } from '../../../components/DarkModeToggle';
 
@@ -73,21 +73,11 @@ const SiteFooter = ({ onNavigate }: any) => (
             A free tool by quietloudlab, a design and research studio specializing in human-centered AI.
           </p>
         <div className="flex gap-3 mt-4">
-          <a href="https://quietloudlab.com" target="_blank" rel="noopener noreferrer" aria-label="Brandon's Website" className="inline-block hover:opacity-70 transition">
-            <svg width="22" height="22" fill="none" viewBox="0 0 22 22" className="h-6 w-6 text-[var(--text-main)]" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1.5" y="1.5" width="19" height="19" rx="4.5" stroke="currentColor" strokeWidth="2"/>
-              <circle cx="11" cy="11" r="4" stroke="currentColor" strokeWidth="2"/>
-              <circle cx="16.2" cy="5.8" r="1.2" fill="currentColor"/>
-            </svg>
+          <a href="https://quietloudlab.com" target="_blank" rel="noopener noreferrer" aria-label="quietloudlab Website" className="inline-block hover:opacity-70 transition">
+            <Globe className="h-5 w-5 text-[var(--text-main)]" />
           </a>
-          <a href="https://www.linkedin.com/company/quietloudlab" target="_blank" rel="noopener noreferrer" aria-label="Brandon on LinkedIn" className="inline-block hover:opacity-70 transition">
-            <svg width="22" height="22" fill="none" viewBox="0 0 22 22" className="h-6 w-6 text-[var(--text-main)]" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="1" width="20" height="20" rx="4" stroke="currentColor" strokeWidth="2"/>
-              <rect x="5.7" y="9.2" width="2.1" height="7.1" rx="1" fill="currentColor"/>
-              <circle cx="6.8" cy="6.8" r="1.1" fill="currentColor"/>
-              <rect x="10" y="9.2" width="2" height="7.1" rx="1" fill="currentColor"/>
-              <path d="M12 12.4c0-1.1.9-2.2 2.4-2.2 1.2 0 2 1.1 2 2.7v3.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-            </svg>
+          <a href="https://www.linkedin.com/company/quietloudlab" target="_blank" rel="noopener noreferrer" aria-label="quietloudlab on LinkedIn" className="inline-block hover:opacity-70 transition">
+            <Linkedin className="h-5 w-5 text-[var(--text-main)]" />
           </a>
         </div>
         </div>
