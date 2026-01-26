@@ -44,6 +44,29 @@ inspiration
 inspo.tsx
 drafts/
 
+# Planning and audit documents
+ATLAS_UX_AUDIT.md
+CANVAS_CTAS_REMOVED.md
+CRITICAL_FIXES_APPLIED.md
+DEPLOYMENT.md
+LANDING_PAGE_AUDIT.md
+LANDING_PAGE_REWRITE.md
+LICENSE_AUDIT.md
+OPEN_SOURCE_STRATEGY.md
+PUBLIC_LAUNCH_PLAN.md
+RATIONALE_PAGE_CREATED.md
+REFACTORING_PLAN.md
+SUPABASE_MIGRATION_PLAN.md
+WAITLIST_PAGE_CREATED.md
+
+# Unused code files (kept locally for reference)
+components/AlphaWarningBanner.tsx
+components/FloatingFeedback.tsx
+features/marketing/components/FrameworkGuide.tsx
+features/marketing/components/RationalePage.tsx
+lib/posthog.ts
+lib/sentry.ts
+
 # WIP role-specific pages (work in progress)
 features/atlas/components/ForDesignersPage.tsx
 features/atlas/components/ForProductPage.tsx
