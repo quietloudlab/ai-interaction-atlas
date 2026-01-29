@@ -28,6 +28,7 @@ const SectionHeader = ({ number, title }: { number: string; title: string }) => 
 export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [heroSubscribeStatus, setHeroSubscribeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -93,6 +94,33 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
     } catch (error) {
       setSubscribeStatus('error');
       setTimeout(() => setSubscribeStatus('idle'), 5000);
+    }
+  };
+
+  const handleHeroSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setHeroSubscribeStatus('submitting');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://buttondown.com/api/emails/embed-subscribe/ai-atlas-updates', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        setHeroSubscribeStatus('success');
+        form.reset();
+        setTimeout(() => setHeroSubscribeStatus('idle'), 5000);
+      } else {
+        setHeroSubscribeStatus('error');
+        setTimeout(() => setHeroSubscribeStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setHeroSubscribeStatus('error');
+      setTimeout(() => setHeroSubscribeStatus('idle'), 5000);
     }
   };
 
@@ -204,7 +232,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
               {/* Right: Form */}
               <div className="md:flex-shrink-0 w-full md:w-auto md:min-w-[320px]">
-                {subscribeStatus === 'success' && (
+                {heroSubscribeStatus === 'success' && (
                   <div
                     className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 text-sm rounded"
                     role="alert"
@@ -213,7 +241,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     Subscribed! Check your email for confirmation.
                   </div>
                 )}
-                {subscribeStatus === 'error' && (
+                {heroSubscribeStatus === 'error' && (
                   <div
                     className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm rounded"
                     role="alert"
@@ -222,14 +250,8 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     Something went wrong. Please try again.
                   </div>
                 )}
-                <form onSubmit={handleSubscribe} className="flex gap-2">
-                  <input
-                    type="text"
-                    name="_honeypot"
-                    style={{ display: 'none' }}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
+                <form onSubmit={handleHeroSubscribe} className="flex gap-2">
+                  <input type="hidden" value="1" name="embed" />
                   <input
                     type="email"
                     name="email"
@@ -239,10 +261,10 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   />
                   <button
                     type="submit"
-                    disabled={subscribeStatus === 'submitting'}
+                    disabled={heroSubscribeStatus === 'submitting'}
                     className="px-8 py-4 bg-[var(--text-main)] text-[var(--bg)] text-sm font-mono uppercase tracking-wider hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
                   >
-                    {subscribeStatus === 'submitting' ? '...' : 'Subscribe'}
+                    {heroSubscribeStatus === 'submitting' ? '...' : 'Subscribe'}
                   </button>
                 </form>
               </div>
