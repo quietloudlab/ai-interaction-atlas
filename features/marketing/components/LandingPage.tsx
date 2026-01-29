@@ -107,7 +107,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </a>
 
       {/* Hero Section - Above the Fold */}
-      <section id="main-content" className="min-h-[40vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 pb-12 w-full relative">
+      <section id="main-content" className="min-h-[40vh] flex flex-col justify-start px-4 md:px-8 max-w-screen-2xl mx-auto pt-32 w-full relative">
         {/* Subtle top light */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start w-full">
@@ -141,14 +141,14 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 className="group inline-flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:opacity-80 transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                 style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
               >
-                View the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                Explore the Atlas <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <a
                 href="https://github.com/quietloudlab/ai-interaction-atlas"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent(EVENTS.GITHUB_CLICKED)}
-                className="group inline-flex items-center gap-2 border-2 border-[var(--text-main)] text-[var(--text-main)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-[var(--text-main)] hover:text-[var(--bg)] transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+                className="group inline-flex items-center gap-2 text-[var(--text-muted)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:text-[var(--text-main)] transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
               >
                 View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
@@ -190,10 +190,69 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             }} />
           </div>
         </div>
+
+        {/* Email Signup */}
+        <div className="mt-20 mb-16">
+          <div className="bg-gradient-to-br from-gray-100 to-gray-50 dark:from-white/[0.08] dark:to-white/[0.03] border border-[var(--border)] rounded-lg px-8 py-6 md:px-10 md:py-7">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-12">
+              {/* Left: Text */}
+              <div className="md:flex-1">
+                <p className="text-xl md:text-2xl font-sans font-medium text-[var(--text-main)] leading-snug">
+                  Stay updated on new patterns and get early access to emerging tools.
+                </p>
+              </div>
+
+              {/* Right: Form */}
+              <div className="md:flex-shrink-0 w-full md:w-auto md:min-w-[320px]">
+                {subscribeStatus === 'success' && (
+                  <div
+                    className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 text-sm rounded"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    Subscribed! Check your email for confirmation.
+                  </div>
+                )}
+                {subscribeStatus === 'error' && (
+                  <div
+                    className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm rounded"
+                    role="alert"
+                    aria-live="assertive"
+                  >
+                    Something went wrong. Please try again.
+                  </div>
+                )}
+                <form onSubmit={handleSubscribe} className="flex gap-2">
+                  <input
+                    type="text"
+                    name="_honeypot"
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="your@email.com"
+                    className="flex-1 min-w-[240px] px-5 py-4 text-base bg-[var(--surface)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all rounded"
+                  />
+                  <button
+                    type="submit"
+                    disabled={subscribeStatus === 'submitting'}
+                    className="px-8 py-4 bg-[var(--text-main)] text-[var(--bg)] text-sm font-mono uppercase tracking-wider hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
+                  >
+                    {subscribeStatus === 'submitting' ? '...' : 'Subscribe'}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* The Problem */}
-      <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
+      <section className="py-4 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
         {/* Subtle shadow transition from above */}
         <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none" />
         <SectionHeader number="01" title="The Problem" />
