@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   Sliders,
   ShieldCheck,
@@ -75,9 +76,30 @@ const ICON_MAP: Record<string, any> = {
 
 export const ConstraintsPage = () => {
   const [activeFilter, setActiveFilter] = useState<ConstraintCategory | 'all'>('all');
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const location = useLocation();
+  const scrolledRef = useRef(false);
   const primary = '#D91A45';
   const secondaryLight = '#FDF2F2';
   const secondaryDark = '#2A1414';
+
+  // Scroll to and highlight item from URL hash
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && !scrolledRef.current) {
+      // Small delay to ensure DOM is rendered
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setHighlightedId(hash);
+          scrolledRef.current = true;
+          // Remove highlight after 3 seconds
+          setTimeout(() => setHighlightedId(null), 3000);
+        }
+      }, 100);
+    }
+  }, [location.hash]);
 
   const categories: {id: ConstraintCategory | 'all', label: string}[] = [
       { id: 'all', label: 'All' },
@@ -124,14 +146,22 @@ export const ConstraintsPage = () => {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 group/list">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredConstraints.map(constraint => {
           const Icon = ICON_MAP[constraint.icon] || Sliders;
           const isDark = document.documentElement.classList.contains('dark');
           const secondary = isDark ? secondaryDark : secondaryLight;
 
           return (
-            <div key={constraint.id} className="relative bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100 group">
+            <div
+              key={constraint.id}
+              id={constraint.id}
+              className={`relative bg-[var(--surface)] border p-6 transition-all hover:bg-[var(--bg)] flex flex-col h-full group ${
+                highlightedId === constraint.id
+                  ? 'border-[#D91A45] ring-2 ring-[#D91A45] ring-offset-2 ring-offset-[var(--bg)]'
+                  : 'border-[var(--border)]'
+              }`}
+            >
               {/* Accent bar */}
               <div className="absolute left-0 top-0 bottom-0 w-1.5 group-hover:w-2 transition-all" style={{ backgroundColor: primary }}></div>
 

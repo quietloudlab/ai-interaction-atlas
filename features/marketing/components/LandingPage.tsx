@@ -207,11 +207,11 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               if (result.type === 'task') {
                 onNavigate(`atlas/task/${result.id}`);
               } else if (result.type === 'data') {
-                onNavigate('atlas/data');
+                onNavigate(`atlas/data#${result.id}`);
               } else if (result.type === 'constraint') {
-                onNavigate('atlas/constraints');
+                onNavigate(`atlas/constraints#${result.id}`);
               } else if (result.type === 'touchpoint') {
-                onNavigate('atlas/touchpoints');
+                onNavigate(`atlas/touchpoints#${result.id}`);
               }
             }} />
           </div>

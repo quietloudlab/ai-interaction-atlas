@@ -84,7 +84,7 @@ export const TaskCategoryPage = ({ type, onTaskClick }: TaskCategoryPageProps) =
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 group/list">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredTasks.map(task => {
            const layer = atlasService.getLayerById(task.layer_id);
            const isDark = document.documentElement.classList.contains('dark');
@@ -94,7 +94,7 @@ export const TaskCategoryPage = ({ type, onTaskClick }: TaskCategoryPageProps) =
              <button
                key={task.id}
                onClick={() => onTaskClick(task.id)}
-               className="text-left group bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100"
+               className="text-left group bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] flex flex-col h-full"
              >
                 <div className="flex items-center justify-between mb-4">
                    <div

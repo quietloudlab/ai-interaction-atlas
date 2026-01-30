@@ -56,10 +56,10 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
 
     // If we've finished typing the current example
     if (currentCharIndex >= currentExample.length) {
-      // Pause for 2 seconds to show results, then start backspacing
+      // Pause for 6 seconds to show results, then start backspacing
       const pauseTimer = setTimeout(() => {
         setIsBackspacing(true);
-      }, 2000);
+      }, 6000);
 
       return () => clearTimeout(pauseTimer);
     }

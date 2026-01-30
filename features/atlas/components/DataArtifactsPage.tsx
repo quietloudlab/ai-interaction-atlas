@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   Database, 
   Type, 
@@ -139,6 +140,27 @@ const ICON_MAP: Record<string, any> = {
 
 export const DataArtifactsPage = () => {
   const [activeFilter, setActiveFilter] = useState<DataCategory | 'all'>('all');
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const location = useLocation();
+  const scrolledRef = useRef(false);
+
+  // Scroll to and highlight item from URL hash
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && !scrolledRef.current) {
+      // Small delay to ensure DOM is rendered
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setHighlightedId(hash);
+          scrolledRef.current = true;
+          // Remove highlight after 3 seconds
+          setTimeout(() => setHighlightedId(null), 3000);
+        }
+      }, 100);
+    }
+  }, [location.hash]);
 
   const categories: {id: DataCategory | 'all', label: string}[] = [
       { id: 'all', label: 'All' },
@@ -187,7 +209,7 @@ export const DataArtifactsPage = () => {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 group/list">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredArtifacts.map(artifact => {
           const Icon = ICON_MAP[artifact.icon] || Database;
           const cat = artifact.category as DataCategory;
@@ -195,7 +217,15 @@ export const DataArtifactsPage = () => {
           const secondary = isDark ? secondaryDark : secondaryLight;
 
           return (
-            <div key={artifact.id} className="bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] group flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100">
+            <div
+              key={artifact.id}
+              id={artifact.id}
+              className={`bg-[var(--surface)] border p-6 transition-all hover:bg-[var(--bg)] group flex flex-col h-full ${
+                highlightedId === artifact.id
+                  ? 'border-[#D37709] ring-2 ring-[#D37709] ring-offset-2 ring-offset-[var(--bg)]'
+                  : 'border-[var(--border)]'
+              }`}
+            >
               <div className="flex items-start justify-between mb-4">
                 <div
                   className="p-3 border group-hover:scale-105 transition-transform"

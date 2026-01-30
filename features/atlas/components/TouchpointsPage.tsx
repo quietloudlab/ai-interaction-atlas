@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   Smartphone,
   Layout,
@@ -46,9 +47,30 @@ const ICON_MAP: Record<string, any> = {
 
 export const TouchpointsPage = () => {
   const [activeFilter, setActiveFilter] = useState<TouchpointCategory | 'all'>('all');
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const location = useLocation();
+  const scrolledRef = useRef(false);
   const primary = '#3090B5';
   const secondaryLight = '#EFFEFF';
   const secondaryDark = '#0A2A2E';
+
+  // Scroll to and highlight item from URL hash
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && !scrolledRef.current) {
+      // Small delay to ensure DOM is rendered
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setHighlightedId(hash);
+          scrolledRef.current = true;
+          // Remove highlight after 3 seconds
+          setTimeout(() => setHighlightedId(null), 3000);
+        }
+      }, 100);
+    }
+  }, [location.hash]);
 
   const categories: {id: TouchpointCategory | 'all', label: string}[] = [
       { id: 'all', label: 'All' },
@@ -93,14 +115,22 @@ export const TouchpointsPage = () => {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 group/list">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredTouchpoints.map(touchpoint => {
           const Icon = ICON_MAP[touchpoint.icon] || Smartphone;
           const isDark = document.documentElement.classList.contains('dark');
           const secondary = isDark ? secondaryDark : secondaryLight;
 
           return (
-            <div key={touchpoint.id} className="bg-[var(--surface)] border border-[var(--border)] p-6 transition-all hover:bg-[var(--bg)] group flex flex-col h-full opacity-100 group-hover/list:opacity-50 hover:!opacity-100">
+            <div
+              key={touchpoint.id}
+              id={touchpoint.id}
+              className={`bg-[var(--surface)] border p-6 transition-all hover:bg-[var(--bg)] group flex flex-col h-full ${
+                highlightedId === touchpoint.id
+                  ? 'border-[#3090B5] ring-2 ring-[#3090B5] ring-offset-2 ring-offset-[var(--bg)]'
+                  : 'border-[var(--border)]'
+              }`}
+            >
               <div className="flex items-start justify-between mb-4">
                 <div
                   className="p-3 border group-hover:scale-105 transition-transform"
