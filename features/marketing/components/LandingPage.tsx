@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import {
   ArrowRight,
+  ArrowDown,
   BrainCircuit,
   UserCircle,
   Settings,
@@ -27,8 +27,18 @@ const SectionHeader = ({ number, title }: { number: string; title: string }) => 
 
 export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [heroSubscribeStatus, setHeroSubscribeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [learnSubscribeStatus, setLearnSubscribeStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [npmHighlighted, setNpmHighlighted] = useState(false);
+
+  const scrollToNpm = () => {
+    const npmElement = document.getElementById('npm-install');
+    if (npmElement) {
+      npmElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setNpmHighlighted(true);
+      setTimeout(() => setNpmHighlighted(false), 2000);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,41 +72,6 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
     }
   };
 
-  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubscribeStatus('submitting');
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch('https://submit-form.com/wD0F0mjLN', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          ...Object.fromEntries(formData),
-          _subject: 'New Atlas Subscription',
-          type: 'subscription'
-        }),
-      });
-
-      if (response.ok) {
-        setSubscribeStatus('success');
-        form.reset();
-        setTimeout(() => setSubscribeStatus('idle'), 5000);
-      } else {
-        setSubscribeStatus('error');
-        setTimeout(() => setSubscribeStatus('idle'), 5000);
-      }
-    } catch (error) {
-      setSubscribeStatus('error');
-      setTimeout(() => setSubscribeStatus('idle'), 5000);
-    }
-  };
-
   const handleHeroSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setHeroSubscribeStatus('submitting');
@@ -121,6 +96,33 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
     } catch (error) {
       setHeroSubscribeStatus('error');
       setTimeout(() => setHeroSubscribeStatus('idle'), 5000);
+    }
+  };
+
+  const handleLearnSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLearnSubscribeStatus('submitting');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://buttondown.com/api/emails/embed-subscribe/ai-atlas-updates', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        setLearnSubscribeStatus('success');
+        form.reset();
+        setTimeout(() => setLearnSubscribeStatus('idle'), 5000);
+      } else {
+        setLearnSubscribeStatus('error');
+        setTimeout(() => setLearnSubscribeStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setLearnSubscribeStatus('error');
+      setTimeout(() => setLearnSubscribeStatus('idle'), 5000);
     }
   };
 
@@ -157,7 +159,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               </a>
             </div>
 
-            <div className="max-w-xxl">
+            <div className="max-w-xl pb-8">
               <p className="text-xl md:text-2xl font-sans font-light text-[var(--text-muted)] leading-snug mb-8">
               A shared language for designing human-AI interaction systems.
               </p>
@@ -178,27 +180,14 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 onClick={() => trackEvent(EVENTS.GITHUB_CLICKED)}
                 className="group inline-flex items-center gap-2 text-[var(--text-muted)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:text-[var(--text-main)] transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
               >
-                View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
-            </div>
-
-            {/* NPM Install Snippet */}
-            <div className="mt-8 pt-8 border-t border-[var(--border)]">
-              <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-mono mb-3">Access the data via npm</p>
-              <div className="relative group">
-                <div className="bg-[var(--bg)] border border-[var(--border)] rounded px-4 py-3 font-mono text-sm text-[var(--text-main)] flex items-center justify-between gap-4">
-                  <code className="flex-1">npm install @quietloudlab/ai-interaction-atlas</code>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText('npm install @quietloudlab/ai-interaction-atlas');
-                    }}
-                    className="text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors px-2 py-1 text-xs uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
-                    aria-label="Copy npm install command"
-                  >
-                    Copy
-                  </button>
-                </div>
-              </div>
+              <button
+                onClick={scrollToNpm}
+                className="group inline-flex items-center gap-2 text-[var(--text-muted)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:text-[var(--text-main)] transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
+              >
+                NPM <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" />
+              </button>
             </div>
           </div>
 
@@ -231,10 +220,10 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
               </div>
 
               {/* Right: Form */}
-              <div className="md:flex-shrink-0 w-full md:w-auto md:min-w-[320px]">
+              <div className="md:flex-shrink-0 w-full md:w-auto md:min-w-[280px]">
                 {heroSubscribeStatus === 'success' && (
                   <div
-                    className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 text-sm rounded"
+                    className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 text-sm rounded"
                     role="alert"
                     aria-live="polite"
                   >
@@ -243,28 +232,28 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 )}
                 {heroSubscribeStatus === 'error' && (
                   <div
-                    className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm rounded"
+                    className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm rounded"
                     role="alert"
                     aria-live="assertive"
                   >
                     Something went wrong. Please try again.
                   </div>
                 )}
-                <form onSubmit={handleHeroSubscribe} className="flex gap-2">
+                <form onSubmit={handleHeroSubscribe} className="space-y-3">
                   <input type="hidden" value="1" name="embed" />
                   <input
                     type="email"
                     name="email"
                     required
                     placeholder="your@email.com"
-                    className="flex-1 min-w-[200px] md:min-w-[240px] px-5 py-4 text-base bg-[var(--surface)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all rounded"
+                    className="w-full px-4 py-2 text-sm bg-[var(--bg)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all"
                   />
                   <button
                     type="submit"
                     disabled={heroSubscribeStatus === 'submitting'}
-                    className="px-8 py-4 bg-[var(--text-main)] text-[var(--bg)] text-sm font-mono uppercase tracking-wider hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
+                    className="w-full px-6 py-2 bg-[var(--text-main)] text-[var(--bg)] text-sm font-mono uppercase tracking-wider hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                   >
-                    {heroSubscribeStatus === 'submitting' ? '...' : 'Subscribe'}
+                    {heroSubscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
                   </button>
                 </form>
               </div>
@@ -274,7 +263,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
       </section>
 
       {/* The Problem */}
-      <section className="py-4 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
+      <section className="pt-4 pb-20 px-4 md:px-8 max-w-screen-2xl mx-auto relative">
         {/* Subtle shadow transition from above */}
         <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none" />
         <SectionHeader number="01" title="The Problem" />
@@ -311,68 +300,15 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
         </div>
 
         <div className="mt-20 border-t border-[var(--text-main)] pt-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Text */}
-            <div>
-              <p className="text-2xl md:text-4xl font-sans font-light text-[var(--text-main)] leading-snug mb-8">
-                The Atlas makes invisible systems visible.
-              </p>
-              <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                It provides a vocabulary for designing AI as legible, inspectable systems of interaction—where
-                capabilities, constraints, human agency, and responsibility are explicit by design. It's not a
-                UI kit or code library. It's the language layer underneath, where responsibility and agency get designed.
-              </p>
-            </div>
-
-            {/* Right: Subscribe */}
-            <div className="flex flex-col items-center justify-center text-center max-w-sm mx-auto">
-              <p className="text-sm text-[var(--text-muted)] mb-4">Stay updated on new patterns and improvements</p>
-
-              {subscribeStatus === 'success' && (
-                <div
-                  className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 text-sm rounded"
-                  role="alert"
-                  aria-live="polite"
-                >
-                  Subscribed! Check your email for confirmation.
-                </div>
-              )}
-              {subscribeStatus === 'error' && (
-                <div
-                  className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm rounded"
-                  role="alert"
-                  aria-live="assertive"
-                >
-                  Something went wrong. Please try again.
-                </div>
-              )}
-
-              <form onSubmit={handleSubscribe} className="space-y-3">
-                {/* Honeypot field */}
-                <input
-                  type="text"
-                  name="_honeypot"
-                  style={{ display: 'none' }}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="your@email.com"
-                  className="w-full px-4 py-2 text-sm bg-[var(--bg)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all"
-                />
-                <button
-                  type="submit"
-                  disabled={subscribeStatus === 'submitting'}
-                  className="w-full px-6 py-2 bg-[var(--text-main)] text-[var(--bg)] text-sm font-mono uppercase tracking-wider hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
-                >
-                  {subscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
-                </button>
-              </form>
-            </div>
+          <div className="max-w-3xl">
+            <p className="text-2xl md:text-4xl font-sans font-light text-[var(--text-main)] leading-snug mb-8">
+              The Atlas makes invisible systems visible.
+            </p>
+            <p className="text-lg text-[var(--text-muted)] leading-relaxed">
+              It provides a vocabulary for designing AI as legible, inspectable systems of interaction—where
+              capabilities, constraints, human agency, and responsibility are explicit by design. It's not a
+              UI kit or code library. It's the language layer underneath, where responsibility and agency get designed.
+            </p>
           </div>
         </div>
       </section>
@@ -543,6 +479,54 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             </p>
           </div>
         </div>
+
+        {/* Learn More Signup */}
+        <div className="mt-16 pt-12 border-t border-[var(--border)]">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-12">
+            <div className="md:flex-1">
+              <p className="text-xl md:text-2xl font-sans font-medium text-[var(--text-main)] leading-snug">
+                Get practical lessons on applying the Atlas to real AI systems.
+              </p>
+            </div>
+            <div className="md:flex-shrink-0 w-full md:w-auto md:min-w-[280px]">
+              {learnSubscribeStatus === 'success' && (
+                <div
+                  className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 text-sm rounded"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  Subscribed! Check your email for confirmation.
+                </div>
+              )}
+              {learnSubscribeStatus === 'error' && (
+                <div
+                  className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm rounded"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  Something went wrong. Please try again.
+                </div>
+              )}
+              <form onSubmit={handleLearnSubscribe} className="space-y-3">
+                <input type="hidden" value="1" name="embed" />
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-2 text-sm bg-[var(--bg)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all"
+                />
+                <button
+                  type="submit"
+                  disabled={learnSubscribeStatus === 'submitting'}
+                  className="w-full px-6 py-2 bg-[var(--text-main)] text-[var(--bg)] text-sm font-mono uppercase tracking-wider hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+                >
+                  {learnSubscribeStatus === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Open Source Section */}
@@ -563,7 +547,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 believe AI systems should be understandable. Open sourcing the Atlas is a commitment
                 to the same principles it encodes: visibility, accountability, and collective intelligence.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <a
                   href="https://github.com/quietloudlab/ai-interaction-atlas"
                   target="_blank"
@@ -574,6 +558,25 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 >
                   View on GitHub <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </a>
+              </div>
+
+              {/* NPM Install Snippet */}
+              <div id="npm-install" className="mb-12">
+                <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-mono mb-3">Access the data via npm</p>
+                <div className="relative group">
+                  <div className={`bg-[var(--bg)] border rounded px-4 py-3 font-mono text-sm text-[var(--text-main)] flex items-center justify-between gap-4 transition-all duration-300 ${npmHighlighted ? 'border-[var(--text-main)] ring-2 ring-[var(--text-main)] ring-offset-2' : 'border-[var(--border)]'}`}>
+                    <code className="flex-1">npm install @quietloudlab/ai-interaction-atlas</code>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText('npm install @quietloudlab/ai-interaction-atlas');
+                      }}
+                      className="text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors px-2 py-1 text-xs uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
+                      aria-label="Copy npm install command"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* Apache 2.0 License */}
@@ -766,7 +769,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left: Copy */}
             <div>
-              <span className="text-xl md:text-2xl leading-relaxed font-light">quietloudlab works with teams to map AI products as inspectable systems so ownership, constraints, and tradeoffs are explicit before build decisions harden.<br /><br></br>
+              <span className="text-xl md:text-2xl leading-relaxed font-light">quietloudlab works with teams to map AI products as inspectable systems so ownership, constraints, and tradeoffs are explicit before build decisions harden.<br /><br />
               Have a system or product in mind? Share a bit about it and we'll take a look.</span>
 
               <div className="mt-8">
