@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   ArrowRight,
   ArrowDown,
+  ExternalLink,
   BrainCircuit,
   UserCircle,
   Settings,
@@ -150,12 +151,13 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
             <div className="inline-flex items-center gap-2 mt-4 mb-8">
               <span className="text-sm text-[var(--text-main)]">by</span>
               <a
-                href="https://www.linkedin.com/company/quietloudlab"
+                href="https://quietloudlab.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-60 hover:opacity-100 transition-opacity p-1 -m-1 focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
+                className="inline-flex items-center gap-2.5 bg-zinc-800 border border-zinc-700 rounded px-2 py-2 shadow-[inset_0_1px_3px_rgba(255,255,255,0.1)] hover:bg-zinc-700 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.15)] transition-all focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
               >
-                <img src={quietloudlabLogo} alt="quietloudlab" className="h-4 dark:invert" />
+                <img src={quietloudlabLogo} alt="quietloudlab" className="h-4 invert" />
+                <ExternalLink size={12} className="text-white/60" />
               </a>
             </div>
 
