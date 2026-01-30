@@ -257,7 +257,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     name="email"
                     required
                     placeholder="your@email.com"
-                    className="flex-1 min-w-[240px] px-5 py-4 text-base bg-[var(--surface)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all rounded"
+                    className="flex-1 min-w-[200px] md:min-w-[240px] px-5 py-4 text-base bg-[var(--surface)] border border-[var(--border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] transition-all rounded"
                   />
                   <button
                     type="submit"
