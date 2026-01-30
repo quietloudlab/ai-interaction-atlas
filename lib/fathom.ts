@@ -1,27 +1,42 @@
 /**
  * Fathom Analytics Tracking Utility
  *
- * Provides type-safe event tracking for Fathom Analytics.
- * Events must be defined in the Fathom dashboard before tracking.
+ * Provides type-safe event and pageview tracking for Fathom Analytics.
  */
 
 declare global {
   interface Window {
     fathom?: {
-      trackEvent: (eventName: string, value?: number) => void;
+      trackPageview: (opts?: { url?: string; referrer?: string }) => void;
+      trackEvent: (eventName: string, opts?: { _value?: number }) => void;
     };
   }
 }
 
 /**
+ * Track a pageview in Fathom Analytics
+ * Call this on client-side route changes in SPAs
+ * @param url - Optional URL to track (defaults to current page)
+ */
+export function trackPageview(url?: string): void {
+  if (typeof window !== 'undefined' && window.fathom) {
+    try {
+      window.fathom.trackPageview(url ? { url } : undefined);
+    } catch (error) {
+      console.error('Fathom pageview tracking error:', error);
+    }
+  }
+}
+
+/**
  * Track a custom event in Fathom Analytics
- * @param eventName - The name of the event to track (must be defined in Fathom dashboard)
- * @param value - Optional monetary value associated with the event
+ * @param eventName - The name of the event to track
+ * @param value - Optional monetary value in cents
  */
 export function trackEvent(eventName: string, value?: number): void {
   if (typeof window !== 'undefined' && window.fathom) {
     try {
-      window.fathom.trackEvent(eventName, value);
+      window.fathom.trackEvent(eventName, value ? { _value: value } : undefined);
     } catch (error) {
       console.error('Fathom tracking error:', error);
     }

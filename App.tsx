@@ -19,6 +19,7 @@ import { Routes, Route, useNavigate, useParams, useLocation } from 'react-router
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ErrorFallback } from './components/ErrorFallback';
 import { preloadAtlasData } from './lib/dataLoader';
+import { trackPageview } from './lib/fathom';
 
 // Lazy load route components
 const MarketingLayout = lazy(() => import('./features/marketing/components/MarketingLayout').then(m => ({ default: m.MarketingLayout })));
@@ -192,10 +193,16 @@ function MarketingPageRoute({ children }: { children: React.ReactNode }) {
 // Main App
 export default function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     preloadAtlasData();
   }, []);
+
+  // Track pageviews on route changes
+  useEffect(() => {
+    trackPageview(location.pathname + location.search);
+  }, [location.pathname, location.search]);
 
   return (
     <Suspense fallback={<LoadingFallback />}>
