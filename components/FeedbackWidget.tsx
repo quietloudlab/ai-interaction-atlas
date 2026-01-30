@@ -84,9 +84,9 @@ export const FeedbackWidget = () => {
           setState('expanded');
           trackEvent(EVENTS.FEEDBACK_OPENED);
         }}
-        className="fixed bottom-4 right-4 z-50 bg-[var(--text-main)] text-[var(--bg)] px-4 py-2 text-sm font-medium rounded-full shadow-lg hover:opacity-90 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
+        className="fixed bottom-4 right-4 z-50 bg-zinc-800 border border-zinc-700 text-white px-4 py-2 text-sm font-medium rounded shadow-[inset_0_1px_3px_rgba(255,255,255,0.1)] hover:bg-zinc-700 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.15)] transition-all focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
       >
-        Feedback
+        Quick Feedback
       </button>
     );
   }
