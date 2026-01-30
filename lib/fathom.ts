@@ -88,4 +88,8 @@ export const EVENTS = {
 
   // Contact
   CONTACT_FORM_SUBMITTED: 'contact_form_submitted',
+
+  // Feedback Widget
+  FEEDBACK_OPENED: 'feedback_opened',
+  FEEDBACK_SUBMITTED: 'feedback_submitted',
 } as const;

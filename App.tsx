@@ -20,6 +20,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { ErrorFallback } from './components/ErrorFallback';
 import { preloadAtlasData } from './lib/dataLoader';
 import { trackPageview } from './lib/fathom';
+import { FeedbackWidget } from './components/FeedbackWidget';
 
 // Lazy load route components
 const MarketingLayout = lazy(() => import('./features/marketing/components/MarketingLayout').then(m => ({ default: m.MarketingLayout })));
@@ -205,33 +206,36 @@ export default function App() {
   }, [location.pathname, location.search]);
 
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Routes>
-        {/* Marketing Pages */}
-        <Route path="/" element={
-          <MarketingPageRoute>
-            <LandingPage onNavigate={(page) => {
-              if (page === 'atlas') navigate('/atlas');
-              else navigate(`/${page}`);
-            }} />
-          </MarketingPageRoute>
-        } />
+    <>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          {/* Marketing Pages */}
+          <Route path="/" element={
+            <MarketingPageRoute>
+              <LandingPage onNavigate={(page) => {
+                if (page === 'atlas') navigate('/atlas');
+                else navigate(`/${page}`);
+              }} />
+            </MarketingPageRoute>
+          } />
 
-        <Route path="/privacy" element={
-          <MarketingPageRoute>
-            <PrivacyPage />
-          </MarketingPageRoute>
-        } />
+          <Route path="/privacy" element={
+            <MarketingPageRoute>
+              <PrivacyPage />
+            </MarketingPageRoute>
+          } />
 
-        <Route path="/terms" element={
-          <MarketingPageRoute>
-            <TermsPage />
-          </MarketingPageRoute>
-        } />
+          <Route path="/terms" element={
+            <MarketingPageRoute>
+              <TermsPage />
+            </MarketingPageRoute>
+          } />
 
-        {/* Atlas Routes */}
-        <Route path="/atlas/*" element={<AtlasRoutes />} />
-      </Routes>
-    </Suspense>
+          {/* Atlas Routes */}
+          <Route path="/atlas/*" element={<AtlasRoutes />} />
+        </Routes>
+      </Suspense>
+      <FeedbackWidget />
+    </>
   );
 }
