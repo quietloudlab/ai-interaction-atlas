@@ -1,0 +1,11 @@
+# Netlify configuration
+
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# SPA routing fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

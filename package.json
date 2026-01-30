@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:vercel": "vercel dev",
-    "build": "vite build",
+    "build": "node scripts/generate-meta-data.js && vite build",
     "generate-embeddings": "tsx scripts/generate-embeddings.ts",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "preview": "vite preview"
