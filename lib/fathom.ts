@@ -44,10 +44,29 @@ export const EVENTS = {
   // Search
   SEARCH_PERFORMED: 'search_performed',
   SEMANTIC_SEARCH_USED: 'semantic_search_used',
+  HERO_SEARCH_ENGAGED: 'hero_search_engaged',
+  HERO_SEARCH_RESULT_CLICKED: 'hero_search_result_clicked',
 
   // Builder
   BUILDER_OPENED: 'builder_opened',
   TEMPLATE_LOADED: 'template_loaded',
+
+  // Newsletter
+  NEWSLETTER_HERO_SUBMITTED: 'newsletter_hero_submitted',
+  NEWSLETTER_LEARN_SUBMITTED: 'newsletter_learn_submitted',
+
+  // NPM
+  NPM_COPIED: 'npm_copied',
+  NPM_SCROLL_CLICKED: 'npm_scroll_clicked',
+
+  // CTAs
+  EXPLORE_ATLAS_CLICKED: 'explore_atlas_clicked',
+  QUIETLOUDLAB_CLICKED: 'quietloudlab_clicked',
+
+  // Contributions
+  SUGGEST_PATTERN_CLICKED: 'suggest_pattern_clicked',
+  CONTRIBUTE_PATTERN_CLICKED: 'contribute_pattern_clicked',
+  SHARE_FEEDBACK_CLICKED: 'share_feedback_clicked',
 
   // External Links
   GITHUB_CLICKED: 'github_clicked',

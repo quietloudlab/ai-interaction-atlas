@@ -33,6 +33,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
   const [npmHighlighted, setNpmHighlighted] = useState(false);
 
   const scrollToNpm = () => {
+    trackEvent(EVENTS.NPM_SCROLL_CLICKED);
     const npmElement = document.getElementById('npm-install');
     if (npmElement) {
       npmElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -49,7 +50,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
     const formData = new FormData(form);
 
     try {
-      const response = await fetch('https://submit-form.com/wD0F0mjLN', {
+      const response = await fetch('https://submit-form.com/9sCstfrTD', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,6 +77,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
   const handleHeroSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setHeroSubscribeStatus('submitting');
+    trackEvent(EVENTS.NEWSLETTER_HERO_SUBMITTED);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -103,6 +105,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
   const handleLearnSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLearnSubscribeStatus('submitting');
+    trackEvent(EVENTS.NEWSLETTER_LEARN_SUBMITTED);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -154,6 +157,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 href="https://quietloudlab.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent(EVENTS.QUIETLOUDLAB_CLICKED)}
                 className="inline-flex items-center gap-2.5 bg-zinc-800 border border-zinc-700 rounded px-2 py-2 shadow-[inset_0_1px_3px_rgba(255,255,255,0.1)] hover:bg-zinc-700 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.15)] transition-all focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
               >
                 <img src={quietloudlabLogo} alt="quietloudlab" className="h-4 invert" />
@@ -169,7 +173,10 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                onClick={() => onNavigate('atlas')}
+                onClick={() => {
+                  trackEvent(EVENTS.EXPLORE_ATLAS_CLICKED);
+                  onNavigate('atlas');
+                }}
                 className="group inline-flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:opacity-80 transition-all active:translate-y-px focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                 style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06)' }}
               >
@@ -571,6 +578,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText('npm install @quietloudlab/ai-interaction-atlas');
+                        trackEvent(EVENTS.NPM_COPIED);
                       }}
                       className="text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors px-2 py-1 text-xs uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2 rounded"
                       aria-label="Copy npm install command"
@@ -615,6 +623,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   href="https://github.com/quietloudlab/ai-interaction-atlas/issues/new?template=pattern-suggestion.md"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent(EVENTS.SUGGEST_PATTERN_CLICKED)}
                   className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                 >
                   <div className="flex items-start gap-2 mb-2">
@@ -636,6 +645,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                   href="https://github.com/quietloudlab/ai-interaction-atlas/blob/main/CONTRIBUTING.md"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent(EVENTS.CONTRIBUTE_PATTERN_CLICKED)}
                   className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                 >
                   <div className="flex items-start gap-2 mb-2">
@@ -655,6 +665,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
                 {/* Share Feedback */}
                 <a
                   href="mailto:brandon@quietloudlab.com?subject=AI%20Interaction%20Atlas%20Feedback"
+                  onClick={() => trackEvent(EVENTS.SHARE_FEEDBACK_CLICKED)}
                   className="group border-2 border-[var(--border)] hover:border-[var(--text-main)] p-5 transition-all hover:shadow-lg bg-[var(--surface)] flex flex-col focus:outline-none focus:ring-2 focus:ring-[var(--text-main)] focus:ring-offset-2"
                 >
                   <div className="flex items-start gap-2 mb-2">

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Search, ArrowRight, BrainCircuit, UserCircle, Settings, Database, Sliders, Smartphone } from 'lucide-react';
 import { atlasService, type UnifiedSearchResult } from '../../../services/atlasService';
+import { trackEvent, EVENTS } from '../../../lib/fathom';
 
 interface HeroSearchWidgetProps {
   onResultClick: (result: UnifiedSearchResult) => void;
@@ -25,6 +26,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
   const [currentExampleIndex, setCurrentExampleIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isBackspacing, setIsBackspacing] = useState(false);
+  const hasTrackedEngagement = useRef(false);
 
   // Auto-typing effect
   useEffect(() => {
@@ -146,6 +148,10 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
             setIsBackspacing(false);
             setSearchQuery('');
             setCurrentCharIndex(0);
+            if (!hasTrackedEngagement.current) {
+              trackEvent(EVENTS.HERO_SEARCH_ENGAGED);
+              hasTrackedEngagement.current = true;
+            }
           }}
           onBlur={() => {
             setTimeout(() => {
@@ -189,7 +195,10 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
               return (
                 <button
                   key={result.id}
-                  onClick={() => onResultClick(result)}
+                  onClick={() => {
+                    trackEvent(EVENTS.HERO_SEARCH_RESULT_CLICKED);
+                    onResultClick(result);
+                  }}
                   className="w-full text-left p-4 hover:bg-[var(--bg)] transition-colors group flex items-start gap-3"
                 >
                   <div
