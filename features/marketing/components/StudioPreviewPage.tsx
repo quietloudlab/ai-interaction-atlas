@@ -121,14 +121,14 @@ export const StudioPreviewPage = () => {
           </div>
         </div>
 
-        {/* Hero image - Full width, seamless */}
-        <div className="mt-8 md:mt-12">
-          <div className="px-4 md:px-8 lg:px-12">
-            <div className="max-w-6xl mx-auto">
+        {/* Hero image - Large, can overflow */}
+        <div className="mt-8 md:mt-12 overflow-hidden">
+          <div className="px-4 md:px-0">
+            <div className="max-w-[100rem] mx-auto">
               <img
                 src="/img/example_rag.png"
                 alt="RAG workflow example showing a knowledge base query flow"
-                className="w-full"
+                className="w-full min-w-[60rem] md:min-w-0 md:w-[110%] md:-ml-[5%]"
               />
             </div>
           </div>
@@ -271,18 +271,18 @@ export const StudioPreviewPage = () => {
         <div className="max-w-screen-2xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             {/* Left: Image bleeding off screen */}
-            <div className="lg:col-span-7 order-2 lg:order-1">
-              <div className="px-4 lg:pl-0 lg:-ml-20 xl:-ml-32 2xl:-ml-48">
+            <div className="lg:col-span-8 order-2 lg:order-1">
+              <div className="px-4 lg:pl-0 lg:-ml-32 xl:-ml-48 2xl:-ml-64">
                 <img
                   src="/img/example_therapy.png"
                   alt="Clinical workflow example showing precision therapy matching with safety checks and clinician review gates"
-                  className="w-full"
+                  className="w-full lg:w-[120%]"
                 />
               </div>
             </div>
 
             {/* Right: Text content */}
-            <div className="lg:col-span-5 order-1 lg:order-2 px-4 md:px-8 lg:px-0 lg:pr-12 xl:pr-20">
+            <div className="lg:col-span-4 order-1 lg:order-2 px-4 md:px-8 lg:px-0 lg:pr-8">
               <span className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-widest mb-6 block">(01)</span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans tracking-tight font-medium mb-8 leading-[1.1]">
                 From simple flows
