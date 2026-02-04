@@ -131,8 +131,8 @@ export const StudioPreviewPage = () => {
         </div>
 
         {/* Subtext below hero */}
-        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto mt-12 md:mt-16">
-          <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed max-w-2xl">
+        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto pt-20 md:pt-28 pb-8 md:pb-12">
+          <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto text-center">
             Studio is the visual workspace for designing AI systems with the Atlas framework.
             Drag patterns, connect flows, align your team.
           </p>
@@ -270,24 +270,6 @@ export const StudioPreviewPage = () => {
         </div>
       </section>
 
-      {/* RAG Example - Full width */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto mb-8">
-          <p className="text-center text-[var(--text-muted)] font-mono text-sm">
-            A simple RAG knowledge base flow
-          </p>
-        </div>
-        <div className="overflow-hidden">
-          <div className="max-w-[90rem] mx-auto px-4 md:px-0">
-            <img
-              src="/img/example_rag.png"
-              alt="RAG workflow example showing a knowledge base query flow"
-              className="w-full"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* How It Works */}
       <section className="py-24 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-[var(--border)]">
         <div className="mb-16">
@@ -326,6 +308,19 @@ export const StudioPreviewPage = () => {
             <p className="text-[var(--text-muted)] leading-relaxed">
               Export or share with your team. Iterate until everyone agrees on the system.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* RAG Example - Full width */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
+        <div className="overflow-hidden">
+          <div className="max-w-[90rem] mx-auto px-4 md:px-0">
+            <img
+              src="/img/example_rag.png"
+              alt="RAG workflow example showing a knowledge base query flow"
+              className="w-full"
+            />
           </div>
         </div>
       </section>
