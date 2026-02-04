@@ -90,11 +90,11 @@ export const StudioPreviewPage = () => {
 
   return (
     <div className="bg-[var(--surface)] text-[var(--text-main)] selection:bg-[var(--text-main)] selection:text-[var(--bg)]">
-      {/* Hero Section - Stacked, image-forward */}
-      <section className="pt-6 pb-0 relative">
+      {/* Hero Section - Medical workflow + headline */}
+      <section className="pt-6 pb-0 relative overflow-hidden">
         <div className="px-4 md:px-8 max-w-screen-2xl mx-auto">
           {/* Top bar: Back link + Badge */}
-          <div className="flex items-center justify-between mb-12 md:mb-16">
+          <div className="flex items-center justify-between mb-8 md:mb-12">
             <a
               href="/atlas"
               className="inline-flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
@@ -107,30 +107,30 @@ export const StudioPreviewPage = () => {
               Coming Soon
             </div>
           </div>
-
-          {/* Centered headline */}
-          <div className="text-center max-w-4xl mx-auto mb-12 md:mb-16">
-            <h1 className="text-5xl md:text-6xl lg:text-8xl font-sans tracking-tighter leading-[0.9] font-medium mb-6">
-              You've seen the patterns.
-              <br />
-              <span className="text-[var(--text-muted)]">Now map them.</span>
-            </h1>
-            <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto">
-              The visual workspace for designing AI systems with the Atlas framework.
-            </p>
-          </div>
         </div>
 
-        {/* Hero image - Large, can overflow */}
-        <div className="mt-8 md:mt-12 overflow-hidden">
-          <div className="px-4 md:px-0">
-            <div className="max-w-[100rem] mx-auto">
-              <img
-                src="/img/example_rag.png"
-                alt="RAG workflow example showing a knowledge base query flow"
-                className="w-full min-w-[60rem] md:min-w-0 md:w-[110%] md:-ml-[5%]"
-              />
-            </div>
+        {/* Hero content: Image left, text right */}
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
+          {/* Left: Image bleeding off left edge of viewport */}
+          <div className="order-2 lg:order-1 w-full lg:w-[58%] lg:flex-shrink-0 px-4 lg:px-0">
+            <img
+              src="/img/example_therapy.png"
+              alt="Clinical workflow example showing precision therapy matching with safety checks and clinician review gates"
+              className="w-full lg:w-[calc(100%+((100vw-100%)/2))] lg:max-w-none lg:ml-[calc(-1*((100vw-100%)/2))]"
+            />
+          </div>
+
+          {/* Right: Hero text */}
+          <div className="order-1 lg:order-2 w-full lg:w-[42%] px-4 md:px-8 lg:pl-12 xl:pl-20 lg:pr-8 xl:pr-16">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-sans tracking-tighter leading-[1] font-medium mb-6">
+              From simple flows
+              <br />
+              <span className="text-[var(--text-muted)]">to complex systems</span>
+            </h1>
+            <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed">
+              Studio is the visual workspace for designing AI systems with the Atlas framework.
+              Drag patterns, connect flows, align your team.
+            </p>
           </div>
         </div>
       </section>
@@ -266,30 +266,20 @@ export const StudioPreviewPage = () => {
         </div>
       </section>
 
-      {/* Clinical Workflow Preview - Asymmetric bleed */}
-      <section className="py-24 md:py-40 relative overflow-hidden">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-0">
-          {/* Left: Image bleeding off left edge of viewport */}
-          <div className="order-2 lg:order-1 w-full lg:w-[60%] lg:flex-shrink-0 px-4 lg:px-0">
+      {/* RAG Example - Full width */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
+        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto mb-8">
+          <p className="text-center text-[var(--text-muted)] font-mono text-sm">
+            A simple RAG knowledge base flow
+          </p>
+        </div>
+        <div className="overflow-hidden">
+          <div className="max-w-[90rem] mx-auto px-4 md:px-0">
             <img
-              src="/img/example_therapy.png"
-              alt="Clinical workflow example showing precision therapy matching with safety checks and clinician review gates"
-              className="w-full lg:w-[calc(100%+((100vw-100%)/2))] lg:max-w-none lg:ml-[calc(-1*((100vw-100%)/2))]"
+              src="/img/example_rag.png"
+              alt="RAG workflow example showing a knowledge base query flow"
+              className="w-full"
             />
-          </div>
-
-          {/* Right: Text content */}
-          <div className="order-1 lg:order-2 w-full lg:w-[40%] px-4 md:px-8 lg:pl-12 xl:pl-16 lg:pr-8 xl:pr-16">
-            <span className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-widest mb-6 block">(01)</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans tracking-tight font-medium mb-8 leading-[1.1]">
-              From simple flows
-              <br />
-              <span className="text-[var(--text-muted)]">to complex systems</span>
-            </h2>
-            <p className="text-lg md:text-xl text-[var(--text-muted)] leading-relaxed">
-              Whether you're mapping a RAG pipeline or a clinical decision system with human-in-the-loop checkpoints,
-              Studio scales with your complexity. Confidence thresholds, safety checks, clinician review gates—all visible before you write a line of code.
-            </p>
           </div>
         </div>
       </section>
