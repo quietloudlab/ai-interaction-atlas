@@ -130,20 +130,13 @@ export const StudioPreviewPage = () => {
           </div>
         </div>
 
-        {/* Subtext below hero */}
-        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto pt-20 md:pt-28 pb-8 md:pb-12">
-          <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto text-center">
-            Studio is the visual workspace for designing AI systems with the Atlas framework.
-            Drag patterns, connect flows, align your team.
-          </p>
-        </div>
       </section>
 
       {/* Waitlist Form Section */}
-      <section className="py-20 md:py-28 px-4 md:px-8">
-        <div className="max-w-xl mx-auto text-center">
+      <section className="pt-28 md:pt-36 pb-20 md:pb-28 px-4 md:px-8">
+        <div className="max-w-screen-xl mx-auto">
           {formStatus === 'success' ? (
-            <div>
+            <div className="max-w-xl mx-auto text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[var(--success)]/10 text-[var(--success)] rounded-full mb-6">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
@@ -161,13 +154,23 @@ export const StudioPreviewPage = () => {
               </a>
             </div>
           ) : (
-            <div>
-              <h3 className="text-3xl md:text-4xl font-medium text-[var(--text-main)] mb-3">
-                Get early access
-              </h3>
-              <p className="text-lg text-[var(--text-muted)] mb-10">
-                Be first to map your AI systems visually.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-[calc(var(--spacing)*32)] items-start">
+              {/* Left: Subtext */}
+              <div>
+                <p className="text-2xl md:text-3xl lg:text-4xl font-medium text-[var(--text-main)] leading-snug">
+                  Studio is the visual workspace for designing AI systems with the Atlas framework.
+                  Drag patterns, connect flows, align your team.
+                </p>
+              </div>
+
+              {/* Right: Form */}
+              <div className="bg-[var(--bg)] border border-[var(--border)] rounded-lg p-8 md:p-10">
+                <h3 className="text-2xl md:text-3xl font-medium text-[var(--text-main)] mb-3">
+                  Get early access
+                </h3>
+                <p className="text-lg text-[var(--text-muted)] mb-8">
+                  Be first to map your AI systems visually.
+                </p>
 
               {formStatus === 'error' && errorMessage && (
                 <div className="mb-6 p-4 bg-[var(--error)]/10 border border-[var(--error)]/20 text-[var(--error)] text-sm rounded-lg text-left">
@@ -188,7 +191,7 @@ export const StudioPreviewPage = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3.5 border-b-2 border-[var(--border)] bg-transparent text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors"
+                      className="w-full px-4 py-3.5 border border-[var(--border)] bg-[var(--surface)] rounded-md text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors"
                       placeholder="you@company.com"
                       disabled={formStatus === 'submitting'}
                     />
@@ -205,7 +208,7 @@ export const StudioPreviewPage = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3.5 border-b-2 border-[var(--border)] bg-transparent text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors"
+                      className="w-full px-4 py-3.5 border border-[var(--border)] bg-[var(--surface)] rounded-md text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors"
                       placeholder="Your name"
                       disabled={formStatus === 'submitting'}
                     />
@@ -223,7 +226,7 @@ export const StudioPreviewPage = () => {
                     required
                     value={formData.organization}
                     onChange={handleChange}
-                    className="w-full px-4 py-3.5 border-b-2 border-[var(--border)] bg-transparent text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors"
+                    className="w-full px-4 py-3.5 border border-[var(--border)] bg-[var(--surface)] rounded-md text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors"
                     placeholder="Your company or team"
                     disabled={formStatus === 'submitting'}
                   />
@@ -239,7 +242,7 @@ export const StudioPreviewPage = () => {
                     rows={2}
                     value={formData.use_case}
                     onChange={handleChange}
-                    className="w-full px-4 py-3.5 border-b-2 border-[var(--border)] bg-transparent text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors resize-none"
+                    className="w-full px-4 py-3.5 border border-[var(--border)] bg-[var(--surface)] rounded-md text-[var(--text-main)] placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--text-main)] transition-colors resize-none"
                     placeholder="Tell us about your AI project (optional)"
                     disabled={formStatus === 'submitting'}
                   />
@@ -265,13 +268,14 @@ export const StudioPreviewPage = () => {
                   </button>
                 </div>
               </form>
+              </div>
             </div>
           )}
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-24 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-[var(--border)]">
+      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-4 md:px-8 max-w-screen-2xl mx-auto border-t border-[var(--border)]">
         <div className="mb-16">
           <span className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-widest mb-4 block">(02)</span>
           <h2 className="text-4xl md:text-5xl font-sans tracking-tight font-medium">How it works</h2>
@@ -313,7 +317,7 @@ export const StudioPreviewPage = () => {
       </section>
 
       {/* RAG Example - Full width */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
+      <section className="py-8 md:py-12 relative overflow-hidden">
         <div className="overflow-hidden">
           <div className="max-w-[90rem] mx-auto px-4 md:px-0">
             <img
