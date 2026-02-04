@@ -122,7 +122,7 @@ export const StudioPreviewPage = () => {
 
           {/* Right: Hero title only */}
           <div className="order-1 lg:order-2 w-full lg:w-[45%] px-4 md:px-8 lg:pl-12 xl:pl-20 lg:pr-8 xl:pr-16">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-sans tracking-tighter leading-[0.95] font-medium">
+            <h1 className="text-[clamp(3rem,8vw,10rem)] font-sans tracking-tighter leading-[0.95] font-medium">
               From simple flows
               <br />
               <span className="text-[var(--text-muted)]">to complex systems</span>
