@@ -109,10 +109,10 @@ export const StudioPreviewPage = () => {
           </div>
         </div>
 
-        {/* Hero content: Image left, text right */}
+        {/* Hero content: Image left, title right */}
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
           {/* Left: Image bleeding off left edge of viewport */}
-          <div className="order-2 lg:order-1 w-full lg:w-[58%] lg:flex-shrink-0 px-4 lg:px-0">
+          <div className="order-2 lg:order-1 w-full lg:w-[55%] lg:flex-shrink-0 px-4 lg:px-0">
             <img
               src="/img/example_therapy.png"
               alt="Clinical workflow example showing precision therapy matching with safety checks and clinician review gates"
@@ -120,18 +120,22 @@ export const StudioPreviewPage = () => {
             />
           </div>
 
-          {/* Right: Hero text */}
-          <div className="order-1 lg:order-2 w-full lg:w-[42%] px-4 md:px-8 lg:pl-12 xl:pl-20 lg:pr-8 xl:pr-16">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-sans tracking-tighter leading-[1] font-medium mb-6">
+          {/* Right: Hero title only */}
+          <div className="order-1 lg:order-2 w-full lg:w-[45%] px-4 md:px-8 lg:pl-12 xl:pl-20 lg:pr-8 xl:pr-16">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-sans tracking-tighter leading-[0.95] font-medium">
               From simple flows
               <br />
               <span className="text-[var(--text-muted)]">to complex systems</span>
             </h1>
-            <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed">
-              Studio is the visual workspace for designing AI systems with the Atlas framework.
-              Drag patterns, connect flows, align your team.
-            </p>
           </div>
+        </div>
+
+        {/* Subtext below hero */}
+        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto mt-12 md:mt-16">
+          <p className="text-xl md:text-2xl font-light text-[var(--text-muted)] leading-relaxed max-w-2xl">
+            Studio is the visual workspace for designing AI systems with the Atlas framework.
+            Drag patterns, connect flows, align your team.
+          </p>
         </div>
       </section>
 
