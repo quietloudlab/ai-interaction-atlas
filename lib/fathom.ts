@@ -92,4 +92,7 @@ export const EVENTS = {
   // Feedback Widget
   FEEDBACK_OPENED: 'feedback_opened',
   FEEDBACK_SUBMITTED: 'feedback_submitted',
+
+  // Studio Waitlist
+  STUDIO_WAITLIST_SUBMITTED: 'studio_waitlist_submitted',
 } as const;

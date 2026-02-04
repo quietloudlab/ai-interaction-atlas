@@ -28,6 +28,7 @@ const AtlasLayout = lazy(() => import('./features/atlas/components/AtlasLayout')
 const LandingPage = lazy(() => import('./features/marketing/components/LandingPage').then(m => ({ default: m.LandingPage })));
 const PrivacyPage = lazy(() => import('./features/marketing/components/PrivacyPage').then(m => ({ default: m.PrivacyPage })));
 const TermsPage = lazy(() => import('./features/marketing/components/TermsPage').then(m => ({ default: m.TermsPage })));
+const StudioPreviewPage = lazy(() => import('./features/marketing/components/StudioPreviewPage').then(m => ({ default: m.StudioPreviewPage })));
 const HomeDashboard = lazy(() => import('./features/atlas/components/HomeDashboard').then(m => ({ default: m.HomeDashboard })));
 const TaskDetail = lazy(() => import('./features/atlas/components/TaskDetail').then(m => ({ default: m.TaskDetail })));
 const LayerDetail = lazy(() => import('./features/atlas/components/LayerDetail').then(m => ({ default: m.LayerDetail })));
@@ -230,6 +231,9 @@ export default function App() {
               <TermsPage />
             </MarketingPageRoute>
           } />
+
+          {/* Studio Preview Page (standalone, has own header/footer) */}
+          <Route path="/studio" element={<StudioPreviewPage />} />
 
           {/* Atlas Routes */}
           <Route path="/atlas/*" element={<AtlasRoutes />} />

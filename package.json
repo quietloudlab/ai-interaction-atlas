@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.94.0",
     "lucide-react": "^0.562.0",
     "openai": "^6.16.0",
     "react": "^19.2.3",

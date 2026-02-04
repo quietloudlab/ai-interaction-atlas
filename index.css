@@ -10,7 +10,15 @@
   --bg-3: #E8E8E8;
   --text-main: #111111;
   --text-muted: #6E6E6E;
+  --text-subtle: #9E9E9E;
   --border: #E6E6E6;
+  --success: #22c55e;
+  --error: #ef4444;
+  --color-marketing-bg-dark: #0A0A0A;
+  --color-marketing-bg-darker: #F5F5F3;
+  --color-brand-purple: #8b5cf6;
+  --color-brand-orange: #f97316;
+  --color-brand-rose: #f43f5e;
 }
 
 .dark {
@@ -21,7 +29,12 @@
   --bg-3: #2A2A2A;
   --text-main: #EFEFEF;
   --text-muted: #B8B8B8;
+  --text-subtle: #888888;
   --border: #2A2A2A;
+  --success: #22c55e;
+  --error: #ef4444;
+  --color-marketing-bg-dark: #0A0A0A;
+  --color-marketing-bg-darker: #050505;
 }
 
 html, body {
@@ -102,4 +115,62 @@ button, a {
 
 button:disabled {
   cursor: not-allowed;
+}
+
+/* Animations for marketing pages */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.3s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
