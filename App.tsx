@@ -232,8 +232,12 @@ export default function App() {
             </MarketingPageRoute>
           } />
 
-          {/* Studio Preview Page (standalone, has own header/footer) */}
-          <Route path="/studio" element={<StudioPreviewPage />} />
+          {/* Studio Preview Page */}
+          <Route path="/studio" element={
+            <MarketingPageRoute>
+              <StudioPreviewPage />
+            </MarketingPageRoute>
+          } />
 
           {/* Atlas Routes */}
           <Route path="/atlas/*" element={<AtlasRoutes />} />

@@ -76,6 +76,8 @@ export const EVENTS = {
 
   // CTAs
   EXPLORE_ATLAS_CLICKED: 'explore_atlas_clicked',
+  QUICK_REFERENCE_CLICKED: 'quick_reference_clicked',
+  STUDIO_PREVIEW_CLICKED: 'studio_preview_clicked',
   QUIETLOUDLAB_CLICKED: 'quietloudlab_clicked',
 
   // Contributions
@@ -95,4 +97,7 @@ export const EVENTS = {
 
   // Studio Waitlist
   STUDIO_WAITLIST_SUBMITTED: 'studio_waitlist_submitted',
+  STUDIO_SUCCESS_ATLAS_CLICKED: 'studio_success_atlas_clicked',
+  STUDIO_CTA_CLICKED: 'studio_cta_clicked',
+  STUDIO_FAQ_OPENED: 'studio_faq_opened',
 } as const;

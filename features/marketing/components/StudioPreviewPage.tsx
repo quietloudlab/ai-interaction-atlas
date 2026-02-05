@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import {
   ArrowRight,
-  ArrowLeft,
   Layers,
   Users,
   Workflow,
-  Sparkles,
   CheckCircle2,
   Loader2,
   Download,
@@ -40,6 +38,7 @@ export const StudioPreviewPage = () => {
     organization: '',
     use_case: '',
   });
+  const [consent, setConsent] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -74,6 +73,7 @@ export const StudioPreviewPage = () => {
 
       setFormStatus('success');
       setFormData({ email: '', name: '', organization: '', use_case: '' });
+      setConsent(false);
     } catch (error) {
       console.error('Waitlist error:', error);
       setErrorMessage('Something went wrong. Please try again.');
@@ -92,22 +92,6 @@ export const StudioPreviewPage = () => {
     <div className="bg-[var(--surface)] text-[var(--text-main)] selection:bg-[var(--text-main)] selection:text-[var(--bg)]">
       {/* Hero Section - Medical workflow + headline */}
       <section className="pt-6 pb-0 relative overflow-hidden">
-        <div className="px-4 md:px-8 max-w-screen-2xl mx-auto">
-          {/* Top bar: Back link + Badge */}
-          <div className="flex items-center justify-between mb-8 md:mb-12">
-            <a
-              href="/atlas"
-              className="inline-flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
-            >
-              <ArrowLeft size={16} />
-              Back to Atlas
-            </a>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-full text-xs font-mono text-amber-600 dark:text-amber-400">
-              <Sparkles className="w-3 h-3" />
-              Coming Soon
-            </div>
-          </div>
-        </div>
 
         {/* Hero content: Image left, title right */}
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
@@ -148,6 +132,7 @@ export const StudioPreviewPage = () => {
               </p>
               <a
                 href="/atlas"
+                onClick={() => trackEvent(EVENTS.STUDIO_SUCCESS_ATLAS_CLICKED)}
                 className="group inline-flex items-center gap-2 text-[var(--text-main)] font-medium hover:gap-3 transition-all"
               >
                 Continue exploring the Atlas <ArrowRight size={16} />
@@ -248,10 +233,30 @@ export const StudioPreviewPage = () => {
                   />
                 </div>
 
+                <div className="pt-2">
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-1 w-4 h-4 rounded border-[var(--border)] text-[var(--text-main)] focus:ring-[var(--text-main)] cursor-pointer"
+                      disabled={formStatus === 'submitting'}
+                      required
+                    />
+                    <span className="text-sm text-[var(--text-muted)] leading-relaxed">
+                      I agree to the{' '}
+                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[var(--text-main)] hover:underline">
+                        Privacy Policy
+                      </a>{' '}
+                      and consent to having my data stored to receive updates about Studio.
+                    </span>
+                  </label>
+                </div>
+
                 <div className="pt-4">
                   <button
                     type="submit"
-                    disabled={formStatus === 'submitting'}
+                    disabled={formStatus === 'submitting' || !consent}
                     className="w-full group inline-flex items-center justify-center gap-3 bg-[var(--text-main)] text-[var(--bg)] px-8 py-4 font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {formStatus === 'submitting' ? (
@@ -448,7 +453,7 @@ export const StudioPreviewPage = () => {
           </div>
 
           <div className="lg:col-span-8 space-y-0 divide-y divide-[var(--border)]">
-            <details className="group py-6 first:pt-0">
+            <details className="group py-6 first:pt-0" onToggle={(e) => { if ((e.target as HTMLDetailsElement).open) trackEvent(EVENTS.STUDIO_FAQ_OPENED); }}>
               <summary className="cursor-pointer text-xl font-medium text-[var(--text-main)] hover:text-[var(--text-muted)] transition-colors list-none flex items-center justify-between">
                 When will I get access?
                 <span className="text-[var(--text-muted)] group-open:rotate-45 transition-transform text-2xl flex-shrink-0 ml-4">+</span>
@@ -459,7 +464,7 @@ export const StudioPreviewPage = () => {
               </p>
             </details>
 
-            <details className="group py-6">
+            <details className="group py-6" onToggle={(e) => { if ((e.target as HTMLDetailsElement).open) trackEvent(EVENTS.STUDIO_FAQ_OPENED); }}>
               <summary className="cursor-pointer text-xl font-medium text-[var(--text-main)] hover:text-[var(--text-muted)] transition-colors list-none flex items-center justify-between">
                 Can I import patterns directly from the Atlas?
                 <span className="text-[var(--text-muted)] group-open:rotate-45 transition-transform text-2xl flex-shrink-0 ml-4">+</span>
@@ -470,7 +475,7 @@ export const StudioPreviewPage = () => {
               </p>
             </details>
 
-            <details className="group py-6">
+            <details className="group py-6" onToggle={(e) => { if ((e.target as HTMLDetailsElement).open) trackEvent(EVENTS.STUDIO_FAQ_OPENED); }}>
               <summary className="cursor-pointer text-xl font-medium text-[var(--text-main)] hover:text-[var(--text-muted)] transition-colors list-none flex items-center justify-between">
                 Is Studio free?
                 <span className="text-[var(--text-muted)] group-open:rotate-45 transition-transform text-2xl flex-shrink-0 ml-4">+</span>
@@ -497,7 +502,7 @@ export const StudioPreviewPage = () => {
           </p>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            onClick={(e) => { e.preventDefault(); trackEvent(EVENTS.STUDIO_CTA_CLICKED); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="cursor-pointer group inline-flex items-center gap-3 bg-[var(--bg)] text-[var(--text-main)] px-10 py-5 font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-all"
           >
             Join the Waitlist <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -514,6 +519,7 @@ export const StudioPreviewPage = () => {
               href="https://quietloudlab.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent(EVENTS.QUIETLOUDLAB_CLICKED)}
               className="text-[var(--text-main)] hover:opacity-70 transition-opacity"
             >
               quietloudlab
