@@ -27,10 +27,21 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isBackspacing, setIsBackspacing] = useState(false);
   const hasTrackedEngagement = useRef(false);
+  const prefersReducedMotion = useRef(
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 
   // Auto-typing effect
   useEffect(() => {
     if (isUserTyping) return; // Don't auto-type if user is interacting
+
+    // Skip animation for users who prefer reduced motion - show full example immediately
+    if (prefersReducedMotion.current) {
+      const currentExample = EXAMPLE_SEARCHES[currentExampleIndex];
+      setSearchQuery(currentExample);
+      setCurrentCharIndex(currentExample.length);
+      return;
+    }
 
     const currentExample = EXAMPLE_SEARCHES[currentExampleIndex];
 
@@ -130,7 +141,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-full">
+    <div className="flex flex-col w-full max-w-full rounded-lg shadow-sm bg-gray-100/40 dark:bg-white/[0.02]">
       {/* Search Input */}
       <div className="relative w-full">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)] pointer-events-none" />
@@ -163,29 +174,44 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
               }
             }, 200);
           }}
+          role="combobox"
           aria-label="Search AI interaction patterns"
-          className="w-full box-border bg-[var(--surface)] border-2 border-[var(--text-main)] text-[var(--text-main)] py-3.5 pl-12 pr-4 text-base font-mono focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] placeholder:text-[var(--text-muted)] shadow-[4px_4px_0px_0px_var(--text-main)] transition-all"
+          aria-expanded={searchResults.length > 0}
+          aria-controls="search-results"
+          aria-autocomplete="list"
+          className="w-full box-border bg-white/60 dark:bg-white/[0.05] border border-[var(--border)] border-b-0 text-[var(--text-main)] py-3.5 pl-12 pr-4 text-base font-mono focus:ring-2 focus:ring-[var(--text-main)] focus:border-[var(--text-main)] placeholder:text-[var(--text-muted)] rounded-t-lg transition-all"
         />
+      </div>
+
+      {/* Screen reader announcement for results */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {searchQuery.trim().length >= 2 && (
+          searchResults.length > 0
+            ? `${searchResults.length} results found`
+            : 'No results found'
+        )}
       </div>
 
       {/* Results Panel */}
       <div
-        className="w-full box-border bg-[var(--surface)] border-2 border-[var(--text-main)] shadow-[4px_4px_0px_0px_var(--text-main)] h-[400px] overflow-y-scroll"
+        id="search-results"
+        role="listbox"
+        aria-label="Search results"
+        className="w-full box-border bg-gray-50/60 dark:bg-white/[0.02] border border-[var(--border)] rounded-b-lg h-[400px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"
         style={{
-          scrollbarWidth: 'auto',
-          msOverflowStyle: 'scrollbar'
+          scrollbarWidth: 'thin'
         }}
       >
         {searchQuery.trim().length === 0 ? (
           <div className="p-8 text-center">
             <Search className="w-12 h-12 mx-auto mb-4 text-[var(--border)]" />
             <p className="text-sm font-mono text-[var(--text-muted)] mb-2">Start typing to explore patterns</p>
-            <p className="text-xs text-[var(--text-muted)] opacity-70">
+            <p className="text-xs text-[var(--text-muted)]">
               Search across tasks, data types, constraints, and touchpoints
             </p>
           </div>
         ) : searchResults.length > 0 ? (
-          <div className="divide-y-2 divide-[var(--border)]">
+          <div className="divide-y divide-[var(--border)]/50">
             {searchResults.map((result) => {
               const Icon = getResultIcon(result);
               const color = getResultColor(result);
@@ -195,14 +221,16 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
               return (
                 <button
                   key={result.id}
+                  role="option"
+                  aria-selected="false"
                   onClick={() => {
                     trackEvent(EVENTS.HERO_SEARCH_RESULT_CLICKED);
                     onResultClick(result);
                   }}
-                  className="w-full text-left p-4 hover:bg-[var(--bg)] transition-colors group flex items-start gap-3"
+                  className="w-full text-left p-4 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors group flex items-start gap-3"
                 >
                   <div
-                    className="p-2 border border-[var(--border)] flex-shrink-0 mt-0.5"
+                    className="p-2 border border-[var(--border)] rounded-md flex-shrink-0 mt-0.5"
                     style={{ backgroundColor: bgColor }}
                   >
                     <Icon className="w-4 h-4" style={{ color }} />
@@ -213,7 +241,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
                       <h3 className="font-sans font-medium text-[var(--text-main)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         {result.name}
                       </h3>
-                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wide">
+                      <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wide">
                         {typeLabel}
                       </span>
                       <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
@@ -231,7 +259,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
         ) : (
           <div className="p-8 text-center">
             <p className="text-sm text-[var(--text-muted)] font-mono">No patterns found</p>
-            <p className="text-xs text-[var(--text-muted)] opacity-70 mt-1">Try different keywords</p>
+            <p className="text-xs text-[var(--text-muted)] mt-1">Try different keywords</p>
           </div>
         )}
       </div>
