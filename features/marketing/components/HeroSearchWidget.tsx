@@ -23,6 +23,7 @@ const EXAMPLE_SEARCHES = [
 export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isUserTyping, setIsUserTyping] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [currentExampleIndex, setCurrentExampleIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isBackspacing, setIsBackspacing] = useState(false);
@@ -33,7 +34,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
 
   // Auto-typing effect
   useEffect(() => {
-    if (isUserTyping) return; // Don't auto-type if user is interacting
+    if (isUserTyping || isHovering) return; // Don't auto-type if user is interacting or hovering
 
     // Skip animation for users who prefer reduced motion - show full example immediately
     if (prefersReducedMotion.current) {
@@ -82,7 +83,7 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
     }, 100); // 100ms between characters
 
     return () => clearTimeout(typingTimer);
-  }, [currentCharIndex, currentExampleIndex, isUserTyping, isBackspacing]);
+  }, [currentCharIndex, currentExampleIndex, isUserTyping, isHovering, isBackspacing]);
 
   // Get search results
   const searchResults = useMemo(() => {
@@ -141,7 +142,11 @@ export const HeroSearchWidget: React.FC<HeroSearchWidgetProps> = ({ onResultClic
   };
 
   return (
-    <div className="flex flex-col w-full max-w-full rounded-lg shadow-sm bg-gray-100/40 dark:bg-white/[0.02]">
+    <div
+      className="flex flex-col w-full max-w-full rounded-lg shadow-sm bg-gray-100/40 dark:bg-white/[0.02]"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       {/* Search Input */}
       <div className="relative w-full">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)] pointer-events-none" />
