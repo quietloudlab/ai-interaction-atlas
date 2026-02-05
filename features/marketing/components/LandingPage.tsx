@@ -167,7 +167,7 @@ export const LandingPage = ({ onNavigate }: { onNavigate: (page: string) => void
 
             <div className="max-w-xl pb-8">
               <p className="text-xl md:text-2xl font-sans font-light text-[var(--text-muted)] leading-snug mb-8">
-              A shared language for designing human-AI interaction systems.
+              A shared language for designing human-AI interactions.
               </p>
             </div>
 
