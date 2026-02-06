@@ -140,12 +140,13 @@ jobs:
           # Fetch latest to avoid conflicts
           git fetch origin main
 
-          git add atlas-package/package.json
+          # Add both package.json and any synced data files
+          git add atlas-package/package.json atlas-package/src/data/
           git commit -m "chore: bump package version to ${{ steps.new_version.outputs.version }}"
           git tag "v${{ steps.new_version.outputs.version }}"
 
-          # Pull with rebase before pushing
-          git pull --rebase origin main
+          # Pull with rebase before pushing (autostash handles any remaining changes)
+          git pull --rebase --autostash origin main
 
           git push origin main
           git push origin "v${{ steps.new_version.outputs.version }}"
