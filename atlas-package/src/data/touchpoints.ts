@@ -93,13 +93,37 @@ export const TOUCHPOINTS: TouchpointDefinition[] = [
     description: "Audio-only or multimodal voice interaction.", 
     examples: ["Smart Speaker", "Phone Line", "Alexa"] 
   },
-  { 
-    id: "tp_spatial_audio", 
-    name: "Spatial Audio", 
+  {
+    id: "tp_spatial_audio",
+    name: "Spatial Audio",
     category: "voice_audio",
     icon: "audio-lines",
     description: "3D positioned audio interface without visual component.",
     examples: ["Spatial AirPods", "3D audio guides", "Directional voice"]
+  },
+  {
+    id: "tp_microphone",
+    name: "Microphone",
+    category: "voice_audio",
+    icon: "mic-2",
+    description: "Audio input device for capturing sound, speech, or ambient audio.",
+    examples: ["Laptop mic", "Smartphone mic", "USB microphone", "Lapel mic", "Array microphone"]
+  },
+  {
+    id: "tp_headphones",
+    name: "Headphones/Earbuds",
+    category: "voice_audio",
+    icon: "headphones",
+    description: "Personal audio device worn on or in ears, often with gesture controls.",
+    examples: ["In-ear headphones", "Over-ear headphones", "Hearing aids", "Bone conduction", "In-ear monitors"]
+  },
+  {
+    id: "tp_speaker",
+    name: "Speaker",
+    category: "voice_audio",
+    icon: "volume-2",
+    description: "Audio output device for sound in a shared or ambient space.",
+    examples: ["Smart speaker", "Soundbar", "PA system", "Car speakers", "Desktop speakers"]
   },
 
   // ===================================
