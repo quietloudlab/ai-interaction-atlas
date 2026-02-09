@@ -141,15 +141,21 @@ let edgeFunctionContent = readFileSync(edgeFunctionPath, 'utf-8');
 
 // Replace the placeholder with actual data
 const jsonString = JSON.stringify(metaData);
+// Escape for safe embedding inside a template literal: backslashes, backticks, and ${ sequences
+const safeJsonString = jsonString
+  .replace(/\\/g, '\\\\')
+  .replace(/`/g, '\\`')
+  .replace(/\$\{/g, '\\${');
+
 edgeFunctionContent = edgeFunctionContent.replace(
   /JSON\.parse\(`INJECT_META_DATA_HERE`\)/,
-  `JSON.parse(\`${jsonString.replace(/\\/g, '\\\\').replace(/`/g, '\\`')}\`)`
+  `JSON.parse(\`${safeJsonString}\`)`
 );
 
 // Also replace if it was already injected (for re-runs)
 edgeFunctionContent = edgeFunctionContent.replace(
   /JSON\.parse\(`\{[^`]+\}`\)/,
-  `JSON.parse(\`${jsonString.replace(/\\/g, '\\\\').replace(/`/g, '\\`')}\`)`
+  `JSON.parse(\`${safeJsonString}\`)`
 );
 
 // Write the updated edge function

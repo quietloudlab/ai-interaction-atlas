@@ -46,24 +46,28 @@ function getMetaForPath(pathname: string): { title: string; description: string 
 }
 
 export default async function handler(request: Request, context: Context) {
+  // Bail out early for paths we know don't need meta injection
+  const url = new URL(request.url);
+  const meta = getMetaForPath(url.pathname);
+  if (meta.title === DEFAULT_META.title) {
+    return context.next();
+  }
+
+  let response: Response;
   try {
-    // Get the response from the origin
-    const response = await context.next();
+    response = await context.next();
+  } catch {
+    // Origin failed — nothing we can do, return a bare 502
+    return new Response("Bad Gateway", { status: 502 });
+  }
 
-    // Only process HTML responses
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.includes("text/html")) {
-      return response;
-    }
+  // Only process HTML responses
+  const contentType = response.headers.get("content-type");
+  if (!contentType || !contentType.includes("text/html")) {
+    return response;
+  }
 
-    const url = new URL(request.url);
-    const meta = getMetaForPath(url.pathname);
-
-    // If we're using default meta, no need to modify
-    if (meta.title === DEFAULT_META.title) {
-      return response;
-    }
-
+  try {
     // Get the HTML
     let html = await response.text();
 
@@ -91,19 +95,22 @@ export default async function handler(request: Request, context: Context) {
       .replace(/<meta property="twitter:url" content="[^"]*">/, `<meta property="twitter:url" content="${canonicalUrl}">`)
       .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonicalUrl}">`);
 
+    // Build new headers without stale Content-Length
+    const headers = new Headers(response.headers);
+    headers.delete("content-length");
+
     return new Response(html, {
       status: response.status,
-      headers: response.headers
+      headers
     });
   } catch (error) {
-    // If anything goes wrong, return the original response
+    // HTML processing failed — return the original unmodified response
     console.error("Edge function error:", error);
-    return context.next();
+    return response;
   }
 }
 
-// Disabled: edge function was causing site downtime. SEO meta injection is nice-to-have.
-// export const config = {
-//   path: "/*",
-//   excludedPath: ["/assets/*", "/*.js", "/*.css", "/*.svg", "/*.png", "/*.jpg", "/*.ico", "/*.json"]
-// };
+export const config = {
+  path: "/*",
+  excludedPath: ["/assets/*", "/*.js", "/*.css", "/*.svg", "/*.png", "/*.jpg", "/*.ico", "/*.json"]
+};
