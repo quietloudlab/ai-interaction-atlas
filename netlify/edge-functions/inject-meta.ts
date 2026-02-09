@@ -102,7 +102,8 @@ export default async function handler(request: Request, context: Context) {
   }
 }
 
-export const config = {
-  path: "/*",
-  excludedPath: ["/assets/*", "/*.js", "/*.css", "/*.svg", "/*.png", "/*.jpg", "/*.ico", "/*.json"]
-};
+// Disabled: edge function was causing site downtime. SEO meta injection is nice-to-have.
+// export const config = {
+//   path: "/*",
+//   excludedPath: ["/assets/*", "/*.js", "/*.css", "/*.svg", "/*.png", "/*.jpg", "/*.ico", "/*.json"]
+// };
