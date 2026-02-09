@@ -110,7 +110,8 @@ export default async function handler(request: Request, context: Context) {
   }
 }
 
-export const config = {
-  path: "/*",
-  excludedPath: ["/assets/*", "/*.js", "/*.css", "/*.svg", "/*.png", "/*.jpg", "/*.ico", "/*.json"]
-};
+// Disabled while investigating 500 errors
+// export const config = {
+//   path: "/*",
+//   excludedPath: ["/assets/*", "/*.js", "/*.css", "/*.svg", "/*.png", "/*.jpg", "/*.ico", "/*.json"]
+// };
