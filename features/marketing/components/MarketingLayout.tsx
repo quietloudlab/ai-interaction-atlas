@@ -80,10 +80,10 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
           </div>
           <button
             onClick={() => { trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED); onNavigate('studio'); }}
-            className="cursor-pointer font-medium text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors flex items-center gap-1.5 px-3 py-4"
+            className="cursor-pointer font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-1.5 px-3 py-4"
           >
-            Studio Preview
-            <span className="text-[9px] font-mono uppercase tracking-wide bg-[var(--text-main)]/10 text-[var(--text-main)] px-1.5 py-0.5">New</span>
+            Map your AI
+            <span className="text-[9px] font-mono uppercase tracking-wide bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-1.5 py-0.5">New</span>
           </button>
           <span className="text-[var(--border)]">|</span>
           <DarkModeToggle />
@@ -113,9 +113,9 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
         >
           <button onClick={() => { trackEvent(EVENTS.EXPLORE_ATLAS_CLICKED); onNavigate('atlas'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium text-[var(--text-main)]">Explore the Atlas</button>
           <button onClick={() => { trackEvent(EVENTS.QUICK_REFERENCE_CLICKED); onNavigate('atlas/reference'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium text-[var(--text-main)]">Quick Reference</button>
-          <button onClick={() => { trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED); onNavigate('studio'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium text-[var(--text-main)] flex items-center gap-2">
-            Studio Preview
-            <span className="text-[9px] font-mono uppercase tracking-wide bg-[var(--text-main)]/10 text-[var(--text-main)] px-1.5 py-0.5">New</span>
+          <button onClick={() => { trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED); onNavigate('studio'); setMobileMenuOpen(false); }} className="cursor-pointer text-left py-2 font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-2">
+            Map your AI
+            <span className="text-[9px] font-mono uppercase tracking-wide bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-1.5 py-0.5">New</span>
           </button>
           <div className="h-px bg-[var(--border)] my-2" role="separator"></div>
           <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] py-1">Patterns</div>
