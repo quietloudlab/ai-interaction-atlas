@@ -144,8 +144,6 @@ export const Sidebar = ({
               )}
             </div>
           </div>
-
-          {/* Mobile CTA - Removed for now */}
         </div>
 
         {/* Navigation & Search Area */}
@@ -360,6 +358,16 @@ export const Sidebar = ({
               </button>
            </div>
            </div>
+
+           <a
+             href="https://studio.ai-interaction.com"
+             target="_blank"
+             rel="noopener noreferrer"
+             onClick={() => trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED)}
+             className="mx-3 mt-2 mb-1 block text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+           >
+             Map your AI
+           </a>
 
            {/* Search Bar */}
            <div className="p-3">
