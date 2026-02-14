@@ -9,9 +9,11 @@ import {
   Layers,
   Activity,
   MessageSquare,
-  Smartphone
+  Smartphone,
+  ExternalLink
 } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
+import { trackEvent, EVENTS } from '../../../lib/fathom';
 
 interface HomeDashboardProps {
    onNavigate: (type: 'task' | 'layer' | 'data' | 'constraints' | 'touchpoints' | 'ai' | 'human' | 'system', id?: string) => void;
@@ -38,7 +40,7 @@ export const HomeDashboard = ({ onNavigate }: HomeDashboardProps) => {
     <div className="space-y-20 pb-20">
 
       {/* Hero Section */}
-      <header className="pt-8 border-b border-[var(--border)] pb-12">
+      <header className="pt-8 border-b border-[var(--border)] pb-12 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
         <div className="max-w-4xl">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans tracking-tighter text-[var(--text-main)] mb-8 leading-[0.95] font-medium">
             AI Interaction<br/>Atlas
@@ -47,6 +49,16 @@ export const HomeDashboard = ({ onNavigate }: HomeDashboardProps) => {
             {meta.description}
           </p>
         </div>
+        <a
+          href="https://studio.ai-interaction.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackEvent(EVENTS.STUDIO_PREVIEW_ATLAS_CLICKED)}
+          className="inline-flex items-center justify-center gap-1.5 py-2 px-4 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-md transition-colors shadow-sm flex-shrink-0"
+        >
+          Map your AI
+          <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+        </a>
       </header>
 
       {/* Stats Grid - Group hover */}
