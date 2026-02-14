@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, X, Globe, Linkedin, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe, Linkedin, ChevronDown, ExternalLink } from 'lucide-react';
 import { atlasService } from '../../../services/atlasService';
 import { DarkModeToggle } from '../../../components/DarkModeToggle';
 import { trackEvent, EVENTS } from '../../../lib/fathom';
@@ -86,6 +86,7 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
             className="inline-flex items-center gap-1.5 font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[var(--bg)]"
           >
             Map your AI
+            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
             <span className="text-[9px] font-mono uppercase tracking-wide bg-white/20 text-white px-1.5 py-0.5 rounded">New</span>
           </a>
           <span className="text-[var(--border)]">|</span>
@@ -124,6 +125,7 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
             className="inline-flex items-center gap-2 font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors px-4 py-2.5 rounded-md w-fit focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[var(--bg)]"
           >
             Map your AI
+            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
             <span className="text-[9px] font-mono uppercase tracking-wide bg-white/20 text-white px-1.5 py-0.5 rounded">New</span>
           </a>
           <div className="h-px bg-[var(--border)] my-2" role="separator"></div>

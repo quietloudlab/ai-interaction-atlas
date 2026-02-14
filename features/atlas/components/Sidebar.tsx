@@ -359,16 +359,6 @@ export const Sidebar = ({
            </div>
            </div>
 
-           <a
-             href="https://studio.ai-interaction.com"
-             target="_blank"
-             rel="noopener noreferrer"
-             onClick={() => trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED)}
-             className="mx-3 mt-2 mb-1 flex items-center justify-center w-[calc(100%-1.5rem)] py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-md transition-colors"
-           >
-             Map your AI
-           </a>
-
            {/* Search Bar */}
            <div className="p-3">
              <div className="relative mb-2">

@@ -77,7 +77,8 @@ export const EVENTS = {
   // CTAs
   EXPLORE_ATLAS_CLICKED: 'explore_atlas_clicked',
   QUICK_REFERENCE_CLICKED: 'quick_reference_clicked',
-  STUDIO_PREVIEW_CLICKED: 'studio_preview_clicked',
+  STUDIO_PREVIEW_CLICKED: 'studio_preview_clicked', // Map your AI from main nav (desktop + mobile)
+  STUDIO_PREVIEW_ATLAS_CLICKED: 'studio_preview_atlas_clicked', // Map your AI from Atlas page floating button
   QUIETLOUDLAB_CLICKED: 'quietloudlab_clicked',
 
   // Contributions
