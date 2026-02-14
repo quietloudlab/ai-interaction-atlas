@@ -83,11 +83,11 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED)}
-            className="inline-flex items-center gap-1.5 font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[var(--bg)]"
+            className="inline-flex items-center gap-1.5 py-2 px-4 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-md transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[var(--bg)]"
           >
             Map your AI
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-            <span className="text-[9px] font-mono uppercase tracking-wide bg-white/20 text-white px-1.5 py-0.5 rounded">New</span>
+            <span className="text-[9px] font-mono uppercase tracking-wide bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded">New</span>
           </a>
           <span className="text-[var(--border)]">|</span>
           <DarkModeToggle />
@@ -122,11 +122,11 @@ const SiteHeader = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => { trackEvent(EVENTS.STUDIO_PREVIEW_CLICKED); setMobileMenuOpen(false); }}
-            className="inline-flex items-center gap-2 font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors px-4 py-2.5 rounded-md w-fit focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[var(--bg)]"
+            className="inline-flex items-center gap-2 py-2 px-4 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-md transition-colors shadow-sm w-fit focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[var(--bg)]"
           >
             Map your AI
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-            <span className="text-[9px] font-mono uppercase tracking-wide bg-white/20 text-white px-1.5 py-0.5 rounded">New</span>
+            <span className="text-[9px] font-mono uppercase tracking-wide bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded">New</span>
           </a>
           <div className="h-px bg-[var(--border)] my-2" role="separator"></div>
           <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] py-1">Patterns</div>
