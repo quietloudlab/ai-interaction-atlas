@@ -878,5 +878,38 @@ export const AI_TASKS: AiTask[] = [
         { target_id: "task_estimate", type: "commonly_preceded_by", strength: "medium", reason: "Spatial estimation provides the world-model for planning." },
         { target_id: "task_act", type: "enables", strength: "strong", reason: "Plans are executed as sequences of actions." }
       ]
+    },
+    {
+      id: "task_harvest",
+      layer_id: "layer_interactive",
+      name: "Harvest",
+      slug: "harvest",
+      task_type: "ai",
+      elevator_pitch: "Discover recurring patterns from aggregate human decisions over time.",
+      example_usage: "Identifying writing style patterns from content a user consistently accepts without editing.",
+      io_spec: {
+          inputs: {
+              required: [{ id: "data_log", label: "Behavioral Signal Log" }],
+              optional: [{ id: "data_text", label: "Source Content" }, { id: "data_json", label: "Existing Pattern Library" }]
+          },
+          outputs: {
+              primary: { id: "data_json", label: "Discovered Patterns", isArray: true },
+              metadata: [{ id: "data_score", label: "Pattern Confidence" }, { id: "data_text", label: "Source Provenance" }]
+          }
+      },
+      implementation_notes: { maturity: "emerging", typical_latency: "batch", data_requirements: "continuous", human_oversight: "recommended" },
+      ux_notes: { risk: "Hallucinated patterns that don't exist in source data", tip: "Link each pattern to the specific human decisions that produced it", anti_patterns: ["Harvesting from insufficient sample sizes", "Treating AI confidence as human validation", "No verification that discovered patterns exist in source material"] },
+      capabilities: [
+        { name: "Editorial Pattern Discovery", tag: "editorial-pattern-discovery", example: "Analyzing months of accepted blog posts to discover recurring phrase structures, vocabulary preferences, and formatting habits that define a writer's voice" },
+        { name: "Preference Mining", tag: "preference-mining", example: "Observing which product recommendations a shopper keeps versus removes over time to discover unstated preferences like avoiding synthetic fabrics" },
+        { name: "Workflow Archaeology", tag: "workflow-archaeology", example: "Mining a support team's ticket resolutions to discover that agents who include a one-line summary have 40% fewer re-opens — a pattern nobody explicitly taught" }
+      ],
+      relations: [
+        { target_id: "task_adapt", type: "enables", strength: "strong", reason: "Harvested patterns are the input that adaptation applies. Harvest discovers what to learn; adapt updates behavior." },
+        { target_id: "task_extract", type: "commonly_preceded_by", strength: "medium", reason: "Individual extraction events produce raw data that harvesting aggregates into patterns over time." },
+        { target_id: "human_edit", type: "requires_input_from", strength: "strong", reason: "Human edits — what they change and what they leave unchanged — are the primary behavioral signal." },
+        { target_id: "task_verify", type: "commonly_followed_by", strength: "strong", reason: "AI-discovered patterns are prone to hallucination; verify against source material before applying." },
+        { target_id: "human_review", type: "commonly_followed_by", strength: "medium", reason: "Low-confidence patterns should be staged for human review before affecting system behavior." }
+      ]
     }
 ];
