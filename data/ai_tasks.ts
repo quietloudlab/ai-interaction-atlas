@@ -878,5 +878,62 @@ export const AI_TASKS: AiTask[] = [
         { target_id: "task_estimate", type: "commonly_preceded_by", strength: "medium", reason: "Spatial estimation provides the world-model for planning." },
         { target_id: "task_act", type: "enables", strength: "strong", reason: "Plans are executed as sequences of actions." }
       ]
+    },
+    {
+      id: "task_reconcile",
+      layer_id: "layer_internal",
+      name: "Reconcile",
+      slug: "reconcile",
+      task_type: "ai",
+      elevator_pitch: "Resolve conflicts between two authoritative but contradictory sources of truth—deciding which wins, merging where possible, and flagging what cannot be automatically resolved.",
+      example_usage: "A codebase evolved since the design document was written; reconcile determines which specifications are still valid and which have been superseded by implementation decisions.",
+      io_spec: {
+        inputs: {
+          required: [
+            { id: "data_any", label: "Source A (e.g., plan, cache, human edit)" },
+            { id: "data_any", label: "Source B (e.g., code, database, AI suggestion)" }
+          ],
+          optional: [
+            { id: "data_json", label: "Authority Hierarchy / Staleness Metadata" },
+            { id: "data_log", label: "Change History" }
+          ]
+        },
+        constraints: {
+          optional: [
+            { id: "const_human_loop", label: "Escalation Policy" },
+            { id: "const_explainability", label: "Conflict Provenance Required" }
+          ]
+        },
+        outputs: {
+          primary: { id: "data_any", label: "Reconciled Truth" },
+          metadata: [
+            { id: "data_json", label: "Conflict Report (what diverged, which source won, why)" },
+            { id: "data_log", label: "Reconciliation Audit Trail" }
+          ]
+        }
+      },
+      implementation_notes: { maturity: "emerging", typical_latency: "interactive", data_requirements: "small", human_oversight: "recommended" },
+      ux_notes: {
+        risk: "Silent wrong-winner selection — the system proceeds confidently with incorrect data because it chose the wrong authority",
+        tip: "Always surface the conflict report to humans for high-stakes reconciliations; show which source won and why with inline diff views",
+        anti_patterns: [
+          "Treating reconciliation as synthesis (summarizing both sources instead of resolving the conflict)",
+          "Always choosing the newer source without considering authority hierarchy",
+          "Silently dropping conflicts instead of flagging unresolvable divergences"
+        ]
+      },
+      capabilities: [
+        { name: "Schema Drift Resolution", tag: "schema-reconciliation", example: "Database migration plan says add column X, but production schema already added column Y for the same purpose — reconcile determines which column to keep" },
+        { name: "Cache Coherence", tag: "cache-reconciliation", example: "CDN cache says product is in stock, origin database says out of stock — reconcile using freshness metadata and authority rules" },
+        { name: "Plan vs Reality", tag: "plan-reconciliation", example: "Architecture document specifies microservice A owns user auth, but codebase shows auth was moved to service B three months ago — reconcile by marking the plan stale and adopting reality" },
+        { name: "Multi-Agent Disagreement", tag: "agent-reconciliation", example: "Two analysis agents return different risk scores for the same loan application — reconcile by comparing confidence, methodology, and input data freshness" }
+      ],
+      relations: [
+        { target_id: "task_verify", type: "commonly_followed_by", strength: "strong", reason: "Reconciled output should be verified against both original sources to confirm no information was incorrectly discarded." },
+        { target_id: "task_retrieve", type: "commonly_preceded_by", strength: "strong", reason: "Both conflicting sources must be retrieved before reconciliation can begin." },
+        { target_id: "task_synthesize", type: "incompatible_with", strength: "strong", reason: "Synthesis assumes complementary sources; reconciliation assumes contradictory sources. Summarizing a conflict is not resolving it." },
+        { target_id: "system_state", type: "enables", strength: "strong", reason: "Reconciliation produces the canonical truth that state management should persist." },
+        { target_id: "task_monitor", type: "commonly_preceded_by", strength: "medium", reason: "Monitoring detects the drift or divergence that triggers reconciliation." }
+      ]
     }
 ];
