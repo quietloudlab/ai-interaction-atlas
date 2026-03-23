@@ -470,6 +470,46 @@ export const HUMAN_TASKS: HumanTask[] = [
     ]
   },
 
+  {
+    id: "human_delegate",
+    layer_id: "layer_interactive",
+    name: "Delegate Authority",
+    slug: "delegate-authority",
+    task_type: "human",
+    elevator_pitch: "User grants an AI agent bounded authority to act on their behalf—spending caps, scope limits, time windows, or approval thresholds.",
+    example_usage: "Authorizing a shopping agent to purchase items under $50 without confirmation, or letting a coding agent merge PRs that pass all checks.",
+    io_spec: {
+      inputs: {
+        required: [{ id: "data_policy", label: "Authority Scope (caps, allowlists, time bounds)" }],
+        optional: [
+          { id: "data_json", label: "Budget / Spending Limits" },
+          { id: "data_text", label: "Escalation Criteria" }
+        ]
+      },
+      constraints: {
+        optional: [
+          { id: "const_human_loop", label: "Permanent Gate Actions" },
+          { id: "const_cost_budget", label: "Spending Cap" }
+        ]
+      },
+      outputs: {
+        primary: { id: "data_policy", label: "Delegation Token / Authority Grant" },
+        metadata: [
+          { id: "data_log", label: "Delegation Audit Record" },
+          { id: "data_json", label: "Scope Boundaries" }
+        ]
+      }
+    },
+    common_variants: ["grant_spending_authority", "approve_autonomous_mode", "set_agent_permissions", "escalation_override", "revoke_delegation"],
+    relations: [
+      { target_id: "human_configure", type: "commonly_preceded_by", strength: "strong", reason: "Boundaries (caps, allowlists, scope) are typically configured before authority is delegated." },
+      { target_id: "task_act", type: "enables", strength: "strong", reason: "Delegation grants the agent permission to execute actions without per-action approval." },
+      { target_id: "task_monitor", type: "commonly_followed_by", strength: "strong", reason: "Delegated actions should be monitored for drift, overspend, or scope violations." },
+      { target_id: "human_stop_process", type: "related_to", strength: "strong", reason: "Revocation is the inverse of delegation—human reclaims authority from the agent." },
+      { target_id: "human_grant_consent", type: "related_to", strength: "medium", reason: "Consent governs data; delegation governs agency. Both transfer a form of permission, but delegation transfers the right to act." }
+    ]
+  },
+
   // =========================================================
   // Outbound — user finalizes, refines, exports
   // =========================================================
