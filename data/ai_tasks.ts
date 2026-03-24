@@ -881,7 +881,7 @@ export const AI_TASKS: AiTask[] = [
     },
     {
       id: "task_harvest",
-      layer_id: "layer_interactive",
+      layer_id: "layer_internal",
       name: "Harvest",
       slug: "harvest",
       task_type: "ai",
@@ -898,7 +898,7 @@ export const AI_TASKS: AiTask[] = [
           }
       },
       implementation_notes: { maturity: "emerging", typical_latency: "batch", data_requirements: "continuous", human_oversight: "recommended" },
-      ux_notes: { risk: "Hallucinated patterns that don't exist in source data", tip: "Link each pattern to the specific human decisions that produced it", anti_patterns: ["Harvesting from insufficient sample sizes", "Treating AI confidence as human validation", "No verification that discovered patterns exist in source material"] },
+      ux_notes: { risk: "Hallucinated patterns that don't exist in source data", tip: "Every discovered pattern must link to specific source decisions with provenance — timestamp, actor, and original context — so patterns are grounded in evidence, not AI confabulation", anti_patterns: ["Harvesting from insufficient sample sizes", "Treating AI confidence as human validation", "No verification that discovered patterns exist in source material", "Patterns without provenance trail back to source decisions", "Accepting pattern candidates that cannot cite concrete examples from the behavioral log"] },
       capabilities: [
         { name: "Editorial Pattern Discovery", tag: "editorial-pattern-discovery", example: "Analyzing months of accepted blog posts to discover recurring phrase structures, vocabulary preferences, and formatting habits that define a writer's voice" },
         { name: "Preference Mining", tag: "preference-mining", example: "Observing which product recommendations a shopper keeps versus removes over time to discover unstated preferences like avoiding synthetic fabrics" },
@@ -909,7 +909,8 @@ export const AI_TASKS: AiTask[] = [
         { target_id: "task_extract", type: "commonly_preceded_by", strength: "medium", reason: "Individual extraction events produce raw data that harvesting aggregates into patterns over time." },
         { target_id: "human_edit", type: "requires_input_from", strength: "strong", reason: "Human edits — what they change and what they leave unchanged — are the primary behavioral signal." },
         { target_id: "task_verify", type: "commonly_followed_by", strength: "strong", reason: "AI-discovered patterns are prone to hallucination; verify against source material before applying." },
-        { target_id: "human_review", type: "commonly_followed_by", strength: "medium", reason: "Low-confidence patterns should be staged for human review before affecting system behavior." }
+        { target_id: "human_review", type: "commonly_followed_by", strength: "medium", reason: "Low-confidence patterns should be staged for human review before affecting system behavior." },
+        { target_id: "task_cluster", type: "distinct_from", strength: "strong", reason: "Cluster groups items by similarity in a vector space at a single point in time; Harvest discovers patterns from sequential human decisions over time. Cluster is spatial (which items are near each other); Harvest is temporal (what behaviors recur across decisions). Cluster needs embeddings; Harvest needs behavioral logs with provenance." }
       ]
     }
 ];
