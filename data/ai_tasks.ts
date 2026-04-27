@@ -900,9 +900,9 @@ export const AI_TASKS: AiTask[] = [
       implementation_notes: { maturity: "emerging", typical_latency: "batch", data_requirements: "continuous", human_oversight: "recommended" },
       ux_notes: { risk: "Hallucinated patterns that don't exist in source data", tip: "Every discovered pattern must link to specific source decisions with provenance — timestamp, actor, and original context — so patterns are grounded in evidence, not AI confabulation", anti_patterns: ["Harvesting from insufficient sample sizes", "Treating AI confidence as human validation", "No verification that discovered patterns exist in source material", "Patterns without provenance trail back to source decisions", "Accepting pattern candidates that cannot cite concrete examples from the behavioral log"] },
       capabilities: [
-        { name: "Editorial Pattern Discovery", tag: "editorial-pattern-discovery", example: "Analyzing months of accepted blog posts to discover recurring phrase structures, vocabulary preferences, and formatting habits that define a writer's voice" },
-        { name: "Preference Mining", tag: "preference-mining", example: "Observing which product recommendations a shopper keeps versus removes over time to discover unstated preferences like avoiding synthetic fabrics" },
-        { name: "Workflow Archaeology", tag: "workflow-archaeology", example: "Mining a support team's ticket resolutions to discover that agents who include a one-line summary have 40% fewer re-opens — a pattern nobody explicitly taught" }
+        { name: "Editorial Pattern Discovery", tag: "sentence-similarity", example: "Analyzing months of accepted blog posts to discover recurring phrase structures, vocabulary preferences, and formatting habits that define a writer's voice" },
+        { name: "Preference Mining", tag: "tabular-classification", example: "Observing which product recommendations a shopper keeps versus removes over time to discover unstated preferences like avoiding synthetic fabrics" },
+        { name: "Workflow Archaeology", tag: "feature-extraction", example: "Mining a support team's ticket resolutions to discover that agents who include a one-line summary have 40% fewer re-opens — a pattern nobody explicitly taught" }
       ],
       relations: [
         { target_id: "task_adapt", type: "enables", strength: "strong", reason: "Harvested patterns are the input that adaptation applies. Harvest discovers what to learn; adapt updates behavior." },
