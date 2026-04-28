@@ -482,8 +482,8 @@ export const HUMAN_TASKS: HumanTask[] = [
       inputs: {
         required: [{ id: "data_policy", label: "Authority Scope (caps, allowlists, time bounds)" }],
         optional: [
-          { id: "data_json", label: "Budget / Spending Limits" },
-          { id: "data_text", label: "Escalation Criteria" }
+          { id: "data_config", label: "Budget / Spending Limits" },
+          { id: "data_policy", label: "Escalation Criteria" }
         ]
       },
       constraints: {
@@ -493,10 +493,10 @@ export const HUMAN_TASKS: HumanTask[] = [
         ]
       },
       outputs: {
-        primary: { id: "data_policy", label: "Delegation Token / Authority Grant" },
+        primary: { id: "data_token", label: "Delegation Token / Authority Grant" },
         metadata: [
           { id: "data_log", label: "Delegation Audit Record" },
-          { id: "data_json", label: "Scope Boundaries" }
+          { id: "data_policy", label: "Scope Boundaries" }
         ]
       }
     },
