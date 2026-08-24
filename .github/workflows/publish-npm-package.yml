@@ -40,13 +40,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Upgrade npm CLI
         # Trusted Publishing (OIDC) requires npm >= 11.5.1.
-        # Node 20 ships with npm 10, so we upgrade explicitly.
-        run: npm install -g npm@latest
+        # Node 22 ships with npm 10, so we upgrade explicitly.
+        # Pinned to the npm 11 line: npm@latest (v12+) drops support for
+        # older Node runtimes and previously broke this workflow.
+        run: npm install -g npm@11
 
       - name: Install dependencies
         working-directory: atlas-package
